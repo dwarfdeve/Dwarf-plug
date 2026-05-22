@@ -221,9 +221,204 @@ select option{background:var(--bg3);color:var(--fg)}
 .hidden{display:none}
 .text-green{color:var(--green-text)}
 .text-muted{color:var(--fg3)}
+
+/* ---- AGE GATE ---- */
+@keyframes ageBgShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+@keyframes ageCardIn{from{opacity:0;transform:translateY(32px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes leafFloat{0%,100%{transform:translateY(0) rotate(-8deg) scale(1)}50%{transform:translateY(-18px) rotate(4deg) scale(1.05)}}
+@keyframes leafFloat2{0%,100%{transform:translateY(0) rotate(12deg) scale(1)}50%{transform:translateY(-12px) rotate(-6deg) scale(1.04)}}
+@keyframes spinSlow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes dotBlink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}
+@keyframes shimmerAge{0%{background-position:-200% center}100%{background-position:200% center}}
+
+#age-gate{
+  position:fixed;inset:0;z-index:9999;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#060d04 0%,#0a150a 20%,#060e08 40%,#0d1505 60%,#060d04 100%);
+  background-size:400% 400%;
+  animation:ageBgShift 14s ease infinite;
+  padding:16px;
+  transition:opacity .55s ease;
+}
+#age-gate.leaving{opacity:0;pointer-events:none}
+body.gate-open{overflow:hidden}
+
+/* floating bg leaves */
+.age-leaf{position:absolute;pointer-events:none;user-select:none;font-size:96px;opacity:.04;line-height:1}
+.age-leaf-1{top:8%;left:6%;animation:leafFloat 7s ease-in-out infinite}
+.age-leaf-2{bottom:12%;right:8%;animation:leafFloat2 9s ease-in-out infinite}
+.age-leaf-3{top:45%;left:-2%;font-size:64px;animation:leafFloat 11s ease-in-out infinite reverse}
+.age-leaf-4{top:20%;right:4%;font-size:72px;animation:leafFloat2 8s ease-in-out infinite}
+
+/* glow orbs */
+.age-orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
+.age-orb-1{width:500px;height:500px;background:radial-gradient(circle,rgba(74,130,40,.18) 0%,transparent 70%);top:-100px;left:-100px}
+.age-orb-2{width:400px;height:400px;background:radial-gradient(circle,rgba(90,158,48,.12) 0%,transparent 70%);bottom:-80px;right:-80px}
+
+.age-card{
+  position:relative;z-index:2;
+  background:rgba(22,20,14,.92);
+  border:1px solid rgba(90,158,48,.25);
+  border-radius:24px;
+  padding:40px 36px 36px;
+  max-width:420px;width:100%;
+  text-align:center;
+  box-shadow:0 32px 80px rgba(0,0,0,.8),0 0 0 1px rgba(90,158,48,.1),inset 0 1px 0 rgba(255,255,255,.04);
+  animation:ageCardIn .65s cubic-bezier(.175,.885,.32,1.275) both;
+  backdrop-filter:blur(12px);
+}
+
+/* shield icon */
+.age-shield{
+  width:72px;height:72px;margin:0 auto 22px;
+  background:linear-gradient(135deg,var(--green3),var(--green2));
+  border-radius:20px;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 8px 24px rgba(61,110,34,.5),0 0 40px rgba(90,158,48,.2);
+  position:relative;
+}
+.age-shield::after{
+  content:'';position:absolute;inset:0;border-radius:20px;
+  background:linear-gradient(135deg,rgba(255,255,255,.15) 0%,transparent 60%);
+}
+.age-shield-icon{font-size:34px;z-index:1;position:relative}
+
+/* live dot */
+.age-live{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 12px;border-radius:99px;
+  background:rgba(90,158,48,.12);border:1px solid rgba(90,158,48,.25);
+  font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--green-text);margin-bottom:20px;
+}
+.age-live-dot{width:6px;height:6px;border-radius:50%;background:#7ec84a;animation:dotBlink 1.8s ease infinite}
+
+.age-title{font-size:26px;font-weight:800;letter-spacing:-.4px;line-height:1.2;margin-bottom:10px}
+.age-title span{
+  background:linear-gradient(90deg,#7ec84a,#a8e065,#7ec84a);
+  background-size:200% auto;
+  animation:shimmerAge 3s linear infinite;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.age-sub{font-size:14px;color:var(--fg3);line-height:1.6;margin-bottom:28px;max-width:320px;margin-left:auto;margin-right:auto}
+
+/* trust row */
+.age-trust{
+  display:flex;justify-content:center;gap:18px;
+  margin-bottom:28px;
+  padding:14px;
+  background:rgba(255,255,255,.025);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:12px;
+}
+.age-trust-item{display:flex;flex-direction:column;align-items:center;gap:4px}
+.age-trust-icon{font-size:20px}
+.age-trust-label{font-size:10px;color:var(--fg4);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+
+/* divider */
+.age-divider{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+.age-divider-line{flex:1;height:1px;background:var(--border)}
+.age-divider-text{font-size:11px;color:var(--fg4);font-weight:600;text-transform:uppercase;letter-spacing:.08em;white-space:nowrap}
+
+/* buttons */
+.age-btn-enter{
+  width:100%;padding:16px;border-radius:14px;
+  background:linear-gradient(135deg,var(--green2),var(--green3));
+  color:#fff;font-size:16px;font-weight:800;letter-spacing:-.1px;
+  border:none;cursor:pointer;
+  box-shadow:0 6px 20px rgba(61,110,34,.5),0 0 0 0 rgba(90,158,48,.3);
+  transition:transform .18s,box-shadow .18s,filter .18s;
+  position:relative;overflow:hidden;
+  margin-bottom:12px;
+}
+.age-btn-enter::before{
+  content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);
+  transition:left .5s ease;
+}
+.age-btn-enter:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(61,110,34,.6),0 0 24px rgba(90,158,48,.25);filter:brightness(1.08)}
+.age-btn-enter:hover::before{left:100%}
+.age-btn-enter:active{transform:translateY(0);filter:brightness(.95)}
+
+.age-btn-leave{
+  width:100%;padding:12px;border-radius:12px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  color:var(--fg4);font-size:13px;font-weight:500;cursor:pointer;
+  transition:background .15s,color .15s,border-color .15s;
+  margin-bottom:20px;
+}
+.age-btn-leave:hover{background:rgba(255,255,255,.07);color:var(--fg3);border-color:rgba(255,255,255,.14)}
+
+.age-legal{font-size:10px;color:var(--fg4);line-height:1.6;padding-top:16px;border-top:1px solid var(--border)}
+.age-legal a{color:var(--fg3);text-decoration:underline;text-underline-offset:2px}
 </style>
 </head>
 <body>
+
+<!-- AGE GATE -->
+<div id="age-gate">
+  <!-- bg leaves -->
+  <div class="age-leaf age-leaf-1">🌿</div>
+  <div class="age-leaf age-leaf-2">🍃</div>
+  <div class="age-leaf age-leaf-3">🌱</div>
+  <div class="age-leaf age-leaf-4">🌿</div>
+  <!-- glow orbs -->
+  <div class="age-orb age-orb-1"></div>
+  <div class="age-orb age-orb-2"></div>
+
+  <div class="age-card">
+    <!-- shield -->
+    <div class="age-shield">
+      <span class="age-shield-icon">🛡️</span>
+    </div>
+
+    <!-- live badge -->
+    <div class="age-live">
+      <span class="age-live-dot"></span>
+      Age Restricted — 21+
+    </div>
+
+    <div class="age-title">Welcome to<br/><span>Dwarf Plug</span></div>
+    <div class="age-sub">This website contains products intended for adults 21 years of age or older. Please confirm your age before entering.</div>
+
+    <!-- trust row -->
+    <div class="age-trust">
+      <div class="age-trust-item">
+        <span class="age-trust-icon">🔒</span>
+        <span class="age-trust-label">Private</span>
+      </div>
+      <div class="age-trust-item">
+        <span class="age-trust-icon">🌍</span>
+        <span class="age-trust-label">Worldwide</span>
+      </div>
+      <div class="age-trust-item">
+        <span class="age-trust-icon">📦</span>
+        <span class="age-trust-label">Discreet</span>
+      </div>
+      <div class="age-trust-item">
+        <span class="age-trust-icon">✅</span>
+        <span class="age-trust-label">Verified</span>
+      </div>
+    </div>
+
+    <div class="age-divider">
+      <div class="age-divider-line"></div>
+      <div class="age-divider-text">Confirm Your Age</div>
+      <div class="age-divider-line"></div>
+    </div>
+
+    <button class="age-btn-enter" onclick="ageEnter()">
+      ✅ &nbsp;I am 21 or older — Enter
+    </button>
+    <button class="age-btn-leave" onclick="ageLeave()">
+      I am under 21 — Exit
+    </button>
+
+    <div class="age-legal">
+      By entering this site you agree to our terms of use and confirm that you are of legal age in your jurisdiction. This site uses a session cookie to remember your age verification.
+    </div>
+  </div>
+</div>
 
 <!-- HEADER -->
 <header class="header">
@@ -543,6 +738,37 @@ select option{background:var(--bg3);color:var(--fg)}
 </div>
 
 <script>
+// =====================================================================
+// AGE GATE
+// =====================================================================
+(function(){
+  const gate = document.getElementById('age-gate');
+  // Check session storage (expires when tab closes) or localStorage (30 days)
+  const verified = sessionStorage.getItem('age_ok') || localStorage.getItem('age_ok');
+  if (verified) {
+    gate.style.display = 'none';
+  } else {
+    document.body.classList.add('gate-open');
+  }
+})();
+
+function ageEnter() {
+  sessionStorage.setItem('age_ok','1');
+  // Remember for 30 days
+  localStorage.setItem('age_ok', Date.now() + 30*24*60*60*1000);
+  const gate = document.getElementById('age-gate');
+  gate.classList.add('leaving');
+  setTimeout(() => {
+    gate.style.display = 'none';
+    document.body.classList.remove('gate-open');
+  }, 580);
+}
+
+function ageLeave() {
+  // Redirect away
+  window.location.replace('https://www.google.com');
+}
+
 // =====================================================================
 // DATA
 // =====================================================================
