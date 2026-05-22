@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1"/>
+<title>Dwarf Plug — Premium Discreet Delivery</title>
+<meta name="description" content="Dwarf Plug — Premium quality, delivered discreetly worldwide. Browse our catalog and place your order."/>
+<meta property="og:title" content="Dwarf Plug — Premium Discreet Delivery"/>
+<meta property="og:description" content="Browse our premium catalog and place your order. Discreet worldwide delivery."/>
+<meta property="og:type" content="website"/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#141210;--bg2:#18160e;--bg3:#1e1b12;--bg4:#22201a;
+  --border:#2e2a1e;--border2:#3a3520;
+  --green:#5a9e30;--green2:#4a8228;--green3:#3d6e22;
+  --green-dim:#1e3010;--green-text:#7ec84a;--green-muted:#3a5520;
+  --fg:#ede8dc;--fg2:#c8bfa8;--fg3:#8a8070;--fg4:#5a5448;
+  --amber:#f59e0b;--amber-dim:#2a1f06;--amber-border:#4a3510;
+  --red:#dc2626;--red-dim:#200a0a;--red-border:#5a1515;
+  --blue:#1d8fb5;
+  --btc:#f7931a;--gift:#a855f7;--cashapp:#00d632;--wu:#fdbe00;
+  --radius:12px;--radius-sm:8px;--radius-lg:16px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--fg);min-height:100vh;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+select,input,textarea{font-family:inherit}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+
+/* ---- HEADER ---- */
+.header{position:sticky;top:0;z-index:50;background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 16px}
+.header-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:36px;height:36px;background:var(--green3);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.logo-name{font-weight:800;font-size:17px;letter-spacing:-.3px}
+.logo-sub{font-size:11px;color:var(--green-text);margin-top:1px}
+.header-links{display:flex;gap:8px}
+.header-link{display:flex;align-items:center;gap:6px;padding:7px 12px;border-radius:var(--radius-sm);font-size:13px;font-weight:500;transition:opacity .15s}
+.header-link:hover{opacity:.8}
+.hl-ig{background:var(--bg4);color:var(--fg2)}
+.hl-tg{background:var(--green3);color:#fff}
+.hl-label{display:none}
+@media(min-width:480px){.hl-label{display:inline}}
+
+/* ---- HERO ---- */
+.hero{background:var(--bg2);border-bottom:1px solid var(--border);padding:40px 16px 44px;text-align:center}
+.hero-inner{max-width:960px;margin:0 auto}
+.badge{display:inline-flex;align-items:center;gap:7px;padding:5px 14px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--green-dim);color:var(--green-text);border:1px solid var(--green-muted);margin-bottom:18px}
+.badge-dot{width:6px;height:6px;background:#7ec84a;border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1{font-size:clamp(26px,5vw,40px);font-weight:800;letter-spacing:-.5px;margin-bottom:10px;line-height:1.15}
+.hero p{font-size:15px;color:var(--fg3);max-width:520px;margin:0 auto 22px}
+.trust-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.trust-badge{display:flex;align-items:center;gap:7px;padding:8px 14px;border-radius:var(--radius-sm);background:var(--bg3);border:1px solid var(--border);font-size:13px;color:var(--fg3)}
+.trust-badge span{color:var(--green-text)}
+
+/* ---- PAYMENT BANNER ---- */
+.pay-banner{background:var(--bg2);border-bottom:1px solid var(--border);padding:16px}
+.pay-banner-inner{max-width:960px;margin:0 auto}
+.pay-banner-label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--fg4);text-align:center;margin-bottom:12px;font-weight:600}
+.pay-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(min-width:600px){.pay-grid{grid-template-columns:repeat(4,1fr)}}
+.pay-card{display:flex;align-items:center;gap:10px;padding:12px;border-radius:var(--radius);background:var(--bg3);border:1px solid var(--border)}
+.pay-icon{font-size:22px;flex-shrink:0}
+.pay-name{font-size:13px;font-weight:600;color:var(--fg)}
+.pay-desc{font-size:11px;color:var(--fg3);margin-top:1px}
+
+/* ---- MAIN ---- */
+.main{max-width:960px;margin:0 auto;padding:28px 16px 48px;display:flex;flex-direction:column;gap:36px}
+
+/* ---- SECTION HEADER ---- */
+.sec-head{margin-bottom:4px}
+.sec-title{font-size:19px;font-weight:700;letter-spacing:-.2px}
+.sec-sub{font-size:13px;color:var(--fg3);margin-top:3px}
+
+/* ---- TIPS ACCORDION ---- */
+.tips-list{display:flex;flex-direction:column;gap:8px}
+.tip-section{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.tip-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;padding:13px 16px;background:var(--bg3);font-size:13px;font-weight:600;color:var(--fg);text-align:left;gap:8px}
+.tip-toggle:hover{background:var(--bg4)}
+.tip-toggle-left{display:flex;align-items:center;gap:8px}
+.tip-arrow{font-size:10px;color:var(--green-text);transition:transform .2s;flex-shrink:0}
+.tip-arrow.open{transform:rotate(180deg)}
+.tip-items{display:none;background:var(--bg2)}
+.tip-items.open{display:block}
+.tip-item-btn{width:100%;display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-top:1px solid var(--border);background:transparent;font-size:13px;color:var(--fg2);text-align:left;gap:8px}
+.tip-item-btn:hover{background:var(--bg3)}
+.tip-num{width:20px;height:20px;border-radius:50%;background:var(--green-dim);color:var(--green-text);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tip-body{display:none;padding:0 16px 14px 44px;font-size:12px;color:var(--fg3);line-height:1.6;border-top:1px solid var(--border);background:var(--bg)}
+.tip-body.open{display:block}
+
+/* ---- CATEGORY ---- */
+.cat-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.cat-name{font-size:15px;font-weight:700;color:var(--green-text)}
+.cat-divider{flex:1;height:1px;background:var(--border)}
+.items-grid{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:580px){.items-grid{grid-template-columns:1fr 1fr}}
+
+/* ---- PRODUCT CARD ---- */
+.item-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:14px;display:flex;flex-direction:column;gap:10px;transition:border-color .15s}
+.item-card.in-cart{background:#1a2610;border-color:var(--green2)}
+.item-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.item-name{font-size:14px;font-weight:600;line-height:1.3}
+.item-desc{font-size:11px;color:var(--fg3);margin-top:3px;line-height:1.4}
+.item-price{font-size:14px;font-weight:700;color:var(--green-text);white-space:nowrap;flex-shrink:0}
+
+/* Size selector */
+.size-selector{display:flex;flex-wrap:wrap;gap:5px}
+.size-btn{padding:4px 9px;border-radius:6px;font-size:11px;font-weight:600;background:var(--bg4);border:1px solid var(--border);color:var(--fg3);cursor:pointer;transition:all .12s;white-space:nowrap}
+.size-btn:hover{border-color:var(--green2);color:var(--fg)}
+.size-btn.active{background:var(--green3);border-color:var(--green2);color:#fff}
+.size-price-tag{font-size:11px;color:var(--green-text);font-weight:700;margin-top:2px}
+
+/* Qty controls */
+.qty-row{display:flex;align-items:center;gap:8px;margin-top:2px}
+.qty-btn{width:28px;height:28px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;transition:opacity .12s}
+.qty-btn:hover{opacity:.75}
+.qty-minus{background:var(--bg4);color:var(--fg2)}
+.qty-plus{background:var(--green3);color:#fff}
+.qty-num{min-width:24px;text-align:center;font-weight:700;font-size:14px}
+.qty-badge{font-size:11px;padding:2px 8px;border-radius:99px;background:var(--green-dim);color:var(--green-text);font-weight:600}
+
+/* ---- ORDER FORM ---- */
+.form-grid{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:540px){.form-grid-2{grid-template-columns:1fr 1fr}}
+.field label{display:block;font-size:13px;font-weight:500;color:var(--fg2);margin-bottom:6px}
+.field label span{font-weight:400;color:var(--fg4)}
+.field input,.field select,.field textarea{width:100%;padding:12px 14px;border-radius:var(--radius);background:var(--bg3);border:1px solid var(--border);color:var(--fg);font-size:14px;outline:none;transition:border-color .15s,box-shadow .15s;-webkit-appearance:none}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--green2);box-shadow:0 0 0 3px rgba(90,158,48,.2)}
+.field input.err,.field select.err{border-color:var(--red)}
+.field .err-msg{font-size:11px;color:#f87171;margin-top:4px}
+.field textarea{resize:vertical;min-height:80px}
+select option{background:var(--bg3);color:var(--fg)}
+
+/* Payment selector */
+.pay-options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pay-option{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:var(--radius);background:var(--bg3);border:2px solid var(--border);cursor:pointer;transition:all .15s;text-align:left}
+.pay-option:hover{border-color:var(--border2)}
+.pay-option.selected{background:var(--bg4)}
+.pay-opt-icon{font-size:20px;flex-shrink:0}
+.pay-opt-name{font-size:13px;font-weight:600}
+.pay-opt-desc{font-size:11px;color:var(--fg3);margin-top:1px}
+.pay-opt-badge{font-size:10px;padding:2px 6px;border-radius:99px;font-weight:700;margin-top:3px;display:inline-block}
+.pay-radio{width:14px;height:14px;border-radius:50%;border:2px solid var(--border2);flex-shrink:0;margin-left:auto;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.pay-radio.checked{border-color:var(--green)}
+.pay-radio.checked::after{content:'';width:6px;height:6px;border-radius:50%;background:var(--green)}
+.pay-hint{margin-top:8px;padding:10px 12px;border-radius:var(--radius-sm);background:var(--amber-dim);border:1px solid var(--amber-border);font-size:12px;color:#fbbf24;display:none}
+.pay-hint.show{display:block}
+
+/* Cart summary */
+.cart-summary{background:var(--bg3);border:1px solid var(--green-muted);border-radius:var(--radius);padding:14px}
+.cart-title{font-size:13px;font-weight:700;color:var(--green-text);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.cart-row{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:4px 0}
+.cart-row-name{color:var(--fg2)}
+.cart-row-price{color:var(--green-text);font-weight:600}
+.cart-empty{font-size:13px;color:var(--fg4);font-style:italic}
+
+/* Insurance */
+.insurance-card{display:flex;align-items:flex-start;gap:12px;padding:14px;border-radius:var(--radius);border:1px solid var(--border);cursor:pointer;transition:all .15s;background:var(--bg3)}
+.insurance-card.checked{background:#1a2610;border-color:var(--green2)}
+.ins-checkbox{width:20px;height:20px;border-radius:5px;border:2px solid var(--border2);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.ins-checkbox.checked{background:var(--green);border-color:var(--green)}
+.ins-tick{display:none;color:#fff;font-size:12px;font-weight:700}
+.ins-checkbox.checked .ins-tick{display:block}
+.ins-title{font-size:14px;font-weight:600}
+.ins-desc{font-size:12px;color:var(--fg3);margin-top:3px}
+
+/* Disclaimer */
+.disclaimer{padding:13px 14px;border-radius:var(--radius-sm);background:var(--bg2);border:1px solid var(--border);font-size:12px;color:var(--fg4);line-height:1.5}
+
+/* Submit */
+.submit-btn{width:100%;padding:16px;border-radius:var(--radius);background:var(--green2);color:#fff;font-size:15px;font-weight:700;letter-spacing:.01em;transition:opacity .15s;cursor:pointer;border:none}
+.submit-btn:hover{opacity:.88}
+.submit-btn:active{opacity:.75}
+
+/* ---- FOOTER ---- */
+.footer{background:var(--bg2);border-top:1px solid var(--border);padding:28px 16px;text-align:center}
+.footer-links{display:flex;justify-content:center;gap:20px;margin-bottom:12px}
+.footer-link{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--fg3);transition:opacity .15s}
+.footer-link:hover{opacity:.75}
+.footer-copy{font-size:12px;color:var(--fg4)}
+
+/* ---- MODAL ---- */
+.modal-overlay{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.9);display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;pointer-events:none;transition:opacity .2s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--bg3);border:1px solid var(--green2);border-radius:var(--radius-lg);padding:30px 24px;max-width:460px;width:100%;max-height:90vh;overflow-y:auto;text-align:center}
+.modal-icon{width:64px;height:64px;border-radius:50%;background:var(--green-dim);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:28px}
+.modal-title{font-size:20px;font-weight:800;margin-bottom:6px}
+.modal-sub{font-size:13px;color:var(--fg3);margin-bottom:20px}
+.order-ref-box{background:var(--bg4);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;margin-bottom:14px}
+.order-ref-label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--fg4);margin-bottom:4px}
+.order-ref-num{font-family:monospace;font-size:24px;font-weight:800;color:var(--green-text);letter-spacing:.05em}
+.order-ref-hint{font-size:11px;color:var(--fg4);margin-top:4px}
+.modal-payment{display:flex;align-items:center;gap:10px;padding:12px;border-radius:var(--radius-sm);background:var(--bg4);border:1px solid var(--border);margin-bottom:14px;text-align:left}
+.modal-payment-icon{font-size:20px;flex-shrink:0}
+.modal-payment-name{font-size:13px;font-weight:600}
+.modal-payment-hint{font-size:11px;color:var(--fg3);margin-top:1px}
+.modal-items{background:var(--bg4);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;margin-bottom:18px;text-align:left}
+.modal-items-label{font-size:11px;font-weight:600;color:var(--fg3);margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em}
+.modal-item-row{display:flex;justify-content:space-between;font-size:12px;padding:3px 0}
+.modal-item-name{color:var(--fg2)}
+.modal-item-price{color:var(--green-text);font-weight:600}
+.modal-item-divider{border:none;border-top:1px solid var(--border);margin:8px 0}
+.tg-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:16px;border-radius:var(--radius);background:#229ed9;color:#fff;font-size:15px;font-weight:700;text-decoration:none;transition:opacity .15s;margin-bottom:10px}
+.tg-btn:hover{opacity:.88}
+.tg-icon{font-size:20px}
+.modal-reset{font-size:13px;color:var(--fg4);cursor:pointer;background:none;border:none;padding:4px;transition:opacity .15s}
+.modal-reset:hover{opacity:.7}
+
+/* Utility */
+.hidden{display:none}
+.text-green{color:var(--green-text)}
+.text-muted{color:var(--fg3)}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">🌿</div>
+      <div>
+        <div class="logo-name">Dwarf Plug</div>
+        <div class="logo-sub">Discreet Worldwide Delivery</div>
+      </div>
+    </div>
+    <div class="header-links">
+      <a href="https://www.instagram.com/dwarf_plug" target="_blank" rel="noopener" class="header-link hl-ig">
+        <span>📷</span><span class="hl-label">Instagram</span>
+      </a>
+      <a href="https://t.me/dwarfplugshop" target="_blank" rel="noopener" class="header-link hl-tg">
+        <span>✈️</span><span class="hl-label">Telegram</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="badge">
+      <span class="badge-dot"></span>
+      Accepting Orders Worldwide
+    </div>
+    <h1>Premium Quality,<br/>Delivered Discreetly</h1>
+    <p>Browse our catalog, fill out the form, and our team handles the rest. Every order ships odor-proof, vacuum-sealed, plain packaging.</p>
+    <div class="trust-badges">
+      <div class="trust-badge"><span>🚚</span> Worldwide Shipping</div>
+      <div class="trust-badge"><span>🔒</span> 100% Discreet</div>
+      <div class="trust-badge"><span>🛡️</span> Insured Delivery</div>
+      <div class="trust-badge"><span>✅</span> Premium Quality</div>
+    </div>
+  </div>
+</section>
+
+<!-- PAYMENT METHODS BANNER -->
+<div class="pay-banner">
+  <div class="pay-banner-inner">
+    <div class="pay-banner-label">Accepted Payment Methods</div>
+    <div class="pay-grid">
+      <div class="pay-card">
+        <div class="pay-icon" style="color:var(--btc)">₿</div>
+        <div><div class="pay-name">Bitcoin (BTC)</div><div class="pay-desc">Recommended for privacy</div></div>
+      </div>
+      <div class="pay-card">
+        <div class="pay-icon" style="color:var(--gift)">🎁</div>
+        <div><div class="pay-name">Gift Cards</div><div class="pay-desc">Amazon, Steam, Google Play, iTunes</div></div>
+      </div>
+      <div class="pay-card">
+        <div class="pay-icon" style="color:var(--cashapp)">📱</div>
+        <div><div class="pay-name">Cash App</div><div class="pay-desc">$cashtag payment</div></div>
+      </div>
+      <div class="pay-card">
+        <div class="pay-icon" style="color:var(--wu)">🏦</div>
+        <div><div class="pay-name">Western Union</div><div class="pay-desc">Bank transfer / cash pickup</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- SECURITY TIPS -->
+  <section>
+    <div class="sec-head">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+        <span style="font-size:16px">⚠️</span>
+        <span class="sec-title">Payment Security Tips</span>
+        <span style="font-size:11px;padding:3px 8px;border-radius:99px;background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-border);font-weight:600">Read before paying</span>
+      </div>
+    </div>
+    <div class="tips-list">
+      <div class="tip-section">
+        <button class="tip-toggle" onclick="toggleTipSection(this)">
+          <span class="tip-toggle-left"><span style="color:var(--btc)">₿</span> Crypto (Bitcoin) — How to stay anonymous</span>
+          <span class="tip-arrow">▼</span>
+        </button>
+        <div class="tip-items">
+          <div class="tip-item-btn" onclick="toggleTip(this)">
+            <span style="display:flex;align-items:center;gap:8px"><span class="tip-num">1</span>Use a fresh wallet address every order</span>
+            <span class="tip-arrow">▼</span>
+          </div>
+          <div class="tip-body">Never reuse a Bitcoin address across orders. Generate a new receiving address each time — this breaks the transaction chain so no one can link your purchases.</div>
+          <div class="tip-item-btn" onclick="toggleTip(this)">
+            <span style="display:flex;align-items:center;gap:8px"><span class="tip-num">2</span>Don't buy BTC from a KYC exchange</span>
+            <span class="tip-arrow">▼</span>
+          </div>
+          <div class="tip-body">Exchanges like Coinbase or Binance tie your identity to your wallet. Instead use a Bitcoin ATM with cash (no ID under certain limits) or peer-to-peer platforms like Bisq that require no KYC.</div>
+          <div class="tip-item-btn" onclick="toggleTip(this)">
+            <span style="display:flex;align-items:center;gap:8px"><span class="tip-num">3</span>Consider Monero (XMR) for full privacy</span>
+            <span class="tip-arrow">▼</span>
+          </div>
+          <div class="tip-body">Bitcoin transactions are public. Monero hides sender, receiver and amount by default. Ask us about XMR — we accept it.</div>
+          <div class="tip-item-btn" onclick="toggleTip(this)">
+            <span style="display:flex;align-items:center;gap:8px"><span class="tip-num">4</span>Use a Bitcoin mixer before sending</span>
+            <span class="tip-arrow">▼</span>
+          </div>
+          <div class="tip-body">If your BTC is tied to your identity, run it through a mixer (e.g., Wasabi Wallet's CoinJoin) before sending to break the trace.</div>
+          <div class="tip-item-btn" onclick="toggleTip(this)">
+            <span style="display:flex;align-items:center;gap:8px"><span class="tip-num">5</span>Use Tor or a VPN when transacting</span>
+            <span class="tip-arrow">▼</span>
+          </div>
+          <div class="tip-body">Your IP can be logged when broadcasting a Bitcoin transaction. Use Tor Browser or a trusted no-log VPN before accessing your wallet or this site.</div>
+        </div>
+      </div>
+      <div class="tip-section">
+        <button class="tip-toggle" onclick="toggleTipSection(this)">
+          <span class="tip-toggle-left"><span style="color:var(--gift)">🎁</span> Gift Cards — How to buy &amp; send safely</span>
+          <span class="tip-arrow">▼</span>
+        </button>
+        <div class="tip-items">
+          <div class="tip-item-btn" onclick="toggleTip(this)">
+            <span style="display:flex;align-items:center;gap:8px"><span class="tip-num">1</span>Buy with physical cash at a store</span>
+            <span class="tip-arrow">▼</span>
+          </div>
+          <div class="tip-body">Walk into Walmart, CVS, Walgreens, or any convenience store and buy Amazon, Google Play, Steam, or iTunes gift cards with cash. Zero digital trace.</div>
+          <div class="tip-item-btn" onclick="toggleTip(this)">
+            <span style="display:flex;align-items:center;gap:8px"><span class="tip-num">2</span>Accepted cards and minimum amounts</span>
+            <span class="tip-arrow">▼</span>
+          </div>
+          <div class="tip-body">We accept: Amazon, Google Play, Steam Wallet, iTunes/Apple, and Visa/Mastercard prepaid gift cards. Minimum $50 per card. Send code + PIN via Telegram — never by email.</div>
+          <div class="tip-item-btn" onclick="toggleTip(this)">
+            <span style="display:flex;align-items:center;gap:8px"><span class="tip-num">3</span>Don't buy online with a linked card</span>
+            <span class="tip-arrow">▼</span>
+          </div>
+          <div class="tip-body">Buying gift cards online with your debit or credit card creates a paper trail. Cash-purchased physical cards are untraceable.</div>
+          <div class="tip-item-btn" onclick="toggleTip(this)">
+            <span style="display:flex;align-items:center;gap:8px"><span class="tip-num">4</span>Activate on mobile data, not home WiFi</span>
+            <span class="tip-arrow">▼</span>
+          </div>
+          <div class="tip-body">If a card requires online activation, use mobile data or a coffee shop WiFi — not your home network, which has a fixed IP registered to your name.</div>
+          <div class="tip-item-btn" onclick="toggleTip(this)">
+            <span style="display:flex;align-items:center;gap:8px"><span class="tip-num">5</span>Photograph and send via Telegram only</span>
+            <span class="tip-arrow">▼</span>
+          </div>
+          <div class="tip-body">Scratch the code, photograph it, and send the photo via Telegram. Never type the code into any public website — some sites log entered codes before submission.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATALOG -->
+  <section id="catalog">
+    <div class="sec-head">
+      <div class="sec-title">Our Catalog</div>
+      <div class="sec-sub">Select items and quantities. Use size buttons on flower to pick your weight.</div>
+    </div>
+    <div id="catalog-content"></div>
+  </section>
+
+  <!-- ORDER FORM -->
+  <section id="order-section">
+    <div class="sec-head">
+      <div class="sec-title">Place Your Order</div>
+      <div class="sec-sub">Fill in your details. Payment and shipping are finalised on Telegram.</div>
+    </div>
+    <form id="order-form" onsubmit="submitOrder(event)" novalidate>
+      <div class="form-grid" style="gap:16px">
+
+        <!-- Name -->
+        <div class="field" id="field-name">
+          <label>Full Name <span>*</span></label>
+          <input type="text" id="inp-name" placeholder="Your name" autocomplete="name"/>
+          <div class="err-msg hidden" id="err-name">Name is required</div>
+        </div>
+
+        <!-- Contact -->
+        <div class="field" id="field-contact">
+          <label>Contact Info <span>* (Telegram handle, email, or phone)</span></label>
+          <input type="text" id="inp-contact" placeholder="@yourtelegram, email@example.com, or phone" autocomplete="off"/>
+          <div class="err-msg hidden" id="err-contact">Contact info is required</div>
+        </div>
+
+        <!-- Country + State -->
+        <div class="form-grid form-grid-2" style="display:grid;gap:12px">
+          <div class="field" id="field-country">
+            <label>Country <span>*</span></label>
+            <select id="inp-country" onchange="onCountryChange()">
+              <option value="">Select country...</option>
+              <option value="USA">United States</option>
+              <option value="Australia">Australia</option>
+              <option value="Canada">Canada</option>
+            </select>
+            <div class="err-msg hidden" id="err-country">Select a country</div>
+          </div>
+          <div class="field" id="field-state">
+            <label id="state-label">State <span>*</span></label>
+            <select id="inp-state" disabled>
+              <option value="">Select country first...</option>
+            </select>
+            <div class="err-msg hidden" id="err-state">Select a state / province</div>
+          </div>
+        </div>
+
+        <!-- Payment Method -->
+        <div class="field" id="field-payment">
+          <label>Preferred Payment Method <span>*</span></label>
+          <div class="pay-options">
+            <button type="button" class="pay-option" data-pay="bitcoin" onclick="selectPayment(this)" style="border-color:transparent">
+              <span class="pay-opt-icon" style="color:var(--btc)">₿</span>
+              <div>
+                <div class="pay-opt-name">Bitcoin (BTC)</div>
+                <div class="pay-opt-desc">Crypto wallet</div>
+                <span class="pay-opt-badge" style="background:#2a1a06;color:var(--btc);border:1px solid #4a3010">Most Private</span>
+              </div>
+              <div class="pay-radio" id="radio-bitcoin"></div>
+            </button>
+            <button type="button" class="pay-option" data-pay="giftcard" onclick="selectPayment(this)" style="border-color:transparent">
+              <span class="pay-opt-icon" style="color:var(--gift)">🎁</span>
+              <div>
+                <div class="pay-opt-name">Gift Cards</div>
+                <div class="pay-opt-desc">Amazon, Steam, iTunes</div>
+                <span class="pay-opt-badge" style="background:#1a0a2a;color:var(--gift);border:1px solid #3a1560">Anonymous</span>
+              </div>
+              <div class="pay-radio" id="radio-giftcard"></div>
+            </button>
+            <button type="button" class="pay-option" data-pay="cashapp" onclick="selectPayment(this)" style="border-color:transparent">
+              <span class="pay-opt-icon" style="color:var(--cashapp)">📱</span>
+              <div>
+                <div class="pay-opt-name">Cash App</div>
+                <div class="pay-opt-desc">$cashtag payment</div>
+              </div>
+              <div class="pay-radio" id="radio-cashapp"></div>
+            </button>
+            <button type="button" class="pay-option" data-pay="westernunion" onclick="selectPayment(this)" style="border-color:transparent">
+              <span class="pay-opt-icon" style="color:var(--wu)">🏦</span>
+              <div>
+                <div class="pay-opt-name">Western Union</div>
+                <div class="pay-opt-desc">Cash / bank transfer</div>
+              </div>
+              <div class="pay-radio" id="radio-westernunion"></div>
+            </button>
+          </div>
+          <div class="err-msg hidden" id="err-payment">Select a payment method</div>
+          <div class="pay-hint" id="pay-hint"></div>
+        </div>
+
+        <!-- Cart Summary -->
+        <div class="field">
+          <label>Your Selection</label>
+          <div class="cart-summary" id="cart-summary">
+            <div class="cart-empty" id="cart-empty">No items selected yet — browse the catalog above.</div>
+            <div id="cart-rows"></div>
+          </div>
+          <div class="err-msg hidden" id="err-cart">Please select at least one item</div>
+        </div>
+
+        <!-- Insurance -->
+        <div class="field">
+          <label>Shipping Insurance <span>(optional)</span></label>
+          <div class="insurance-card" id="insurance-card" onclick="toggleInsurance()">
+            <div class="ins-checkbox" id="ins-check">
+              <span class="ins-tick">✓</span>
+            </div>
+            <div>
+              <div class="ins-title">🛡️ Add Shipping Insurance — $20</div>
+              <div class="ins-desc">Full replacement if your package is lost, seized, or damaged. We reship at no cost.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notes -->
+        <div class="field">
+          <label>Special Instructions <span>(optional)</span></label>
+          <textarea id="inp-notes" placeholder="Strain preferences, packaging requests, quantities in different sizes, or any other notes..."></textarea>
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="disclaimer">
+          🔒 By submitting this form, you confirm you are 21+ years of age and placing an order for personal use in accordance with your local regulations. All orders are handled with full discretion.
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="submit-btn">Submit Order Request</button>
+      </div>
+    </form>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-links">
+    <a href="https://www.instagram.com/dwarf_plug" target="_blank" rel="noopener" class="footer-link">
+      <span>📷</span> @dwarf_plug
+    </a>
+    <a href="https://t.me/dwarfplugshop" target="_blank" rel="noopener" class="footer-link">
+      <span>✈️</span> @dwarfplugshop
+    </a>
+  </div>
+  <div class="footer-copy">© <span id="yr"></span> Dwarf Plug. Discreet delivery worldwide.</div>
+</footer>
+
+<!-- CONFIRMATION MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-icon">✅</div>
+    <div class="modal-title">Order Received!</div>
+    <div class="modal-sub">Head to Telegram to confirm your order and arrange payment. Share your reference number.</div>
+    <div class="order-ref-box">
+      <div class="order-ref-label">Order Reference</div>
+      <div class="order-ref-num" id="modal-ref">DP-000000</div>
+      <div class="order-ref-hint">Mention this when you message us</div>
+    </div>
+    <div class="modal-payment" id="modal-payment"></div>
+    <div class="modal-items" id="modal-items"></div>
+    <a class="tg-btn" id="tg-checkout-btn" href="#" target="_blank" rel="noopener">
+      <span class="tg-icon">✈️</span> Complete Order on Telegram
+    </a>
+    <button class="modal-reset" onclick="resetOrder()">Place another order</button>
+  </div>
+</div>
+
+<script>
+// =====================================================================
+// DATA
+// =====================================================================
+const COUNTRIES = {
+  USA: ["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"],
+  Australia: ["Australian Capital Territory","New South Wales","Northern Territory","Queensland","South Australia","Tasmania","Victoria","Western Australia"],
+  Canada: ["Alberta","British Columbia","Manitoba","New Brunswick","Newfoundland and Labrador","Northwest Territories","Nova Scotia","Nunavut","Ontario","Prince Edward Island","Quebec","Saskatchewan","Yukon"]
+};
+
+const STATE_LABELS = { USA: "State", Australia: "Territory", Canada: "Province / Territory" };
+
+// Flower sizes: [label, grams, oz_label, multiplier_off_per_gram]
+// pricePerGram is the base; bulk discounts applied per tier
+const FLOWER_SIZES = [
+  { label:"1g",     grams:1,   oz:"",        disc:0    },
+  { label:"3.5g",   grams:3.5, oz:"⅛ oz",    disc:0.05 },
+  { label:"7g",     grams:7,   oz:"¼ oz",    disc:0.10 },
+  { label:"14g",    grams:14,  oz:"½ oz",    disc:0.15 },
+  { label:"28g",    grams:28,  oz:"1 oz",    disc:0.20 },
+  { label:"56g",    grams:56,  oz:"2 oz",    disc:0.28 },
+  { label:"112g",   grams:112, oz:"¼ lb",    disc:0.35 },
+  { label:"224g",   grams:224, oz:"½ lb",    disc:0.42 },
+  { label:"448g",   grams:448, oz:"1 lb",    disc:0.50 },
+];
+
+function flowerPrice(ppg, grams, disc) {
+  return Math.round(ppg * grams * (1 - disc));
+}
+
+const MENU = [
+  {
+    cat: "Premium Flower", emoji: "🌿", type: "flower",
+    items: [
+      { name:"Blue Dream (AAA+)",           desc:"Sativa-dominant hybrid — uplifting, creative, euphoric",   ppg:16 },
+      { name:"OG Kush (AAAA)",              desc:"Classic indica — deep relaxation, pine & earth notes",     ppg:17 },
+      { name:"Girl Scout Cookies (AAAA)",   desc:"Balanced hybrid — sweet, earthy, full-body high",          ppg:18 },
+      { name:"Gorilla Glue #4 (AAAA)",      desc:"Heavy indica — powerful, long-lasting, couch-lock",        ppg:18 },
+      { name:"Sour Diesel (AAA+)",          desc:"Sativa — energizing, diesel aroma, cerebral rush",         ppg:17 },
+      { name:"Purple Punch (AAAA)",         desc:"Indica — grape candy, sedating, great for sleep",          ppg:18 },
+      { name:"Wedding Cake (AAAA)",         desc:"Hybrid — vanilla frosting taste, relaxing and euphoric",   ppg:18 },
+      { name:"Zkittlez (AAAA)",             desc:"Indica-dominant — fruity rainbow candy, happy & calm",     ppg:19 },
+    ]
+  },
+  {
+    cat: "Edibles", emoji: "🍬", type: "standard",
+    items: [
+      { name:"THC Gummies 500mg",      desc:"20 pieces × 25mg each — assorted fruit flavors",              price:"$90/pack"    },
+      { name:"THC Gummies 1000mg",     desc:"20 pieces × 50mg each — extra-strength",                      price:"$150/pack"   },
+      { name:"Chocolate Bar 500mg",    desc:"10 squares × 50mg each — dark chocolate",                     price:"$100/bar"    },
+      { name:"Chocolate Bar 1000mg",   desc:"10 squares × 100mg each — milk chocolate",                    price:"$170/bar"    },
+      { name:"THC Capsules (300mg)",   desc:"30 gel caps × 10mg each — tasteless, precise dosing",         price:"$110/bottle" },
+      { name:"Rice Krispies 500mg",    desc:"10 pieces × 50mg each — classic treat",                       price:"$80/pack"    },
+    ]
+  },
+  {
+    cat: "Concentrates", emoji: "💎", type: "standard",
+    items: [
+      { name:"Live Resin",             desc:"Full-spectrum extract — terpene-rich, fresh-frozen | 1g",     price:"$140/g"      },
+      { name:"Shatter",                desc:"Glass-like BHO — 80%+ THC, potent clean burn | 1g",          price:"$120/g"      },
+      { name:"Wax / Badder",           desc:"Creamy consistency — easy to work, flavorful | 1g",           price:"$130/g"      },
+      { name:"Distillate Syringe",     desc:"90%+ THC pure oil — versatile use | 1g (1ml) syringe",       price:"$150/g"      },
+      { name:"Hand-Pressed Hash",      desc:"Traditional — smooth classic experience | 3.5g unit",         price:"$160/3.5g"   },
+    ]
+  },
+  {
+    cat: "Pre-Rolls", emoji: "🚬", type: "standard",
+    items: [
+      { name:"Infused Pre-Roll",       desc:"1g flower + distillate-dipped + kief-coated | single",        price:"$40/each"    },
+      { name:"Blunt Pack",             desc:"5 × 1g natural leaf blunts — assorted strains | 5g total",    price:"$120/pack"   },
+      { name:"Joint Pack",             desc:"10 × 0.5g joints — sativa/indica mix | 5g total",             price:"$110/pack"   },
+    ]
+  },
+  {
+    cat: "Vapes", emoji: "💨", type: "standard",
+    items: [
+      { name:"Vape Cart — Sativa (1g)",  desc:"High-terpene distillate — Sour Diesel profile | 510-thread",          price:"$110/cart"  },
+      { name:"Vape Cart — Indica (1g)",  desc:"High-terpene distillate — Granddaddy Purple profile | 510-thread",    price:"$110/cart"  },
+      { name:"Vape Cart — Hybrid (1g)",  desc:"High-terpene distillate — Gelato profile | 510-thread",               price:"$110/cart"  },
+      { name:"Disposable Vape (1g)",     desc:"All-in-one, rechargeable — no cartridge needed | 1g (1ml)",           price:"$130/pen"   },
+    ]
+  }
+];
+
+// =====================================================================
+// STATE
+// =====================================================================
+// cart: { "itemName": { qty, size (for flower), sizeLabel, price, priceNum } }
+const cart = {};
+let selectedPayment = "";
+let insured = false;
+
+// =====================================================================
+// RENDER CATALOG
+// =====================================================================
+function renderCatalog() {
+  const el = document.getElementById("catalog-content");
+  el.innerHTML = MENU.map((cat, ci) => `
+    <div style="margin-bottom:28px">
+      <div class="cat-header">
+        <span style="font-size:20px">${cat.emoji}</span>
+        <span class="cat-name">${cat.cat}</span>
+        <div class="cat-divider"></div>
+      </div>
+      <div class="items-grid">
+        ${cat.items.map((item, ii) => renderItem(item, cat.type, ci, ii)).join("")}
+      </div>
+    </div>
+  `).join("");
+}
+
+function renderItem(item, type, ci, ii) {
+  const key = item.name;
+  const inCart = cart[key] && cart[key].qty > 0;
+  if (type === "flower") {
+    const selSize = (cart[key] && cart[key].sizeIdx != null) ? cart[key].sizeIdx : 4; // default 28g
+    const price = flowerPrice(item.ppg, FLOWER_SIZES[selSize].grams, FLOWER_SIZES[selSize].disc);
+    const sizeLabel = FLOWER_SIZES[selSize].label + (FLOWER_SIZES[selSize].oz ? " / " + FLOWER_SIZES[selSize].oz : "");
+    return `
+      <div class="item-card ${inCart ? "in-cart" : ""}" id="card-${ci}-${ii}">
+        <div class="item-top">
+          <div>
+            <div class="item-name">${item.name}</div>
+            <div class="item-desc">${item.desc}</div>
+          </div>
+          <div class="item-price" id="price-${ci}-${ii}">$${price}</div>
+        </div>
+        <div class="size-selector" id="sizes-${ci}-${ii}">
+          ${FLOWER_SIZES.map((s, si) => {
+            const p = flowerPrice(item.ppg, s.grams, s.disc);
+            const lbl = s.label + (s.oz ? "<br/><span style='font-size:9px;opacity:.75'>"+s.oz+"</span>" : "");
+            return `<button class="size-btn ${si === selSize ? "active" : ""}" onclick="selectSize(${ci},${ii},'${item.name}',${si},${item.ppg})" title="$${p}">${lbl}</button>`;
+          }).join("")}
+        </div>
+        <div class="size-price-tag" id="sizetag-${ci}-${ii}">$${price} for ${sizeLabel}</div>
+        <div class="qty-row">
+          <button class="qty-btn qty-minus" onclick="changeQty('${item.name}',${ci},${ii},-1,'flower',${item.ppg})">−</button>
+          <span class="qty-num" id="qty-${ci}-${ii}">${cart[key] ? cart[key].qty : 0}</span>
+          <button class="qty-btn qty-plus" onclick="changeQty('${item.name}',${ci},${ii},1,'flower',${item.ppg})">+</button>
+          ${inCart ? `<span class="qty-badge">× ${cart[key].qty} in order</span>` : ""}
+        </div>
+      </div>`;
+  } else {
+    return `
+      <div class="item-card ${inCart ? "in-cart" : ""}" id="card-${ci}-${ii}">
+        <div class="item-top">
+          <div>
+            <div class="item-name">${item.name}</div>
+            <div class="item-desc">${item.desc}</div>
+          </div>
+          <div class="item-price">${item.price}</div>
+        </div>
+        <div class="qty-row">
+          <button class="qty-btn qty-minus" onclick="changeQty('${item.name}',${ci},${ii},-1,'standard')">−</button>
+          <span class="qty-num" id="qty-${ci}-${ii}">${cart[key] ? cart[key].qty : 0}</span>
+          <button class="qty-btn qty-plus" onclick="changeQty('${item.name}',${ci},${ii},1,'standard','${item.price}')">+</button>
+          ${inCart ? `<span class="qty-badge">× ${cart[key].qty} in order</span>` : ""}
+        </div>
+      </div>`;
+  }
+}
+
+function selectSize(ci, ii, name, sizeIdx, ppg) {
+  if (!cart[name]) cart[name] = { qty:0, sizeIdx:sizeIdx };
+  cart[name].sizeIdx = sizeIdx;
+  const s = FLOWER_SIZES[sizeIdx];
+  const price = flowerPrice(ppg, s.grams, s.disc);
+  cart[name].price = "$" + price;
+  cart[name].sizeLabel = s.label + (s.oz ? " / " + s.oz : "");
+  // Update UI
+  const sizeBtns = document.querySelectorAll(`#sizes-${ci}-${ii} .size-btn`);
+  sizeBtns.forEach((b,i) => b.classList.toggle("active", i === sizeIdx));
+  document.getElementById(`price-${ci}-${ii}`).textContent = "$" + price;
+  document.getElementById(`sizetag-${ci}-${ii}`).textContent = "$" + price + " for " + cart[name].sizeLabel;
+  updateCartSummary();
+}
+
+function changeQty(name, ci, ii, delta, type, ppgOrPrice) {
+  if (!cart[name]) {
+    if (type === "flower") {
+      const defIdx = 4;
+      const s = FLOWER_SIZES[defIdx];
+      cart[name] = { qty:0, sizeIdx:defIdx, sizeLabel: s.label+" / "+s.oz, price:"$"+flowerPrice(ppgOrPrice, s.grams, s.disc) };
+    } else {
+      cart[name] = { qty:0, price: ppgOrPrice || "" };
+    }
+  }
+  cart[name].qty = Math.max(0, (cart[name].qty || 0) + delta);
+  if (cart[name].qty === 0) delete cart[name];
+  // Re-render just that card
+  const cardEl = document.getElementById(`card-${ci}-${ii}`);
+  const catIdx = ci;
+  const itemIdx = ii;
+  const catData = MENU[catIdx];
+  const itemData = catData.items[itemIdx];
+  cardEl.outerHTML = renderItem(itemData, catData.type, catIdx, itemIdx);
+  updateCartSummary();
+}
+
+function updateCartSummary() {
+  const rows = document.getElementById("cart-rows");
+  const empty = document.getElementById("cart-empty");
+  const items = Object.entries(cart);
+  if (items.length === 0) {
+    empty.classList.remove("hidden");
+    rows.innerHTML = "";
+  } else {
+    empty.classList.add("hidden");
+    rows.innerHTML = items.map(([name, data]) => {
+      const sizeInfo = data.sizeLabel ? ` <span style="color:var(--fg4);font-size:11px">(${data.sizeLabel})</span>` : "";
+      return `<div class="cart-row">
+        <span class="cart-row-name">${name}${sizeInfo} × ${data.qty}</span>
+        <span class="cart-row-price">${data.price} ea</span>
+      </div>`;
+    }).join("");
+    if (insured) {
+      rows.innerHTML += `<hr style="border:none;border-top:1px solid var(--border);margin:8px 0"><div class="cart-row"><span class="cart-row-name">🛡️ Shipping Insurance</span><span class="cart-row-price">$20</span></div>`;
+    }
+  }
+}
+
+// =====================================================================
+// COUNTRY / STATE
+// =====================================================================
+function onCountryChange() {
+  const country = document.getElementById("inp-country").value;
+  const stateSelect = document.getElementById("inp-state");
+  const stateLabel = document.getElementById("state-label");
+  stateSelect.innerHTML = "";
+  if (!country) {
+    stateSelect.disabled = true;
+    stateSelect.innerHTML = `<option value="">Select country first...</option>`;
+    stateLabel.innerHTML = `State <span>*</span>`;
+    return;
+  }
+  stateLabel.innerHTML = `${STATE_LABELS[country]} <span>*</span>`;
+  stateSelect.disabled = false;
+  stateSelect.innerHTML = `<option value="">Select ${STATE_LABELS[country]}...</option>` +
+    COUNTRIES[country].map(s => `<option value="${s}">${s}</option>`).join("");
+}
+
+// =====================================================================
+// PAYMENT
+// =====================================================================
+const PAY_HINTS = {
+  bitcoin: "⚠️ Send payment ONLY after confirming the wallet address with us on Telegram. Never send to an address you haven't verified in chat.",
+  giftcard: "⚠️ Buy gift cards with physical cash at a store. Send the code photo via Telegram only — never by email or SMS.",
+  cashapp: "⚠️ We'll send you our $cashtag on Telegram. Only send to the $cashtag we provide — verify before every payment.",
+  westernunion: "⚠️ We'll provide our receiver details on Telegram. Always confirm details directly in chat before sending any transfer."
+};
+const PAY_COLORS = { bitcoin:"var(--btc)", giftcard:"var(--gift)", cashapp:"var(--cashapp)", westernunion:"var(--wu)" };
+const PAY_NAMES = { bitcoin:"Bitcoin (BTC)", giftcard:"Gift Cards", cashapp:"Cash App", westernunion:"Western Union" };
+const PAY_ICONS = { bitcoin:"₿", giftcard:"🎁", cashapp:"📱", westernunion:"🏦" };
+
+function selectPayment(btn) {
+  selectedPayment = btn.dataset.pay;
+  document.querySelectorAll(".pay-option").forEach(b => {
+    const pay = b.dataset.pay;
+    const isSelected = pay === selectedPayment;
+    const color = PAY_COLORS[pay];
+    b.classList.toggle("selected", isSelected);
+    b.style.borderColor = isSelected ? color : "transparent";
+    const radio = document.getElementById("radio-"+pay);
+    radio.classList.toggle("checked", isSelected);
+    if (isSelected) radio.style.borderColor = color;
+    else radio.style.borderColor = "";
+  });
+  const hint = document.getElementById("pay-hint");
+  hint.textContent = PAY_HINTS[selectedPayment];
+  hint.classList.add("show");
+  document.getElementById("err-payment").classList.add("hidden");
+}
+
+// =====================================================================
+// INSURANCE
+// =====================================================================
+function toggleInsurance() {
+  insured = !insured;
+  const card = document.getElementById("insurance-card");
+  const check = document.getElementById("ins-check");
+  card.classList.toggle("checked", insured);
+  check.classList.toggle("checked", insured);
+  updateCartSummary();
+}
+
+// =====================================================================
+// TIPS ACCORDION
+// =====================================================================
+function toggleTipSection(btn) {
+  const items = btn.nextElementSibling;
+  const arrow = btn.querySelector(".tip-arrow");
+  items.classList.toggle("open");
+  arrow.classList.toggle("open");
+}
+function toggleTip(btn) {
+  const body = btn.nextElementSibling;
+  const arrow = btn.querySelector(".tip-arrow");
+  body.classList.toggle("open");
+  arrow.classList.toggle("open");
+}
+
+// =====================================================================
+// VALIDATION & SUBMIT
+// =====================================================================
+function showErr(id, errId) {
+  document.getElementById(id).classList.add("err");
+  document.getElementById(errId).classList.remove("hidden");
+}
+function clearErr(id, errId) {
+  document.getElementById(id) && document.getElementById(id).classList.remove("err");
+  document.getElementById(errId) && document.getElementById(errId).classList.add("hidden");
+}
+
+function submitOrder(e) {
+  e.preventDefault();
+  let valid = true;
+  const name = document.getElementById("inp-name").value.trim();
+  const contact = document.getElementById("inp-contact").value.trim();
+  const country = document.getElementById("inp-country").value;
+  const state = document.getElementById("inp-state").value;
+  const cartItems = Object.entries(cart);
+
+  clearErr("inp-name","err-name");
+  clearErr("inp-contact","err-contact");
+  clearErr("inp-country","err-country");
+  clearErr("inp-state","err-state");
+  clearErr(null,"err-cart");
+  clearErr(null,"err-payment");
+
+  if (!name) { showErr("inp-name","err-name"); valid=false; }
+  if (!contact) { showErr("inp-contact","err-contact"); valid=false; }
+  if (!country) { showErr("inp-country","err-country"); valid=false; }
+  if (!state) { showErr("inp-state","err-state"); valid=false; }
+  if (cartItems.length===0) { document.getElementById("err-cart").classList.remove("hidden"); valid=false; }
+  if (!selectedPayment) { document.getElementById("err-payment").classList.remove("hidden"); valid=false; }
+
+  if (!valid) {
+    // Scroll to first error
+    const firstErr = document.querySelector(".err-msg:not(.hidden)");
+    if (firstErr) firstErr.scrollIntoView({behavior:"smooth", block:"center"});
+    return;
+  }
+
+  const orderId = "DP-" + (Math.floor(100000 + Math.random() * 900000));
+  const notes = document.getElementById("inp-notes").value.trim();
+
+  // Build Telegram message
+  const lines = [
+    "🌿 *NEW ORDER — " + orderId + "*",
+    "",
+    "👤 *Name:* " + name,
+    "📱 *Contact:* " + contact,
+    "🌍 *Location:* " + state + ", " + country,
+    "💳 *Payment:* " + PAY_NAMES[selectedPayment],
+    "",
+    "📦 *ORDER DETAILS:*",
+    ...cartItems.map(([n,d]) => {
+      const sizeInfo = d.sizeLabel ? " (" + d.sizeLabel + ")" : "";
+      return "• " + n + sizeInfo + " × " + d.qty + " — " + d.price + " each";
+    }),
+    "",
+    "🛡️ *Insurance:* " + (insured ? "YES (+$20)" : "No"),
+    notes ? "\n📝 *Notes:* " + notes : "",
+    "",
+    "---",
+    "Sent from DwarfPlug.github.io"
+  ].filter(l => l !== undefined).join("\n");
+
+  const tgUrl = "https://t.me/dwarfplugshop?text=" + encodeURIComponent(lines);
+
+  // Build modal
+  document.getElementById("modal-ref").textContent = orderId;
+  document.getElementById("modal-payment").innerHTML = `
+    <span class="modal-payment-icon" style="color:${PAY_COLORS[selectedPayment]}">${PAY_ICONS[selectedPayment]}</span>
+    <div>
+      <div class="modal-payment-name">Paying with: ${PAY_NAMES[selectedPayment]}</div>
+      <div class="modal-payment-hint">Payment details will be provided on Telegram</div>
+    </div>`;
+  document.getElementById("modal-items").innerHTML = `
+    <div class="modal-items-label">Your Items</div>
+    ${cartItems.map(([n,d]) => {
+      const sizeInfo = d.sizeLabel ? `<span style="color:var(--fg4);font-size:11px"> (${d.sizeLabel})</span>` : "";
+      return `<div class="modal-item-row"><span class="modal-item-name">${n}${sizeInfo} × ${d.qty}</span><span class="modal-item-price">${d.price} ea</span></div>`;
+    }).join("")}
+    ${insured ? `<hr class="modal-item-divider"><div class="modal-item-row"><span class="modal-item-name">🛡️ Shipping Insurance</span><span class="modal-item-price">$20</span></div>` : ""}
+  `;
+  document.getElementById("tg-checkout-btn").href = tgUrl;
+  document.getElementById("modal").classList.add("open");
+}
+
+function resetOrder() {
+  // Clear cart
+  Object.keys(cart).forEach(k => delete cart[k]);
+  insured = false;
+  selectedPayment = "";
+  document.getElementById("order-form").reset();
+  document.getElementById("inp-state").innerHTML = "<option value=''>Select country first...</option>";
+  document.getElementById("inp-state").disabled = true;
+  document.getElementById("pay-hint").classList.remove("show");
+  document.querySelectorAll(".pay-option").forEach(b => {
+    b.classList.remove("selected");
+    b.style.borderColor = "transparent";
+    document.getElementById("radio-"+b.dataset.pay).classList.remove("checked");
+  });
+  updateCartSummary();
+  renderCatalog();
+  document.getElementById("modal").classList.remove("open");
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+// =====================================================================
+// INIT
+// =====================================================================
+document.getElementById("yr").textContent = new Date().getFullYear();
+renderCatalog();
+</script>
+</body>
+</html>
