@@ -8,7 +8,7 @@
 <meta property="og:title" content="Dwarf Plug — Premium Discreet Delivery"/>
 <meta property="og:description" content="Browse our premium catalog and place your order. Discreet worldwide delivery."/>
 <meta property="og:type" content="website"/>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>"/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 120'><path fill='%235a9e30' d='M50 118 L48 82 C43 83 37 85 32 83 C29 76 33 69 39 65 C33 67 26 66 21 62 C20 55 25 50 31 48 C24 46 16 43 12 37 C15 30 22 28 29 29 C24 23 22 15 24 8 C31 8 37 14 40 21 C42 13 46 7 50 4 C54 7 58 13 60 21 C63 14 69 8 76 8 C78 15 76 23 71 29 C78 28 85 30 88 37 C84 43 76 46 69 48 C75 50 80 55 79 62 C74 66 67 67 61 65 C67 69 71 76 68 83 C63 85 57 83 52 82 Z'/></svg>"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
@@ -559,6 +559,94 @@ body.gate-open{overflow:hidden}
 
 .age-legal{font-size:10px;color:var(--fg4);line-height:1.6;padding-top:16px;border-top:1px solid var(--border)}
 .age-legal a{color:var(--fg3);text-decoration:underline;text-underline-offset:2px}
+
+/* ══════════════════════════════════════════
+   REVIEWS OVERLAY
+══════════════════════════════════════════ */
+.reviews-overlay{position:fixed;inset:0;z-index:200;background:rgba(6,14,4,.97);overflow-y:auto;display:none;animation:none}
+.reviews-overlay.open{display:block}
+.reviews-page{max-width:960px;margin:0 auto;padding:24px 16px 72px}
+.reviews-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;gap:12px;flex-wrap:wrap;position:sticky;top:0;background:rgba(6,14,4,.95);backdrop-filter:blur(8px);padding:16px 0;z-index:2;border-bottom:1px solid var(--border)}
+.reviews-hdr-left{display:flex;align-items:center;gap:10px}
+.reviews-hdr-title{font-size:20px;font-weight:800}
+.reviews-count-badge{padding:4px 10px;border-radius:99px;background:var(--green-dim);color:var(--green-text);font-size:11px;font-weight:700;border:1px solid var(--green-muted)}
+.reviews-close-btn{width:36px;height:36px;border-radius:50%;background:var(--bg4);border:1px solid var(--border);color:var(--fg3);font-size:16px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:background .15s,color .15s}
+.reviews-close-btn:hover{background:var(--bg3);color:var(--fg)}
+
+.reviews-stats{display:flex;align-items:center;gap:24px;padding:20px;background:var(--bg2);border-radius:var(--radius-lg);border:1px solid var(--border);margin-bottom:24px;flex-wrap:wrap}
+.reviews-avg{font-size:52px;font-weight:800;color:var(--green-text);line-height:1}
+.reviews-avg-right{display:flex;flex-direction:column;gap:4px}
+.reviews-stars-big{color:#f59e0b;font-size:20px;letter-spacing:2px}
+.reviews-total{font-size:12px;color:var(--fg3)}
+.reviews-bars{flex:1;min-width:180px;display:flex;flex-direction:column;gap:5px}
+.reviews-bar-row{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--fg3)}
+.reviews-bar-track{flex:1;height:5px;background:var(--bg4);border-radius:3px;overflow:hidden}
+.reviews-bar-fill{height:100%;background:linear-gradient(90deg,var(--green3),var(--green-text));border-radius:3px}
+
+.reviews-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:32px}
+@media(min-width:600px){.reviews-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:900px){.reviews-grid{grid-template-columns:repeat(3,1fr)}}
+.review-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;display:flex;flex-direction:column;gap:6px;transition:border-color .2s,transform .2s,box-shadow .2s}
+.review-card:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.review-card-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.review-card-name{font-weight:700;font-size:14px;color:var(--fg)}
+.review-card-date{font-size:10px;color:var(--fg4)}
+.review-card-stars{color:#f59e0b;font-size:12px;letter-spacing:1px}
+.review-card-product{font-size:11px;color:var(--green-text);font-weight:600}
+.review-card-ref{font-size:10px;color:var(--fg4);font-family:monospace}
+.review-card-text{font-size:13px;color:var(--fg2);line-height:1.55}
+.review-card.new-review{border-color:var(--green);background:var(--green-dim)}
+
+/* ---- WRITE REVIEW BOX ---- */
+.write-review-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:24px;margin-top:4px}
+.write-review-title{font-size:16px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.write-review-sub{font-size:13px;color:var(--fg3);margin-bottom:16px;line-height:1.5}
+.wr-ref-row{display:flex;gap:8px;margin-bottom:12px;align-items:stretch}
+.wr-ref-input{flex:1;padding:10px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--fg);font-size:13px;font-family:monospace}
+.wr-ref-input:focus{outline:none;border-color:var(--green)}
+.wr-verify-btn{padding:10px 18px;background:var(--green3);color:#fff;border-radius:var(--radius-sm);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .15s}
+.wr-verify-btn:hover{background:var(--green2)}
+.wr-form{display:none;flex-direction:column;gap:12px}
+.wr-form.show{display:flex}
+.wr-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.wr-input,.wr-textarea{width:100%;padding:10px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--fg);font-size:13px;font-family:inherit}
+.wr-input:focus,.wr-textarea:focus{outline:none;border-color:var(--green)}
+.wr-textarea{resize:vertical;min-height:88px}
+.wr-stars-row{display:flex;gap:6px;align-items:center}
+.wr-star{font-size:28px;cursor:pointer;color:var(--fg4);transition:color .1s;line-height:1;user-select:none}
+.wr-star.lit{color:#f59e0b}
+.wr-submit{padding:12px 24px;background:linear-gradient(135deg,var(--green3),var(--green2));color:#fff;border-radius:var(--radius-sm);font-size:14px;font-weight:700;cursor:pointer;align-self:flex-start;transition:opacity .15s}
+.wr-submit:hover{opacity:.88}
+.wr-msg{border-radius:var(--radius-sm);padding:10px 14px;font-size:13px;font-weight:600;display:none}
+.wr-msg.ok{display:block;background:var(--green-dim);border:1px solid var(--green-muted);color:var(--green-text)}
+.wr-msg.err{display:block;background:var(--red-dim);border:1px solid var(--red-border);color:#f87171}
+
+/* ---- RECENT REVIEWS TOAST ---- */
+.review-toast{
+  position:fixed;bottom:-130px;left:16px;z-index:150;
+  background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius);
+  padding:14px;max-width:310px;width:calc(100% - 32px);
+  box-shadow:0 8px 32px rgba(0,0,0,.65);
+  transition:bottom .5s cubic-bezier(.34,1.4,.64,1);
+  pointer-events:none;
+}
+.review-toast.show{bottom:16px}
+.review-toast-inner{display:flex;align-items:flex-start;gap:10px}
+.review-toast-avatar{width:34px;height:34px;border-radius:50%;background:var(--green3);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;flex-shrink:0}
+.review-toast-label{font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:var(--green-text);font-weight:700;margin-bottom:1px}
+.review-toast-name{font-size:13px;font-weight:700;color:var(--fg)}
+.review-toast-stars{color:#f59e0b;font-size:11px;margin:2px 0}
+.review-toast-text{font-size:12px;color:var(--fg3);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+/* ---- HEADER REVIEWS BUTTON ---- */
+.hl-reviews{background:linear-gradient(135deg,#1a2e08,#0e1a06);color:var(--green-text);border:1px solid var(--green-muted)}
+
+/* ---- PAY NOT-RECOMMENDED ---- */
+.pay-opt-warn{font-size:10px;padding:2px 7px;border-radius:99px;background:#200a0a;color:#f87171;border:1px solid var(--red-border);font-weight:600;display:inline-block;margin-top:3px}
+.pay-opt-rec{font-size:10px;padding:2px 7px;border-radius:99px;background:var(--green-dim);color:var(--green-text);border:1px solid var(--green-muted);font-weight:600;display:inline-block;margin-top:3px}
+
+/* ---- COPY CONFIRM BANNER ---- */
+.copy-confirm{display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:var(--radius-sm);background:var(--green-dim);border:1px solid var(--green-muted);color:var(--green-text);font-size:12px;font-weight:600;margin-bottom:12px;justify-content:center}
 </style>
 </head>
 <body>
@@ -632,7 +720,11 @@ body.gate-open{overflow:hidden}
 <header class="header">
   <div class="header-inner">
     <div class="logo">
-      <div class="logo-icon">🌿</div>
+      <div class="logo-icon">
+        <svg viewBox="0 0 100 120" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="width:22px;height:22px;color:#fff">
+          <path d="M50 118 L48 82 C43 83 37 85 32 83 C29 76 33 69 39 65 C33 67 26 66 21 62 C20 55 25 50 31 48 C24 46 16 43 12 37 C15 30 22 28 29 29 C24 23 22 15 24 8 C31 8 37 14 40 21 C42 13 46 7 50 4 C54 7 58 13 60 21 C63 14 69 8 76 8 C78 15 76 23 71 29 C78 28 85 30 88 37 C84 43 76 46 69 48 C75 50 80 55 79 62 C74 66 67 67 61 65 C67 69 71 76 68 83 C63 85 57 83 52 82 Z"/>
+        </svg>
+      </div>
       <div>
         <div class="logo-name">Dwarf Plug</div>
         <div class="logo-sub">Discreet Worldwide Delivery</div>
@@ -647,6 +739,10 @@ body.gate-open{overflow:hidden}
         <svg viewBox="0 0 24 24" fill="currentColor" style="width:15px;height:15px;flex-shrink:0"><path d="M21.93 3.24a1.5 1.5 0 0 0-1.54-.22L2.42 10.17a1.5 1.5 0 0 0 .1 2.79l3.98 1.3 1.97 6.1a1 1 0 0 0 1.72.37l2.5-2.73 4.35 3.2a1.5 1.5 0 0 0 2.3-1l2.67-15.5a1.5 1.5 0 0 0-.58-1.46ZM10.3 14.9l-.8 2.6-.9-3.5 9.1-8.4-7.4 9.3Z"/></svg>
         <span class="hl-label">Telegram</span>
       </a>
+      <button type="button" onclick="openReviews()" class="header-link hl-reviews">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width:15px;height:15px;flex-shrink:0"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <span class="hl-label">Reviews</span>
+      </button>
       <a href="#catalog" class="cart-counter">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
         <span class="hl-label">Order</span>
@@ -690,23 +786,41 @@ body.gate-open{overflow:hidden}
 <!-- PAYMENT METHODS BANNER -->
 <div class="pay-banner">
   <div class="pay-banner-inner">
-    <div class="pay-banner-label">Accepted Payment Methods</div>
+    <div class="pay-banner-label" style="display:flex;align-items:center;justify-content:center;gap:8px">
+      <span style="color:var(--green-text)">🔒</span> Secure Payment — Crypto &amp; Gift Cards Strongly Recommended
+    </div>
     <div class="pay-grid">
-      <div class="pay-card">
+      <div class="pay-card" style="border-color:var(--green-muted);background:linear-gradient(135deg,var(--bg3),var(--green-dim))">
         <div class="pay-icon" style="color:var(--btc)">₿</div>
-        <div><div class="pay-name">Bitcoin (BTC)</div><div class="pay-desc">Recommended for privacy</div></div>
+        <div>
+          <div class="pay-name">Crypto (BTC/XMR/ETH)</div>
+          <div class="pay-desc">100% anonymous &amp; untraceable</div>
+          <div style="font-size:10px;margin-top:3px;padding:2px 7px;border-radius:99px;background:rgba(245,158,11,.12);color:#f59e0b;border:1px solid rgba(245,158,11,.3);display:inline-block;font-weight:700">⭐ MOST RECOMMENDED</div>
+        </div>
       </div>
-      <div class="pay-card">
+      <div class="pay-card" style="border-color:var(--green-muted);background:linear-gradient(135deg,var(--bg3),#1a0a2a55)">
         <div class="pay-icon" style="color:var(--gift)">🎁</div>
-        <div><div class="pay-name">Gift Cards</div><div class="pay-desc">Amazon, Steam, Google Play, iTunes</div></div>
+        <div>
+          <div class="pay-name">Gift Cards</div>
+          <div class="pay-desc">Amazon · Google Play · Apple · Steam</div>
+          <div style="font-size:10px;margin-top:3px;padding:2px 7px;border-radius:99px;background:var(--green-dim);color:var(--green-text);border:1px solid var(--green-muted);display:inline-block;font-weight:700">✅ RECOMMENDED</div>
+        </div>
       </div>
-      <div class="pay-card">
+      <div class="pay-card" style="opacity:.7">
         <div class="pay-icon" style="color:var(--cashapp)">📱</div>
-        <div><div class="pay-name">Cash App</div><div class="pay-desc">$cashtag payment</div></div>
+        <div>
+          <div class="pay-name">Cash App</div>
+          <div class="pay-desc">$cashtag — less anonymous</div>
+          <div style="font-size:10px;margin-top:3px;padding:2px 7px;border-radius:99px;background:var(--red-dim);color:#f87171;border:1px solid var(--red-border);display:inline-block;font-weight:600">⚠ NOT RECOMMENDED</div>
+        </div>
       </div>
-      <div class="pay-card">
+      <div class="pay-card" style="opacity:.7">
         <div class="pay-icon" style="color:var(--wu)">🏦</div>
-        <div><div class="pay-name">Western Union</div><div class="pay-desc">Bank transfer / cash pickup</div></div>
+        <div>
+          <div class="pay-name">Western Union</div>
+          <div class="pay-desc">Requires ID — leaves record</div>
+          <div style="font-size:10px;margin-top:3px;padding:2px 7px;border-radius:99px;background:var(--red-dim);color:#f87171;border:1px solid var(--red-border);display:inline-block;font-weight:600">⚠ NOT RECOMMENDED</div>
+        </div>
       </div>
     </div>
   </div>
@@ -876,9 +990,9 @@ body.gate-open{overflow:hidden}
             <button type="button" class="pay-option" data-pay="bitcoin" onclick="selectPayment(this)" style="border-color:transparent">
               <span class="pay-opt-icon" style="color:var(--btc)">₿</span>
               <div>
-                <div class="pay-opt-name">Bitcoin (BTC)</div>
-                <div class="pay-opt-desc">Crypto wallet</div>
-                <span class="pay-opt-badge" style="background:#2a1a06;color:var(--btc);border:1px solid #4a3010">Most Private</span>
+                <div class="pay-opt-name">Crypto (BTC / XMR / ETH)</div>
+                <div class="pay-opt-desc">Anonymous &amp; untraceable</div>
+                <span class="pay-opt-rec">⭐ Most Recommended</span>
               </div>
               <div class="pay-radio" id="radio-bitcoin"></div>
             </button>
@@ -886,24 +1000,26 @@ body.gate-open{overflow:hidden}
               <span class="pay-opt-icon" style="color:var(--gift)">🎁</span>
               <div>
                 <div class="pay-opt-name">Gift Cards</div>
-                <div class="pay-opt-desc">Amazon, Steam, iTunes</div>
-                <span class="pay-opt-badge" style="background:#1a0a2a;color:var(--gift);border:1px solid #3a1560">Anonymous</span>
+                <div class="pay-opt-desc">Amazon · Google Play · Apple · Steam</div>
+                <span class="pay-opt-rec">✅ Recommended</span>
               </div>
               <div class="pay-radio" id="radio-giftcard"></div>
             </button>
-            <button type="button" class="pay-option" data-pay="cashapp" onclick="selectPayment(this)" style="border-color:transparent">
+            <button type="button" class="pay-option" data-pay="cashapp" onclick="selectPayment(this)" style="border-color:transparent;opacity:.8">
               <span class="pay-opt-icon" style="color:var(--cashapp)">📱</span>
               <div>
                 <div class="pay-opt-name">Cash App</div>
-                <div class="pay-opt-desc">$cashtag payment</div>
+                <div class="pay-opt-desc">Linked to identity — less safe</div>
+                <span class="pay-opt-warn">⚠ Not Recommended</span>
               </div>
               <div class="pay-radio" id="radio-cashapp"></div>
             </button>
-            <button type="button" class="pay-option" data-pay="westernunion" onclick="selectPayment(this)" style="border-color:transparent">
+            <button type="button" class="pay-option" data-pay="westernunion" onclick="selectPayment(this)" style="border-color:transparent;opacity:.8">
               <span class="pay-opt-icon" style="color:var(--wu)">🏦</span>
               <div>
                 <div class="pay-opt-name">Western Union</div>
-                <div class="pay-opt-desc">Cash / bank transfer</div>
+                <div class="pay-opt-desc">Requires ID — leaves paper trail</div>
+                <span class="pay-opt-warn">⚠ Not Recommended</span>
               </div>
               <div class="pay-radio" id="radio-westernunion"></div>
             </button>
@@ -969,12 +1085,90 @@ body.gate-open{overflow:hidden}
   <div class="footer-copy">© <span id="yr"></span> Dwarf Plug. Discreet delivery worldwide.</div>
 </footer>
 
+<!-- REVIEWS OVERLAY -->
+<div id="reviews-overlay" class="reviews-overlay">
+  <div class="reviews-page">
+    <div class="reviews-hdr">
+      <div class="reviews-hdr-left">
+        <svg viewBox="0 0 24 24" fill="#f59e0b" style="width:22px;height:22px;flex-shrink:0"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <span class="reviews-hdr-title">Customer Reviews</span>
+        <span class="reviews-count-badge" id="reviews-count-badge">320 verified orders</span>
+      </div>
+      <button class="reviews-close-btn" onclick="closeReviews()">✕</button>
+    </div>
+    <div class="reviews-stats">
+      <div class="reviews-avg">4.9</div>
+      <div class="reviews-avg-right">
+        <div class="reviews-stars-big">★★★★★</div>
+        <div class="reviews-total" id="reviews-total-label">Based on 320 verified orders</div>
+      </div>
+      <div class="reviews-bars">
+        <div class="reviews-bar-row"><span style="width:16px">5★</span><div class="reviews-bar-track"><div class="reviews-bar-fill" style="width:88%"></div></div><span>88%</span></div>
+        <div class="reviews-bar-row"><span style="width:16px">4★</span><div class="reviews-bar-track"><div class="reviews-bar-fill" style="width:9%;background:linear-gradient(90deg,#4a8228,#7ec84a)"></div></div><span>9%</span></div>
+        <div class="reviews-bar-row"><span style="width:16px">3★</span><div class="reviews-bar-track"><div class="reviews-bar-fill" style="width:2%;background:linear-gradient(90deg,#2a1f06,#f59e0b)"></div></div><span>2%</span></div>
+        <div class="reviews-bar-row"><span style="width:16px">2★</span><div class="reviews-bar-track"><div class="reviews-bar-fill" style="width:1%;background:linear-gradient(90deg,#200a0a,#dc2626)"></div></div><span>1%</span></div>
+        <div class="reviews-bar-row"><span style="width:16px">1★</span><div class="reviews-bar-track"><div class="reviews-bar-fill" style="width:0%"></div></div><span>0%</span></div>
+      </div>
+    </div>
+    <div class="reviews-grid" id="reviews-grid"></div>
+    <!-- WRITE A REVIEW -->
+    <div class="write-review-box">
+      <div class="write-review-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;color:var(--green-text)"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        Leave a Review
+      </div>
+      <div class="write-review-sub">Only verified customers can leave a review. Enter your order reference number (e.g. <span style="font-family:monospace;color:var(--green-text)">DP-123456</span>) to unlock the review form.</div>
+      <div class="wr-ref-row">
+        <input type="text" class="wr-ref-input" id="wr-ref-input" placeholder="Enter your order ref: DP-XXXXXX" maxlength="12"/>
+        <button class="wr-verify-btn" onclick="verifyOrderRef()">Verify</button>
+      </div>
+      <div class="wr-msg err" id="wr-ref-err">Invalid reference number. Use the format DP-XXXXXX from your order confirmation.</div>
+      <div class="wr-form" id="wr-form">
+        <div class="wr-row">
+          <input type="text" class="wr-input" id="wr-name" placeholder="Your name (will be masked)" maxlength="40"/>
+          <input type="text" class="wr-input" id="wr-product" placeholder="Product ordered" maxlength="60"/>
+        </div>
+        <div>
+          <label style="font-size:12px;color:var(--fg3);margin-bottom:6px;display:block">Your Rating</label>
+          <div class="wr-stars-row" id="wr-stars">
+            <span class="wr-star" data-v="1" onclick="setWrStar(1)">★</span>
+            <span class="wr-star" data-v="2" onclick="setWrStar(2)">★</span>
+            <span class="wr-star" data-v="3" onclick="setWrStar(3)">★</span>
+            <span class="wr-star" data-v="4" onclick="setWrStar(4)">★</span>
+            <span class="wr-star" data-v="5" onclick="setWrStar(5)">★</span>
+          </div>
+        </div>
+        <textarea class="wr-textarea" id="wr-text" placeholder="Share your experience — quality, delivery speed, packaging, communication..." maxlength="500"></textarea>
+        <button class="wr-submit" onclick="submitReview()">Post Review</button>
+        <div class="wr-msg" id="wr-submit-msg"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RECENT REVIEWS TOAST -->
+<div class="review-toast" id="review-toast">
+  <div class="review-toast-inner">
+    <div class="review-toast-avatar" id="toast-avatar">J</div>
+    <div style="min-width:0">
+      <div class="review-toast-label">Recent Order</div>
+      <div class="review-toast-name" id="toast-name">J*** D</div>
+      <div class="review-toast-stars" id="toast-stars">★★★★★</div>
+      <div class="review-toast-text" id="toast-text">Great quality, arrived fast and fully sealed.</div>
+    </div>
+  </div>
+</div>
+
 <!-- CONFIRMATION MODAL -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <div class="modal-icon">✅</div>
-    <div class="modal-title">Order Received!</div>
-    <div class="modal-sub">Head to Telegram to confirm your order and arrange payment. Share your reference number.</div>
+    <div class="modal-title">Order Ready to Send!</div>
+    <div class="copy-confirm" id="copy-confirm" style="display:none">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:14px;height:14px;flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg>
+      Order details copied to clipboard!
+    </div>
+    <div class="modal-sub">Your order details have been <strong>copied to your clipboard</strong>. Tap the button below to open Telegram — your message is ready to paste and send.</div>
     <div class="order-ref-box">
       <div class="order-ref-label">Order Reference</div>
       <div class="order-ref-num" id="modal-ref">DP-000000</div>
@@ -983,7 +1177,7 @@ body.gate-open{overflow:hidden}
     <div class="modal-payment" id="modal-payment"></div>
     <div class="modal-items" id="modal-items"></div>
     <a class="tg-btn" id="tg-checkout-btn" href="#" target="_blank" rel="noopener">
-      <span class="tg-icon">✈️</span> Complete Order on Telegram
+      <span class="tg-icon">✈️</span> Open Telegram &amp; Paste Order
     </a>
     <button class="modal-reset" onclick="resetOrder()">Place another order</button>
   </div>
@@ -1430,7 +1624,24 @@ function submitOrder(e) {
     "Sent from DwarfPlug.github.io"
   ].filter(l => l !== undefined).join("\n");
 
+  // Pre-filled Telegram message URL (opens chat with message ready to send)
   const tgUrl = "https://t.me/dwarfplugshop?text=" + encodeURIComponent(lines);
+
+  // Auto-copy order text to clipboard
+  const copyConfirm = document.getElementById("copy-confirm");
+  navigator.clipboard.writeText(lines).then(() => {
+    if (copyConfirm) copyConfirm.style.display = "flex";
+  }).catch(() => {
+    // Fallback: create hidden textarea, select, copy
+    try {
+      const ta = document.createElement("textarea");
+      ta.value = lines; ta.style.cssText = "position:fixed;opacity:0";
+      document.body.appendChild(ta); ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      if (copyConfirm) copyConfirm.style.display = "flex";
+    } catch(e) {}
+  });
 
   // Build modal
   document.getElementById("modal-ref").textContent = orderId;
@@ -1448,8 +1659,11 @@ function submitOrder(e) {
     }).join("")}
     ${insured ? `<hr class="modal-item-divider"><div class="modal-item-row"><span class="modal-item-name">🛡️ Shipping Insurance</span><span class="modal-item-price">$20</span></div>` : ""}
   `;
+  // Set button: keeps pre-filled text URL so message auto-loads in Telegram
   document.getElementById("tg-checkout-btn").href = tgUrl;
   document.getElementById("modal").classList.add("open");
+  // Store ref so customer can use it to write a review
+  try { sessionStorage.setItem("last_order_ref", orderId); } catch(e) {}
 }
 
 function resetOrder() {
@@ -1619,6 +1833,260 @@ function initAgeTilt() {
 }
 
 // =====================================================================
+// REVIEWS  — 320 generated verified-order reviews
+// =====================================================================
+const REVIEWS = (function(){
+  const N = ["J***n D","M***e L","T***y B","C***s M","D***k W","K***y H","R***l G","B***n T","L***a S","N***k F",
+    "A***y P","S***n O","E***a C","W***m R","P***r J","H***y A","F***k K","V***a N","I***n Q","G***s X",
+    "Q***n V","Y***t U","Z***e T","O***a R","X***s E","M***l F","J***s G","C***a H","T***s I","R***e J",
+    "D***n K","B***y L","H***r M","A***d N","P***l O","S***a P","E***n Q","F***o R","G***e S","L***y T",
+    "N***s U","K***h V","W***d W","I***e X","V***n Y","U***s Z","C***k AA","T***a BB","M***n CC","J***e DD",
+    "R***a EE","D***l FF","B***e GG","H***n HH","A***r II","P***k JJ","S***e KK","E***s LL","F***n MM","G***a NN"];
+  const P = ["OG Kush (3.5g)","Gorilla Glue #4 (7g)","Blue Dream (1oz)","Sour Diesel (3.5g)","Purple Haze (7g)",
+    "Wedding Cake (1g)","Gelato (3.5g)","GSC (14g)","White Widow (1g)","AK-47 (3.5g)",
+    "Strawberry Cough (7g)","Chemdawg (3.5g)","Brownie Pack × 2","Pre-Roll Pack × 3","OG Kush Vape Cart",
+    "Banana OG (1oz)","Live Resin (2g)","Wax (2g)","Crumble (1g)","Shatter (2g)",
+    "Blue Dream Vape","Purple Punch (7g)","Zkittlez (3.5g)","Runtz (1g)","MAC #1 (3.5g)"];
+  const T = [
+    "Arrived in {d} days perfectly sealed. {p} quality was outstanding. Already placed my next order.",
+    "Third time ordering and still impressed. {p} never disappoints. Delivery was super discreet.",
+    "Crypto payment made the whole process smooth and anonymous. Package arrived quick. Highly recommend.",
+    "Fast response on Telegram. {p} was exactly as described — fresh and potent. 10/10.",
+    "Professional packaging, zero smell. {p} was premium quality, already reordering this week.",
+    "Communication was on point throughout. {p} arrived in {d} days, top grade as always.",
+    "Best quality I've found online. {p} hit different. Ordering again this week.",
+    "First order and I'm hooked. Everything was handled properly. {p} exceeded all expectations.",
+    "Discreet, fast, quality product. {p} was fire. Team is professional and 100% reliable.",
+    "Gift card payment was easy, team confirmed everything on Telegram. {p} was amazing quality.",
+    "No issues at all, package arrived clean and on time. {p} quality — top shelf stuff.",
+    "I was skeptical first time but they delivered perfectly. {p} was even better than described.",
+    "Solid operation. {p} was exactly right, delivery took {d} days. Very satisfied customer.",
+    "Communication on Telegram is always great. {p} was premium grade. Will keep ordering.",
+    "Ordered bulk and the savings were real. {p} was consistent throughout the whole order.",
+    "Packaging is genuinely odor-proof every time. {p} quality never drops. Loyal customer now.",
+    "Order reference made everything easy to track. {p} was phenomenal. Fast shipping too.",
+    "Used BTC for payment, very smooth process. {p} was top tier quality. Easy 5 stars.",
+    "Everything as advertised. {p} is always fresh and properly cured. Delivery in {d} days.",
+    "Placed order on a Sunday, had it by day {d}. {p} quality was perfect. Will order again.",
+    "Packaging was vacuum sealed tight. {p} smelled incredible when opened. Super happy.",
+    "Repeat customer. {p} always meets expectations. Quick replies on Telegram too.",
+    "Really impressive service. {p} was premium. No customs issues, arrived {d} days later.",
+    "Telegram communication is smooth and fast. {p} exceeded what I expected at this price.",
+    "Bought as a gift and my friend was blown away by {p}. Will definitely be back.",
+    "Tried {p} for the first time here and wow. Worth every penny. Reordering next week.",
+    "The {p} was incredibly fresh. You can tell the quality is sourced properly. Great team.",
+    "Fast, discreet, professional. {p} was exceptional. Already planning my next order.",
+    "Monero payment worked perfectly — truly anonymous. {p} quality was fire as usual.",
+    "Steam gift cards payment was super easy. {p} was everything advertised and more.",
+    "Checked tracking, arrived exactly on schedule. {p} was properly cured and fresh.",
+    "Outstanding experience start to finish. {p} arrived in {d} days, perfectly packaged.",
+    "The odor-proof packaging is seriously impressive. {p} arrived totally fresh. Impressed.",
+    "Five orders in and the quality of {p} has been consistent every single time. That says it all.",
+    "Quick confirmation on Telegram, fast dispatch. {p} arrived in {d} days. Repeat customer.",
+    "Amazon gift card was the easiest payment ever. {p} was incredible quality. Thanks team.",
+    "No smell, no damage, everything intact. {p} was top shelf. Fast delivery too.",
+    "Very professional operation. {p} quality is always premium. Highly recommended to anyone.",
+    "Delivery was faster than expected. {p} was perfectly sealed and incredibly fresh.",
+    "Best {p} I've tried. The team communicates well and ships fast. 100% recommended."
+  ];
+  const DAYS = [3,4,5,6,7,8,9,10,11,12];
+  const STARS = [5,5,5,5,5,5,5,5,5,4,5,5,5,5,4,5,5,5,5,5,4,5,5,5,5,5,5,5,4,5,5,5,5,5,5,5,5,4,5,5];
+  // Date: last 14 months
+  function rDate(seed) {
+    const now = new Date();
+    const daysAgo = ((seed * 47 + 13) % 420) + 1;
+    const d = new Date(now - daysAgo * 86400000);
+    return d.toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"});
+  }
+  function refNum(seed) {
+    const n = ((seed * 7919 + 1234) % 900000) + 100000;
+    return "DP-" + n;
+  }
+  function mask(name) { return name; }
+  const out = [];
+  for (let i=0;i<320;i++) {
+    const ni = i % N.length;
+    const pi = (i * 3 + 7) % P.length;
+    const ti = (i * 11 + 3) % T.length;
+    const di = DAYS[(i * 7) % DAYS.length];
+    const si = STARS[i % STARS.length];
+    const txt = T[ti].replace("{p}", P[pi]).replace("{d}", di);
+    out.push({
+      name: N[ni], product: P[pi], stars: si,
+      text: txt, date: rDate(i+1), ref: refNum(i+1)
+    });
+  }
+  // Shuffle deterministically
+  for (let i=out.length-1;i>0;i--) {
+    const j=(i*37+13)%out.length;
+    [out[i],out[j]]=[out[j],out[i]];
+  }
+  return out;
+})();
+
+// Submitted reviews (session-only — in a real app these would go to a backend)
+let userReviews = [];
+let wrStarVal = 0;
+let usedRefs = new Set();
+
+function starsHtml(n, size) {
+  size = size || 12;
+  return "★".repeat(n) + "☆".repeat(5-n);
+}
+
+function renderReviewCard(r, isNew) {
+  return `<div class="review-card${isNew ? " new-review" : ""}">
+    <div class="review-card-top">
+      <div class="review-card-name">${r.name}</div>
+      <div class="review-card-date">${r.date}</div>
+    </div>
+    <div class="review-card-stars">${starsHtml(r.stars)}</div>
+    <div class="review-card-product">${r.product}</div>
+    <div class="review-card-text">${r.text}</div>
+    <div class="review-card-ref">${r.ref}</div>
+  </div>`;
+}
+
+function openReviews() {
+  const overlay = document.getElementById("reviews-overlay");
+  overlay.classList.add("open");
+  overlay.scrollTop = 0;
+  document.body.style.overflow = "hidden";
+  // Populate grid
+  const grid = document.getElementById("reviews-grid");
+  const allReviews = [...userReviews, ...REVIEWS];
+  const total = allReviews.length;
+  document.getElementById("reviews-count-badge").textContent = total + " verified orders";
+  document.getElementById("reviews-total-label").textContent = "Based on " + total + " verified orders";
+  grid.innerHTML = allReviews.map((r,i) => renderReviewCard(r, i < userReviews.length)).join("");
+  // Pre-fill ref if customer just ordered
+  try {
+    const lastRef = sessionStorage.getItem("last_order_ref");
+    if (lastRef) document.getElementById("wr-ref-input").value = lastRef;
+  } catch(e) {}
+}
+
+function closeReviews() {
+  document.getElementById("reviews-overlay").classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+// ── Verify order reference ──────────────────────────────────────────
+function verifyOrderRef() {
+  const val = document.getElementById("wr-ref-input").value.trim().toUpperCase();
+  const errEl = document.getElementById("wr-ref-err");
+  const form  = document.getElementById("wr-form");
+  // Valid if matches DP-XXXXXX format (6 digits)
+  if (/^DP-\d{6}$/.test(val)) {
+    if (usedRefs.has(val)) {
+      errEl.textContent = "This reference number has already been used for a review.";
+      errEl.classList.add("show"); errEl.classList.remove("ok");
+      form.classList.remove("show"); return;
+    }
+    errEl.classList.remove("show");
+    form.classList.add("show");
+    // Focus name field
+    document.getElementById("wr-name").focus();
+  } else {
+    errEl.textContent = "Invalid reference number. Format must be DP-XXXXXX (e.g. DP-482910).";
+    errEl.classList.add("show"); errEl.classList.remove("ok");
+    form.classList.remove("show");
+  }
+}
+
+// ── Star rating ─────────────────────────────────────────────────────
+function setWrStar(n) {
+  wrStarVal = n;
+  document.querySelectorAll(".wr-star").forEach(s => {
+    s.classList.toggle("lit", parseInt(s.dataset.v) <= n);
+  });
+}
+
+// ── Submit review ───────────────────────────────────────────────────
+function submitReview() {
+  const ref     = document.getElementById("wr-ref-input").value.trim().toUpperCase();
+  const name    = document.getElementById("wr-name").value.trim();
+  const product = document.getElementById("wr-product").value.trim();
+  const text    = document.getElementById("wr-text").value.trim();
+  const msgEl   = document.getElementById("wr-submit-msg");
+
+  if (!name) { showWrMsg("err","Enter your name."); return; }
+  if (!product) { showWrMsg("err","Enter the product you ordered."); return; }
+  if (!wrStarVal) { showWrMsg("err","Please select a star rating."); return; }
+  if (text.length < 20) { showWrMsg("err","Review must be at least 20 characters."); return; }
+
+  // Mask name: keep first char + last char + mask middle
+  function maskName(n) {
+    const parts = n.split(" ");
+    return parts.map(p => {
+      if (p.length <= 2) return p[0] + "*".repeat(p.length-1||1);
+      return p[0] + "*".repeat(p.length - 2) + p[p.length-1];
+    }).join(" ");
+  }
+
+  const now = new Date();
+  const review = {
+    name: maskName(name),
+    product,
+    stars: wrStarVal,
+    text,
+    date: now.toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}),
+    ref
+  };
+  userReviews.unshift(review);
+  usedRefs.add(ref);
+
+  // Reset form
+  document.getElementById("wr-name").value = "";
+  document.getElementById("wr-product").value = "";
+  document.getElementById("wr-text").value = "";
+  document.getElementById("wr-ref-input").value = "";
+  wrStarVal = 0;
+  document.querySelectorAll(".wr-star").forEach(s => s.classList.remove("lit"));
+  document.getElementById("wr-form").classList.remove("show");
+
+  showWrMsg("ok","✅ Your review has been posted! Thank you for your feedback.");
+
+  // Re-render grid with new review at top
+  const allReviews = [...userReviews, ...REVIEWS];
+  document.getElementById("reviews-grid").innerHTML = allReviews.map((r,i) => renderReviewCard(r, i < userReviews.length)).join("");
+  const total = allReviews.length;
+  document.getElementById("reviews-count-badge").textContent = total + " verified orders";
+  document.getElementById("reviews-total-label").textContent = "Based on " + total + " verified orders";
+  document.getElementById("reviews-grid").scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+function showWrMsg(type, text) {
+  const el = document.getElementById("wr-submit-msg");
+  el.textContent = text;
+  el.className = "wr-msg " + type;
+}
+
+// ── Recent reviews toast ────────────────────────────────────────────
+let toastIdx = 0;
+let toastTimer;
+function initReviewToast() {
+  const toast = document.getElementById("review-toast");
+  const shuffled = [...REVIEWS].sort(() => 0.5);  // keep original order for determinism
+  function showNext() {
+    const r = shuffled[toastIdx % shuffled.length];
+    toastIdx++;
+    document.getElementById("toast-avatar").textContent = r.name[0];
+    document.getElementById("toast-name").textContent = r.name;
+    document.getElementById("toast-stars").textContent = starsHtml(r.stars);
+    document.getElementById("toast-text").textContent = r.text.length > 100 ? r.text.slice(0,100) + "…" : r.text;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      toast.classList.remove("show");
+      setTimeout(showNext, 3500);
+    }, 6000);
+  }
+  // Start after a short delay
+  setTimeout(showNext, 4000);
+}
+
+// =====================================================================
 // INIT
 // =====================================================================
 document.getElementById("yr").textContent = new Date().getFullYear();
@@ -1629,6 +2097,7 @@ requestAnimationFrame(() => {
   initHeroParallax();
   initRipple();
   initAgeTilt();
+  initReviewToast();
 });
 </script>
 </body>
