@@ -2,12 +2,18 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1"/>
-<title>Dwarf Plug — Premium Discreet Delivery</title>
-<meta name="description" content="Dwarf Plug — Premium quality, delivered discreetly worldwide. Browse our catalog and place your order."/>
-<meta property="og:title" content="Dwarf Plug — Premium Discreet Delivery"/>
-<meta property="og:description" content="Browse our premium catalog and place your order. Discreet worldwide delivery."/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Dwarf Plug | Premium Discreet Cannabis Delivery Worldwide</title>
+<meta name="description" content="Order premium cannabis — flower, edibles, vapes, concentrates, oils, seeds and more. Delivered worldwide in odor-proof, vacuum-sealed, plain packaging. Crypto and gift card payments. Fast, discreet, insured."/>
+<link rel="canonical" href="https://dwarfdeve.github.io/Dwarf-plug/"/>
+<meta property="og:title" content="Dwarf Plug | Premium Discreet Cannabis Delivery Worldwide"/>
+<meta property="og:description" content="Flower, edibles, vapes, concentrates & more. Worldwide discreet delivery — crypto and gift card payments accepted. Vacuum-sealed, plain packaging."/>
 <meta property="og:type" content="website"/>
+<meta property="og:url" content="https://dwarfdeve.github.io/Dwarf-plug/"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Dwarf Plug | Premium Discreet Cannabis Delivery"/>
+<meta name="twitter:description" content="Worldwide discreet delivery — flower, edibles, vapes, concentrates & more. Crypto & gift cards accepted."/>
+<meta name="robots" content="index, follow"/>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'><defs><style>.leaf{fill:none;stroke:%235ec745;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}.badge-circle{fill:none;stroke:%23ffffff;stroke-width:2}.badge-check{fill:%23ffffff;stroke:%23ffffff;stroke-width:1}</style></defs><g class='leaf'><path d='M60 10 Q70 25 75 40 Q80 55 75 70 Q70 85 60 95'/><path d='M60 10 Q50 25 45 40 Q40 55 45 70 Q50 85 60 95'/><path d='M60 10 Q65 30 68 50 Q70 70 60 95'/><path d='M60 10 Q55 30 52 50 Q50 70 60 95'/><circle cx='60' cy='60' r='8' class='leaf'/></g><circle cx='95' cy='25' r='15' class='badge-circle'/><path d='M90 25 L93 28 L100 21' class='badge-check' stroke-width='2.5' fill='none'/></svg>"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -197,12 +203,28 @@ select option{background:var(--bg3);color:var(--fg)}
 .submit-btn:hover{opacity:.95;transform:translateY(-2px);box-shadow:0 12px 32px rgba(212,175,55,.4), 0 0 0 1px rgba(212,175,55,.3)}
 .submit-btn:active{transform:translateY(0);opacity:.85}
 
+/* ---- HOW IT WORKS ---- */
+.hiw-grid{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:600px){.hiw-grid{grid-template-columns:repeat(3,1fr)}}
+.hiw-step{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:20px 18px;position:relative;overflow:hidden;transition:border-color .2s}
+.hiw-step:hover{border-color:var(--green-muted)}
+.hiw-step::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green3),var(--green-text))}
+.hiw-num{font-size:42px;font-weight:800;color:rgba(255,255,255,.035);font-family:'Playfair Display',serif;line-height:1;margin-bottom:10px;letter-spacing:-1px}
+.hiw-icon{font-size:22px;margin-bottom:10px}
+.hiw-title{font-size:14px;font-weight:700;color:var(--fg);margin-bottom:6px}
+.hiw-desc{font-size:12px;color:var(--fg3);line-height:1.65}
+
 /* ---- FOOTER ---- */
-.footer{background:var(--bg2);border-top:1px solid var(--border);padding:28px 16px;text-align:center}
-.footer-links{display:flex;justify-content:center;gap:20px;margin-bottom:12px}
+.footer{background:var(--bg2);border-top:1px solid var(--border);padding:36px 16px 28px;text-align:center}
+.footer-inner{max-width:960px;margin:0 auto}
+.footer-top{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:20px}
+.footer-trust{display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:99px;background:var(--bg3);border:1px solid var(--border);font-size:12px;color:var(--fg3)}
+.footer-links{display:flex;justify-content:center;gap:16px;margin-bottom:14px;flex-wrap:wrap}
 .footer-link{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--fg3);transition:opacity .15s}
 .footer-link:hover{opacity:.75}
-.footer-copy{font-size:12px;color:var(--fg4)}
+.footer-divider{width:40px;height:1px;background:var(--border);margin:14px auto}
+.footer-copy{font-size:12px;color:var(--fg4);line-height:1.6}
+.footer-legal{font-size:11px;color:var(--fg4);margin-top:8px;max-width:560px;margin-left:auto;margin-right:auto;line-height:1.5;opacity:.7}
 
 /* ---- MODAL ---- */
 .modal-overlay{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.9);display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;pointer-events:none;transition:opacity .2s}
@@ -327,7 +349,7 @@ select option{background:var(--bg3);color:var(--fg)}
 .news-ticker-wrapper{background:linear-gradient(90deg, rgba(94,199,69,.08) 0%, rgba(212,175,55,.04) 100%);border-bottom:2px solid rgba(94,199,69,.25);padding:0;overflow:hidden;position:relative;height:44px}
 .news-ticker-wrapper::before{content:'';position:absolute;left:0;top:0;bottom:0;width:50px;background:linear-gradient(90deg, var(--bg2) 0%, transparent 100%);z-index:10;pointer-events:none}
 .news-ticker-wrapper::after{content:'';position:absolute;right:0;top:0;bottom:0;width:50px;background:linear-gradient(90deg, transparent 0%, var(--bg2) 100%);z-index:10;pointer-events:none}
-.news-ticker{display:flex;align-items:center;gap:32px;padding:10px 16px;animation:tickerScroll 22s linear infinite;white-space:nowrap;height:100%}
+.news-ticker{display:flex;align-items:center;gap:32px;padding:10px 16px;animation:tickerScroll 48s linear infinite;white-space:nowrap;height:100%}
 .news-ticker:hover{animation-play-state:paused;cursor:pointer}
 .ticker-label{font-size:11px;font-weight:800;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;flex-shrink:0;text-shadow:0 0 8px rgba(212,175,55,.2)}
 .ticker-message{font-size:13px;color:var(--fg2);font-weight:600;flex-shrink:0;letter-spacing:.3px;line-height:1.4}
@@ -685,6 +707,39 @@ body.gate-open{overflow:hidden}
 .card-header-line{position:absolute;bottom:0;left:0;right:0;height:2px}
 .card-header-corner{position:absolute;top:0;right:0;width:0;height:0;border-style:solid;border-width:0 28px 28px 0;border-color:transparent rgba(255,255,255,.06) transparent transparent}
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Store",
+  "name": "Dwarf Plug",
+  "description": "Premium cannabis delivery service — flower, edibles, vapes, concentrates, oils and seeds delivered worldwide in discreet, odor-proof, vacuum-sealed packaging.",
+  "url": "https://dwarfdeve.github.io/Dwarf-plug/",
+  "sameAs": [
+    "https://www.instagram.com/dwarf_plug",
+    "https://t.me/dwarfplugshop"
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "url": "https://t.me/dwarfplugshop",
+    "availableLanguage": "English"
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Cannabis Products",
+    "itemListElement": [
+      {"@type":"Offer","itemOffered":{"@type":"Product","name":"Premium Flower"}},
+      {"@type":"Offer","itemOffered":{"@type":"Product","name":"Edibles"}},
+      {"@type":"Offer","itemOffered":{"@type":"Product","name":"Vapes"}},
+      {"@type":"Offer","itemOffered":{"@type":"Product","name":"Concentrates"}},
+      {"@type":"Offer","itemOffered":{"@type":"Product","name":"Pre-Rolls"}},
+      {"@type":"Offer","itemOffered":{"@type":"Product","name":"Oils & Tinctures"}},
+      {"@type":"Offer","itemOffered":{"@type":"Product","name":"Seeds"}},
+      {"@type":"Offer","itemOffered":{"@type":"Product","name":"Topicals & Balms"}}
+    ]
+  }
+}
+</script>
 </head>
 <body>
 
@@ -900,15 +955,55 @@ body.gate-open{overflow:hidden}
 <!-- NEWS TICKER - BULK DISCOUNTS -->
 <div class="news-ticker-wrapper">
   <div class="news-ticker">
-    <span class="ticker-label">💰 REAL TALK:</span>
-    <span class="ticker-message">Big orders get automatic discounts at checkout on Telegram. Think your order's big? Ask us, you might get one. Real recognize real. 🤝</span>
-    <span class="ticker-label">💰 REAL TALK:</span>
-    <span class="ticker-message">Big orders get automatic discounts at checkout on Telegram. Think your order's big? Ask us, you might get one. Real recognize real. 🤝</span>
+    <span class="ticker-label">📦</span>
+    <span class="ticker-message">Every shipment is vacuum-sealed, odor-proof and leaves in plain, unmarked packaging — guaranteed.</span>
+    <span class="ticker-label">💰</span>
+    <span class="ticker-message">Bulk orders qualify for automatic tiered discounts. Reach out on Telegram before you checkout to get your rate.</span>
+    <span class="ticker-label">🔒</span>
+    <span class="ticker-message">Crypto (BTC/XMR/ETH) and physical gift cards accepted. Your privacy is our priority — ask us about Monero for full anonymity.</span>
+    <span class="ticker-label">🌍</span>
+    <span class="ticker-message">Shipping to 40+ countries worldwide. Not in the list? Message us on Telegram — we may still be able to help.</span>
+    <span class="ticker-label">📦</span>
+    <span class="ticker-message">Every shipment is vacuum-sealed, odor-proof and leaves in plain, unmarked packaging — guaranteed.</span>
+    <span class="ticker-label">💰</span>
+    <span class="ticker-message">Bulk orders qualify for automatic tiered discounts. Reach out on Telegram before you checkout to get your rate.</span>
+    <span class="ticker-label">🔒</span>
+    <span class="ticker-message">Crypto (BTC/XMR/ETH) and physical gift cards accepted. Your privacy is our priority — ask us about Monero for full anonymity.</span>
+    <span class="ticker-label">🌍</span>
+    <span class="ticker-message">Shipping to 40+ countries worldwide. Not in the list? Message us on Telegram — we may still be able to help.</span>
   </div>
 </div>
 
 <!-- MAIN -->
 <div class="main">
+
+  <!-- HOW IT WORKS -->
+  <section>
+    <div class="sec-head">
+      <div class="sec-title">How It Works</div>
+      <div class="sec-sub">Three simple steps from browse to delivery</div>
+    </div>
+    <div class="hiw-grid">
+      <div class="hiw-step">
+        <div class="hiw-num">01</div>
+        <div class="hiw-icon">🛍️</div>
+        <div class="hiw-title">Browse &amp; Select</div>
+        <div class="hiw-desc">Browse our full catalog — flower, edibles, vapes, concentrates, oils, seeds and more. Pick your strain, size and quantity directly on the page.</div>
+      </div>
+      <div class="hiw-step">
+        <div class="hiw-num">02</div>
+        <div class="hiw-icon">📋</div>
+        <div class="hiw-title">Fill the Form</div>
+        <div class="hiw-desc">Enter your name, Telegram handle, delivery country and preferred payment method. Your order summary is built automatically as you select items.</div>
+      </div>
+      <div class="hiw-step">
+        <div class="hiw-num">03</div>
+        <div class="hiw-icon">✈️</div>
+        <div class="hiw-title">Confirm &amp; Receive</div>
+        <div class="hiw-desc">Hit Submit — your order details go straight to Telegram. Confirm payment and we ship within 24–48 hours in odor-proof, vacuum-sealed, plain packaging.</div>
+      </div>
+    </div>
+  </section>
 
   <!-- SECURITY TIPS -->
   <section>
@@ -1032,9 +1127,30 @@ body.gate-open{overflow:hidden}
             <label>Country <span>*</span></label>
             <select id="inp-country" onchange="onCountryChange()">
               <option value="">Select country...</option>
-              <option value="USA">United States</option>
-              <option value="Australia">Australia</option>
-              <option value="Canada">Canada</option>
+              <optgroup label="North America">
+                <option value="USA">United States</option>
+                <option value="Canada">Canada</option>
+              </optgroup>
+              <optgroup label="Europe">
+                <option value="UK">United Kingdom</option>
+                <option value="Germany">Germany</option>
+                <option value="Netherlands">Netherlands</option>
+                <option value="France">France</option>
+                <option value="Spain">Spain</option>
+                <option value="Ireland">Ireland</option>
+                <option value="Sweden">Sweden</option>
+                <option value="Denmark">Denmark</option>
+                <option value="Norway">Norway</option>
+                <option value="Switzerland">Switzerland</option>
+                <option value="Belgium">Belgium</option>
+              </optgroup>
+              <optgroup label="Oceania">
+                <option value="Australia">Australia</option>
+                <option value="NewZealand">New Zealand</option>
+              </optgroup>
+              <optgroup label="Other">
+                <option value="Other">Other — contact us on Telegram</option>
+              </optgroup>
             </select>
             <div class="err-msg hidden" id="err-country">Select a country</div>
           </div>
@@ -1136,17 +1252,32 @@ body.gate-open{overflow:hidden}
 
 <!-- FOOTER -->
 <footer class="footer">
-  <div class="footer-links">
-    <a href="https://www.instagram.com/dwarf_plug" target="_blank" rel="noopener" class="footer-link">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;flex-shrink:0"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-      @dwarf_plug
-    </a>
-    <a href="https://t.me/dwarfplugshop" target="_blank" rel="noopener" class="footer-link">
-      <svg viewBox="0 0 24 24" fill="currentColor" style="width:15px;height:15px;flex-shrink:0"><path d="M21.93 3.24a1.5 1.5 0 0 0-1.54-.22L2.42 10.17a1.5 1.5 0 0 0 .1 2.79l3.98 1.3 1.97 6.1a1 1 0 0 0 1.72.37l2.5-2.73 4.35 3.2a1.5 1.5 0 0 0 2.3-1l2.67-15.5a1.5 1.5 0 0 0-.58-1.46ZM10.3 14.9l-.8 2.6-.9-3.5 9.1-8.4-7.4 9.3Z"/></svg>
-      @dwarfplugshop
-    </a>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-trust">🔒 100% Discreet</div>
+      <div class="footer-trust">📦 Vacuum-Sealed Packaging</div>
+      <div class="footer-trust">🌍 40+ Countries</div>
+      <div class="footer-trust">🛡️ Insured Delivery</div>
+      <div class="footer-trust">₿ Crypto Accepted</div>
+    </div>
+    <div class="footer-links">
+      <a href="https://www.instagram.com/dwarf_plug" target="_blank" rel="noopener" class="footer-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;flex-shrink:0"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        @dwarf_plug
+      </a>
+      <a href="https://t.me/dwarfplugshop" target="_blank" rel="noopener" class="footer-link">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;flex-shrink:0"><path d="M21.93 3.24a1.5 1.5 0 0 0-1.54-.22L2.42 10.17a1.5 1.5 0 0 0 .1 2.79l3.98 1.3 1.97 6.1a1 1 0 0 0 1.72.37l2.5-2.73 4.35 3.2a1.5 1.5 0 0 0 2.3-1l2.67-15.5a1.5 1.5 0 0 0-.58-1.46ZM10.3 14.9l-.8 2.6-.9-3.5 9.1-8.4-7.4 9.3Z"/></svg>
+        @dwarfplugshop on Telegram
+      </a>
+      <button type="button" onclick="openReviews()" class="footer-link" style="background:none;border:none;cursor:pointer;padding:0">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;flex-shrink:0;color:#f59e0b"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        Customer Reviews
+      </button>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-copy">© <span id="yr"></span> Dwarf Plug — Premium Discreet Cannabis Delivery</div>
+    <div class="footer-legal">All orders are handled with full discretion. By using this site you confirm you are 21+ years of age and that purchasing cannabis products is permitted under the laws of your jurisdiction. This site is for adults only.</div>
   </div>
-  <div class="footer-copy">© <span id="yr"></span> Dwarf Plug. Stay blessed. Stay discreet. 🙏</div>
 </footer>
 
 <!-- REVIEWS OVERLAY -->
@@ -1285,10 +1416,23 @@ function ageLeave() {
 const COUNTRIES = {
   USA: ["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"],
   Australia: ["Australian Capital Territory","New South Wales","Northern Territory","Queensland","South Australia","Tasmania","Victoria","Western Australia"],
-  Canada: ["Alberta","British Columbia","Manitoba","New Brunswick","Newfoundland and Labrador","Northwest Territories","Nova Scotia","Nunavut","Ontario","Prince Edward Island","Quebec","Saskatchewan","Yukon"]
+  Canada: ["Alberta","British Columbia","Manitoba","New Brunswick","Newfoundland and Labrador","Northwest Territories","Nova Scotia","Nunavut","Ontario","Prince Edward Island","Quebec","Saskatchewan","Yukon"],
+  UK: [],
+  Germany: [],
+  Netherlands: [],
+  France: [],
+  Spain: [],
+  Ireland: [],
+  NewZealand: [],
+  Sweden: [],
+  Denmark: [],
+  Norway: [],
+  Switzerland: [],
+  Belgium: [],
+  Other: []
 };
 
-const STATE_LABELS = { USA: "State", Australia: "Territory", Canada: "Province / Territory" };
+const STATE_LABELS = { USA: "State", Australia: "Territory", Canada: "Province / Territory", UK: "Region", Germany: "Region", Netherlands: "Region", France: "Region", Spain: "Region", Ireland: "Region", NewZealand: "Region", Sweden: "Region", Denmark: "Region", Norway: "Region", Switzerland: "Region", Belgium: "Region", Other: "Region" };
 
 // Flower sizes: [label, grams, oz_label, multiplier_off_per_gram]
 // pricePerGram is the base; bulk discounts applied per tier
@@ -1677,13 +1821,20 @@ function onCountryChange() {
   if (!country) {
     stateSelect.disabled = true;
     stateSelect.innerHTML = `<option value="">Select country first...</option>`;
-    stateLabel.innerHTML = `State <span>*</span>`;
+    stateLabel.innerHTML = `State <span>(optional)</span>`;
+    return;
+  }
+  const states = COUNTRIES[country] || [];
+  if (states.length === 0) {
+    stateSelect.disabled = true;
+    stateSelect.innerHTML = `<option value="N/A">Not applicable</option>`;
+    stateLabel.innerHTML = `Region <span>(not required)</span>`;
     return;
   }
   stateLabel.innerHTML = `${STATE_LABELS[country]} <span>*</span>`;
   stateSelect.disabled = false;
   stateSelect.innerHTML = `<option value="">Select ${STATE_LABELS[country]}...</option>` +
-    COUNTRIES[country].map(s => `<option value="${s}">${s}</option>`).join("");
+    states.map(s => `<option value="${s}">${s}</option>`).join("");
 }
 
 // =====================================================================
@@ -1777,7 +1928,8 @@ function submitOrder(e) {
   if (!name) { showErr("inp-name","err-name"); valid=false; }
   if (!contact) { showErr("inp-contact","err-contact"); valid=false; }
   if (!country) { showErr("inp-country","err-country"); valid=false; }
-  if (!state) { showErr("inp-state","err-state"); valid=false; }
+  const stateRequired = COUNTRIES[country] && COUNTRIES[country].length > 0;
+  if (stateRequired && !state) { showErr("inp-state","err-state"); valid=false; }
   if (cartItems.length===0) { document.getElementById("err-cart").classList.remove("hidden"); valid=false; }
   if (!selectedPayment) { document.getElementById("err-payment").classList.remove("hidden"); valid=false; }
 
