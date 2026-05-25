@@ -663,6 +663,18 @@ body.gate-open{overflow:hidden}
 /* ---- COPY CONFIRM BANNER ---- */
 .copy-confirm{display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:var(--radius-sm);background:var(--green-dim);border:1px solid var(--green-muted);color:var(--green-text);font-size:12px;font-weight:600;margin-bottom:12px;justify-content:center}
 
+/* ---- CATEGORY NAV ---- */
+.cat-nav{position:sticky;top:66px;z-index:40;background:rgba(20,18,16,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 12px}
+.cat-nav-inner{max-width:960px;margin:0 auto;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+.cat-nav-inner::-webkit-scrollbar{display:none}
+.cat-nav-btn{display:flex;align-items:center;gap:6px;padding:9px 12px;border-radius:0;font-size:12px;font-weight:600;color:var(--fg4);background:none;border:none;cursor:pointer;white-space:nowrap;transition:color .15s;position:relative;flex-shrink:0}
+.cat-nav-btn::after{content:'';position:absolute;bottom:0;left:6px;right:6px;height:2px;border-radius:2px 2px 0 0;background:transparent;transition:background .15s}
+.cat-nav-btn:hover{color:var(--fg2)}
+.cat-nav-btn.active{color:var(--fg)}
+.cat-nav-btn.active::after{background:var(--cat-color,var(--green-text))}
+.cat-nav-dot{width:6px;height:6px;border-radius:50%;background:var(--cat-color,var(--green-text));flex-shrink:0;opacity:.7}
+.cat-nav-btn.active .cat-nav-dot{opacity:1}
+
 /* ---- PRODUCT CARD HEADER ---- */
 .card-header{margin:-14px -14px 12px;padding:18px 16px 14px;position:relative;overflow:hidden;border-radius:var(--radius) var(--radius) 0 0;min-height:88px;display:flex;flex-direction:column;justify-content:flex-end;gap:5px}
 .card-header-monogram{position:absolute;right:-6px;top:50%;transform:translateY(-55%);font-family:'Playfair Display',serif;font-size:88px;font-weight:800;line-height:1;color:rgba(255,255,255,.055);pointer-events:none;user-select:none;letter-spacing:-4px}
@@ -976,6 +988,11 @@ body.gate-open{overflow:hidden}
       </div>
     </div>
   </section>
+
+  <!-- CATEGORY NAV -->
+  <div class="cat-nav" id="cat-nav">
+    <div class="cat-nav-inner" id="cat-nav-inner"></div>
+  </div>
 
   <!-- CATALOG -->
   <section id="catalog">
@@ -1437,12 +1454,53 @@ let insured = false;
 // =====================================================================
 // RENDER CATALOG
 // =====================================================================
+function renderCatNav() {
+  const inner = document.getElementById("cat-nav-inner");
+  if (!inner) return;
+  inner.innerHTML = MENU.map((cat, ci) => {
+    const st = CAT_STYLE[cat.styleKey] || CAT_STYLE.flower;
+    const shortName = cat.cat.replace("Premium ","").replace(" & Tinctures","").replace(" & Balms","");
+    return `<button class="cat-nav-btn ${ci===0?'active':''}" id="nav-btn-${ci}" style="--cat-color:${st.strip}" onclick="scrollToCat(${ci})">
+      <span class="cat-nav-dot"></span>${shortName}
+    </button>`;
+  }).join("");
+  initCatScrollSpy();
+}
+
+function scrollToCat(ci) {
+  const el = document.getElementById(`cat-section-${ci}`);
+  if (!el) return;
+  const offset = 110;
+  const top = el.getBoundingClientRect().top + window.scrollY - offset;
+  window.scrollTo({ top, behavior:"smooth" });
+}
+
+function initCatScrollSpy() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const ci = entry.target.dataset.ci;
+        document.querySelectorAll(".cat-nav-btn").forEach(b => b.classList.remove("active"));
+        const activeBtn = document.getElementById(`nav-btn-${ci}`);
+        if (activeBtn) {
+          activeBtn.classList.add("active");
+          activeBtn.scrollIntoView({ behavior:"smooth", block:"nearest", inline:"center" });
+        }
+      }
+    });
+  }, { rootMargin:"-20% 0px -60% 0px" });
+  MENU.forEach((_,ci) => {
+    const el = document.getElementById(`cat-section-${ci}`);
+    if (el) observer.observe(el);
+  });
+}
+
 function renderCatalog() {
   const el = document.getElementById("catalog-content");
   el.innerHTML = MENU.map((cat, ci) => {
     const st = CAT_STYLE[cat.styleKey] || CAT_STYLE.flower;
     return `
-    <div style="margin-bottom:32px" class="reveal">
+    <div style="margin-bottom:32px" class="reveal" id="cat-section-${ci}" data-ci="${ci}">
       <div class="cat-banner" style="background:${st.grad};box-shadow:0 4px 20px ${st.glow}">
         <div class="cat-banner-glow" style="background:radial-gradient(ellipse at 10% 50%,${st.glow} 0%,transparent 70%)"></div>
         <div class="cat-banner-emoji" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;flex-shrink:0">${cat.emoji}</div>
@@ -1820,6 +1878,7 @@ function resetOrder() {
   });
   updateCartSummary();
   renderCatalog();
+  renderCatNav();
   document.getElementById("modal").classList.remove("open");
   window.scrollTo({top:0, behavior:"smooth"});
 }
@@ -2269,6 +2328,7 @@ function initOrderCounter() {
 // =====================================================================
 document.getElementById("yr").textContent = new Date().getFullYear();
 renderCatalog();
+renderCatNav();
 requestAnimationFrame(() => {
   initReveal();
   initParticles();
