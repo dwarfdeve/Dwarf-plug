@@ -1111,7 +1111,7 @@ body.gate-open{overflow:hidden}
       @dwarfplugshop
     </a>
   </div>
-  <div class="footer-copy">© <span id="yr"></span> Dwarf Plug. Discreet delivery worldwide.</div>
+  <div class="footer-copy">© <span id="yr"></span> Dwarf Plug. Stay blessed. Stay discreet. 🙏</div>
 </footer>
 
 <!-- REVIEWS OVERLAY -->
@@ -1650,11 +1650,11 @@ function submitOrder(e) {
     notes ? "\n📝 *Notes:* " + notes : "",
     "",
     "---",
-    "Sent from DwarfPlug.github.io"
+    "Stay blessed. Stay discreet. 🙏"
   ].filter(l => l !== undefined).join("\n");
 
   // Pre-filled Telegram message URL (opens chat with message ready to send)
-  const tgUrl = "https://t.me/dwarfplugshop?text=" + encodeURIComponent(lines);
+  const tgUrl = "https://t.me/dwarfplugshop?direct&text=" + encodeURIComponent(lines);
 
   // Auto-copy order text to clipboard
   const copyConfirm = document.getElementById("copy-confirm");
