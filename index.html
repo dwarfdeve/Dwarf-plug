@@ -2281,7 +2281,9 @@ function updateCartSummary() {
   const rows = document.getElementById("cart-rows");
   const empty = document.getElementById("cart-empty");
   const items = Object.entries(cart);
-  if (items.length === 0) {
+  // Filter to only show items with qty > 0
+  const activeItems = items.filter(([, data]) => data.qty > 0);
+  if (activeItems.length === 0) {
     empty.classList.remove("hidden");
     rows.innerHTML = "";
   } else {
@@ -2292,7 +2294,7 @@ function updateCartSummary() {
     const insPrice = insured ? (getInsurancePrice() || 0) : 0;
     const grandTotal = subtotal - discount + insPrice;
 
-    let html = items.map(([name, data]) => {
+    let html = activeItems.map(([name, data]) => {
       const sizeInfo = data.sizeLabel ? ` <span style="color:var(--fg4);font-size:11px">(${data.sizeLabel})</span>` : "";
       return `<div class="cart-row">
         <span class="cart-row-name">${name}${sizeInfo} × ${data.qty}</span>
@@ -2507,6 +2509,9 @@ function submitOrder(e) {
   const orderId = "DP-" + (Math.floor(100000 + Math.random() * 900000));
   const notes = document.getElementById("inp-notes").value.trim();
 
+  // Filter cart to only include items with qty > 0
+  const activeCartItems = cartItems.filter(([n, d]) => d.qty > 0);
+
   // Build Telegram message
   const lines = [
     "🌿 *NEW ORDER — " + orderId + "*",
@@ -2517,7 +2522,7 @@ function submitOrder(e) {
     "💳 *Payment:* " + PAY_NAMES[selectedPayment],
     "",
     "📦 *ORDER DETAILS:*",
-    ...cartItems.map(([n,d]) => {
+    ...activeCartItems.map(([n,d]) => {
       const sizeInfo = d.sizeLabel ? " (" + d.sizeLabel + ")" : "";
       return "• " + n + sizeInfo + " × " + d.qty + " — " + d.price + " each";
     }),
@@ -2558,7 +2563,7 @@ function submitOrder(e) {
     </div>`;
   document.getElementById("modal-items").innerHTML = `
     <div class="modal-items-label">Your Items</div>
-    ${cartItems.map(([n,d]) => {
+    ${activeCartItems.map(([n,d]) => {
       const sizeInfo = d.sizeLabel ? `<span style="color:var(--fg4);font-size:11px"> (${d.sizeLabel})</span>` : "";
       return `<div class="modal-item-row"><span class="modal-item-name">${n}${sizeInfo} × ${d.qty}</span><span class="modal-item-price">${d.price} ea</span></div>`;
     }).join("")}
