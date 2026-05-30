@@ -1,0 +1,1 @@
+Updated product section to modern app-like menu with horizontal category tabs, larger touch-friendly cards, floating add to cart, and bottom navigation. Pure HTML/CSS/JS improvements for better mobile UX.
