@@ -680,7 +680,20 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
         <div class="modal-close" onclick="closeCart()">✕</div>
       </div>
       <div class="modal-body">
+        <div id="discountBanner" style="display:none;background:rgba(0,255,153,0.1);border:1px solid rgba(0,255,153,0.3);border-radius:8px;padding:12px;margin-bottom:16px;text-align:center">
+          <div style="font-size:11px;color:rgba(0,255,153,0.7);margin-bottom:6px">🎮 DISCOUNT CODE ACTIVE</div>
+          <div style="font-size:18px;font-weight:900;color:#00ff99;letter-spacing:2px" id="discountCodeDisplay"></div>
+          <div style="font-size:10px;color:rgba(0,255,153,0.6);margin-top:6px" id="discountSavings"></div>
+        </div>
         <div class="cart-list" id="cartList"></div>
+        <div class="cart-total-row">
+          <span class="cart-total-label">Subtotal:</span>
+          <span class="cart-total-val" id="cartSubtotal">$0</span>
+        </div>
+        <div class="cart-total-row" id="discountRow" style="display:none;border-top:none;padding-top:0;margin-top:0">
+          <span class="cart-total-label" style="color:#00ff99">Discount (<span id="discountPercent">0</span>%):</span>
+          <span class="cart-total-val" style="color:#ff3333" id="discountAmount">-$0</span>
+        </div>
         <div class="cart-total-row">
           <span class="cart-total-label">Total Amount:</span>
           <span class="cart-total-val" id="cartTotal">$0</span>
@@ -771,12 +784,13 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     if (cart.length === 0) {
       list.innerHTML = '<div class="cart-empty">Your cart is empty</div>';
       document.getElementById('cartTotal').textContent = '$0';
+      document.getElementById('discountBanner').style.display = 'none';
       return;
     }
     
-    let total = 0;
+    let subtotal = 0;
     cart.forEach((item, i) => {
-      total += item.price;
+      subtotal += item.price;
       list.innerHTML += `
         <div class="cart-item">
           <img src="${item.img}" class="cart-item-img" />
@@ -790,7 +804,36 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       `;
     });
     
-    document.getElementById('cartTotal').textContent = '$' + total.toLocaleString();
+    // Check for active discount code
+    const discountCode = localStorage.getItem('dwarfplug-discount-code');
+    const discountLevel = parseInt(localStorage.getItem('dwarfplug-discount-level') || '0');
+    let discountPercent = 0;
+    
+    if (discountCode && discountLevel >= 3) {
+      if (discountLevel >= 12) discountPercent = 35;
+      else if (discountLevel >= 8) discountPercent = 25;
+      else if (discountLevel >= 5) discountPercent = 15;
+      else if (discountLevel >= 3) discountPercent = 10;
+    }
+    
+    document.getElementById('cartSubtotal').textContent = '$' + subtotal.toLocaleString();
+    
+    if (discountPercent > 0) {
+      const discountAmount = Math.floor(subtotal * discountPercent / 100);
+      const total = subtotal - discountAmount;
+      
+      document.getElementById('discountBanner').style.display = 'block';
+      document.getElementById('discountCodeDisplay').textContent = discountCode;
+      document.getElementById('discountSavings').textContent = `Save $${discountAmount.toLocaleString()} on this order`;
+      document.getElementById('discountRow').style.display = 'flex';
+      document.getElementById('discountPercent').textContent = discountPercent;
+      document.getElementById('discountAmount').textContent = '-$' + discountAmount.toLocaleString();
+      document.getElementById('cartTotal').textContent = '$' + total.toLocaleString();
+    } else {
+      document.getElementById('discountBanner').style.display = 'none';
+      document.getElementById('discountRow').style.display = 'none';
+      document.getElementById('cartTotal').textContent = '$' + subtotal.toLocaleString();
+    }
   }
 
   function openCart() { document.getElementById('cartModalOverlay').classList.add('open'); }

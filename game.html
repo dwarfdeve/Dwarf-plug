@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
-<title>The Plug Runner — Dwarf Plug</title>
+<title>Discount Quest — Dwarf Plug</title>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@700;900&display=swap" rel="stylesheet"/>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -38,7 +38,7 @@ canvas{display:block;image-rendering:pixelated;max-width:100%;max-height:100%}
 
 /* overlays */
 .overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:500;background:rgba(0,0,0,0.88)}
-.overlay-box{background:rgba(6,6,6,0.98);border:2px solid rgba(0,255,153,0.35);border-radius:12px;padding:36px 40px;text-align:center;max-width:440px;width:90%;box-shadow:0 0 60px rgba(0,255,153,0.15),0 0 120px rgba(0,255,153,0.06);position:relative;overflow:hidden}
+.overlay-box{background:rgba(6,6,6,0.98);border:2px solid rgba(0,255,153,0.35);border-radius:12px;padding:36px 40px;text-align:center;max-width:500px;width:90%;box-shadow:0 0 60px rgba(0,255,153,0.15),0 0 120px rgba(0,255,153,0.06);position:relative;overflow:hidden;max-height:90vh;overflow-y:auto}
 .overlay-box::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 3px,rgba(0,255,153,0.02) 3px,rgba(0,255,153,0.02) 4px);pointer-events:none}
 .ov-title{font-family:'Orbitron',sans-serif;font-size:28px;font-weight:900;color:var(--green);text-shadow:0 0 20px rgba(0,255,153,0.5),0 0 40px rgba(0,255,153,0.2);letter-spacing:2px;margin-bottom:6px}
 .ov-sub{font-size:11px;color:rgba(0,255,153,0.5);letter-spacing:3px;text-transform:uppercase;margin-bottom:28px}
@@ -47,12 +47,20 @@ canvas{display:block;image-rendering:pixelated;max-width:100%;max-height:100%}
 .ov-score-big{font-family:'Orbitron',sans-serif;font-size:42px;font-weight:900;color:var(--green);text-shadow:0 0 20px rgba(0,255,153,0.5);margin-bottom:6px}
 .ov-score-label{font-size:10px;color:rgba(0,255,153,0.45);letter-spacing:2px;margin-bottom:8px}
 .ov-hi{font-size:11px;color:var(--gold);letter-spacing:1px;margin-bottom:28px}
-.btn-play{display:inline-block;padding:14px 40px;background:linear-gradient(135deg,var(--green),var(--green2));color:#000;font-family:'Orbitron',sans-serif;font-size:13px;font-weight:900;letter-spacing:2px;border:none;border-radius:8px;cursor:pointer;box-shadow:0 0 30px rgba(0,255,153,0.5);transition:all .2s;text-transform:uppercase}
+.btn-play{display:inline-block;padding:14px 40px;background:linear-gradient(135deg,var(--green),var(--green2));color:#000;font-family:'Orbitron',sans-serif;font-size:13px;font-weight:900;letter-spacing:2px;border:none;border-radius:8px;cursor:pointer;box-shadow:0 0 30px rgba(0,255,153,0.5);transition:all .2s;text-transform:uppercase;margin-top:12px}
 .btn-play:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(0,255,153,0.7)}
 .btn-play:active{transform:scale(0.96)}
 .ov-controls{margin-top:22px;font-size:10px;color:rgba(255,255,255,0.28);letter-spacing:1px;line-height:1.9}
 .ov-controls b{color:rgba(0,255,153,0.55)}
 .hidden{display:none!important}
+
+/* discount rewards */
+.reward-box{background:rgba(0,255,153,0.08);border:1px solid rgba(0,255,153,0.3);border-radius:8px;padding:16px;margin:12px 0;text-align:center}
+.reward-percent{font-family:'Orbitron',sans-serif;font-size:32px;font-weight:900;color:var(--gold);text-shadow:0 0 15px rgba(255,215,0,0.6)}
+.reward-desc{font-size:10px;color:rgba(0,255,153,0.7);margin-top:6px;letter-spacing:1px}
+.reward-code{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--green);background:rgba(0,0,0,0.5);padding:8px 12px;border-radius:4px;margin-top:8px;word-break:break-all}
+.btn-copy{display:inline-block;padding:8px 16px;background:rgba(0,255,153,0.15);border:1px solid rgba(0,255,153,0.3);color:var(--green);font-size:10px;font-weight:700;border-radius:4px;cursor:pointer;margin-top:8px;transition:all .2s;font-family:'Orbitron',sans-serif}
+.btn-copy:hover{background:rgba(0,255,153,0.25);border-color:rgba(0,255,153,0.6)}
 
 /* level flash */
 #levelFlash{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:490;pointer-events:none;opacity:0;transition:opacity .3s}
@@ -75,7 +83,7 @@ canvas{display:block;image-rendering:pixelated;max-width:100%;max-height:100%}
 <body>
 
 <div class="top-bar">
-  <span class="top-logo">◈ PLUG RUNNER</span>
+  <span class="top-logo">◈ DISCOUNT QUEST</span>
   <div style="display:flex;align-items:center;gap:10px">
     <button class="music-toggle" id="musicBtn" onclick="toggleAudio()" title="Toggle Music">🎵 Music ON</button>
     <a class="top-back" href="index.html">← Shop</a>
@@ -106,13 +114,17 @@ canvas{display:block;image-rendering:pixelated;max-width:100%;max-height:100%}
 <!-- Start Screen -->
 <div class="overlay" id="startScreen">
   <div class="overlay-box">
-    <div class="ov-title">PLUG RUNNER</div>
-    <div class="ov-sub">Dark Market Heist · v2.1</div>
+    <div class="ov-title">DISCOUNT QUEST</div>
+    <div class="ov-sub">Earn Rewards · Huge Order Bonuses</div>
     <div class="ov-desc">
-      You are <span>The Plug</span>. Navigate the dark grid, <span>collect drops</span> to build your stack. Avoid <span>surveillance drones</span> — one hit and you're caught.<br/><br/>
-      Stack enough drops and the drones get faster. How long can you run?
+      Collect drops and survive the grid. Each level you complete <span>unlocks exclusive discounts</span> on bulk orders.<br/><br/>
+      <span>Level 3+:</span> 10% OFF<br/>
+      <span>Level 5+:</span> 15% OFF<br/>
+      <span>Level 8+:</span> 25% OFF<br/>
+      <span>Level 12+:</span> 35% OFF<br/><br/>
+      Higher levels = bigger discounts. Apply your code at checkout!
     </div>
-    <button class="btn-play" onclick="startGame()">⚡ RUN IT</button>
+    <button class="btn-play" onclick="startGame()">⚡ PLAY NOW</button>
     <div class="ov-controls">
       <b>WASD</b> or <b>ARROW KEYS</b> to move &nbsp;·&nbsp; <b>P</b> to pause<br/>
       Mobile: <b>swipe</b> or use D-pad below
@@ -120,15 +132,19 @@ canvas{display:block;image-rendering:pixelated;max-width:100%;max-height:100%}
   </div>
 </div>
 
-<!-- Game Over Screen -->
+<!-- Game Over Screen - Reward Unlock -->
 <div class="overlay hidden" id="gameOverScreen">
   <div class="overlay-box">
-    <div class="ov-title">CAUGHT.</div>
-    <div class="ov-sub">System Trace Complete</div>
+    <div class="ov-title">GAME OVER</div>
+    <div class="ov-sub" id="goSub">Level Complete</div>
     <div class="ov-score-big" id="goScore">0</div>
-    <div class="ov-score-label">PACKAGES MOVED</div>
+    <div class="ov-score-label">FINAL LEVEL</div>
+    
+    <div id="rewardSection"></div>
+    
     <div class="ov-hi" id="goHi">BEST: 0</div>
-    <button class="btn-play" onclick="startGame()">↺ RUN AGAIN</button>
+    <button class="btn-play" onclick="startGame()">↺ PLAY AGAIN</button>
+    <button class="btn-play" style="background:linear-gradient(135deg,#ff6b00,#ff8c00);margin-left:8px" onclick="goToShop()">🛒 GO TO SHOP</button>
   </div>
 </div>
 
@@ -167,27 +183,63 @@ canvas{display:block;image-rendering:pixelated;max-width:100%;max-height:100%}
     }
 })();
 
+// ── DISCOUNT REWARDS ──────────────────────────────────────────────────────────
+const DISCOUNT_TIERS = [
+  { level: 3, discount: 10, code: 'QUEST10' },
+  { level: 5, discount: 15, code: 'QUEST15' },
+  { level: 8, discount: 25, code: 'QUEST25' },
+  { level: 12, discount: 35, code: 'QUEST35' }
+];
+
+function getDiscountForLevel(level) {
+  let bestDiscount = null;
+  for (let tier of DISCOUNT_TIERS) {
+    if (level >= tier.level) {
+      bestDiscount = tier;
+    } else {
+      break;
+    }
+  }
+  return bestDiscount;
+}
+
+function generateDiscountCode(level) {
+  const discount = getDiscountForLevel(level);
+  if (!discount) return null;
+  
+  const code = discount.code + Math.random().toString(36).substring(2, 7).toUpperCase();
+  localStorage.setItem('dwarfplug-discount-code', code);
+  localStorage.setItem('dwarfplug-discount-level', level);
+  return { code, discount: discount.discount };
+}
+
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    alert('Discount code copied to clipboard!');
+  });
+}
+
+function goToShop() {
+  window.location.href = 'index.html';
+}
+
 // ── WEB AUDIO ENGINE ──────────────────────────────────────────────────────────
 let audioCtx = null, audioOn = true;
 let masterGain, droneGain, musicGain;
 let musicScheduler = null, musicStep = 0, musicNextTime = 0;
 
-// Dark ambient bass drone notes (Hz, 0=rest) — A minor feel
 const BASS = [55,0,55,0,49,0,49,0,44,0,44,0,41,0,41,0];
-// Arpeggio melody (Hz, 0=rest)
 const MELODY = [220,0,330,0,262,0,392,0,294,0,440,0,349,0,523,0];
-const STEP = 0.16; // seconds per 16th step
+const STEP = 0.16;
 
 function initAudio() {
   if (audioCtx) return;
   try {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
     masterGain = audioCtx.createGain();
     masterGain.gain.value = audioOn ? 0.28 : 0.0;
     masterGain.connect(audioCtx.destination);
 
-    // Drone layer
     droneGain = audioCtx.createGain();
     droneGain.gain.value = 0.5;
     droneGain.connect(masterGain);
@@ -198,576 +250,259 @@ function initAudio() {
     });
     const lfo = audioCtx.createOscillator(), lfoG = audioCtx.createGain();
     lfo.frequency.value = 0.07; lfoG.gain.value = 0.06;
-    lfo.connect(lfoG); lfoG.connect(droneGain.gain); lfo.start();
+    lfo.connect(lfoG); lfoG.connect(droneGain.gain);
+    lfo.start();
 
-    // Music layer
     musicGain = audioCtx.createGain();
-    musicGain.gain.value = 0.7;
+    musicGain.gain.value = 0.25;
     musicGain.connect(masterGain);
-
-    // Start sequencer
-    musicNextTime = audioCtx.currentTime + 0.05;
-    scheduleMusicLoop();
-  } catch(e) {}
+    musicNextTime = audioCtx.currentTime;
+    musicScheduler = setInterval(playMusicStep, STEP * 1000 * 0.9);
+  } catch(e) { console.log('Audio init failed'); }
 }
 
-function scheduleNote(freq, time, dur, type, vol, dest) {
-  const o = audioCtx.createOscillator(), g = audioCtx.createGain();
-  o.type = type; o.frequency.value = freq; g.gain.value = 0;
-  o.connect(g); g.connect(dest);
-  g.gain.setTargetAtTime(vol, time, 0.004);
-  g.gain.setTargetAtTime(0, time + dur * 0.7, 0.02);
-  o.start(time); o.stop(time + dur);
-}
-
-function scheduleMusicLoop() {
+function playMusicStep() {
   if (!audioCtx || !audioOn) return;
-  const ahead = 0.12;
   const now = audioCtx.currentTime;
-  while (musicNextTime < now + ahead) {
-    const i = musicStep % 16;
-    // Bass
-    if (BASS[i]) scheduleNote(BASS[i], musicNextTime, STEP * 0.85, 'sawtooth', 0.18, musicGain);
-    // Melody arpeggio
-    if (MELODY[i]) scheduleNote(MELODY[i], musicNextTime, STEP * 0.6, 'square', 0.07, musicGain);
-    // Kick-like pulse on beat 0 and 8
-    if (i === 0 || i === 8) {
-      const ko = audioCtx.createOscillator(), kg = audioCtx.createGain();
-      ko.type = 'sine'; ko.frequency.setValueAtTime(120, musicNextTime);
-      ko.frequency.exponentialRampToValueAtTime(40, musicNextTime + 0.08);
-      kg.gain.value = 0;
-      ko.connect(kg); kg.connect(musicGain);
-      kg.gain.setTargetAtTime(0.22, musicNextTime, 0.003);
-      kg.gain.setTargetAtTime(0, musicNextTime + 0.07, 0.03);
-      ko.start(musicNextTime); ko.stop(musicNextTime + 0.12);
-    }
-    musicNextTime += STEP;
-    musicStep++;
-  }
-  musicScheduler = setTimeout(scheduleMusicLoop, 60);
+  if (now < musicNextTime) return;
+  
+  const bassNote = BASS[musicStep % BASS.length];
+  const melodyNote = MELODY[musicStep % MELODY.length];
+  
+  if (bassNote > 0) playTone(bassNote, STEP, musicGain, 0.08);
+  if (melodyNote > 0) playTone(melodyNote, STEP, musicGain, 0.06);
+  
+  musicNextTime = now + STEP;
+  musicStep++;
 }
 
-function stopMusicLoop() {
-  clearTimeout(musicScheduler);
-  musicScheduler = null;
-}
-
-function sfxCollect() {
-  if (!audioCtx || !audioOn) return;
-  try {
-    const t = audioCtx.currentTime;
-    [330, 440, 660].forEach((f, i) => {
-      const o = audioCtx.createOscillator();
-      const g = audioCtx.createGain();
-      o.type = 'square';
-      o.frequency.value = f;
-      g.gain.value = 0.0;
-      o.connect(g); g.connect(audioCtx.destination);
-      g.gain.setTargetAtTime(0.08, t + i * 0.055, 0.01);
-      g.gain.setTargetAtTime(0.0, t + i * 0.055 + 0.05, 0.04);
-      o.start(t + i * 0.055);
-      o.stop(t + i * 0.055 + 0.18);
-    });
-  } catch(e) {}
-}
-
-function sfxBonus() {
-  if (!audioCtx || !audioOn) return;
-  try {
-    const t = audioCtx.currentTime;
-    [220, 330, 440, 660, 880].forEach((f, i) => {
-      const o = audioCtx.createOscillator();
-      const g = audioCtx.createGain();
-      o.type = 'sawtooth';
-      o.frequency.value = f;
-      g.gain.value = 0.0;
-      o.connect(g); g.connect(audioCtx.destination);
-      g.gain.setTargetAtTime(0.07, t + i * 0.07, 0.01);
-      g.gain.setTargetAtTime(0.0, t + i * 0.07 + 0.1, 0.06);
-      o.start(t + i * 0.07);
-      o.stop(t + i * 0.07 + 0.25);
-    });
-  } catch(e) {}
-}
-
-function sfxDie() {
-  if (!audioCtx || !audioOn) return;
-  try {
-    const t = audioCtx.currentTime;
-    [220, 180, 140, 100, 60].forEach((f, i) => {
-      const o = audioCtx.createOscillator();
-      const g = audioCtx.createGain();
-      o.type = 'sawtooth';
-      o.frequency.setValueAtTime(f + 60, t + i * 0.08);
-      o.frequency.linearRampToValueAtTime(f - 20, t + i * 0.08 + 0.2);
-      g.gain.value = 0.0;
-      o.connect(g); g.connect(audioCtx.destination);
-      g.gain.setTargetAtTime(0.12, t + i * 0.08, 0.01);
-      g.gain.setTargetAtTime(0.0, t + i * 0.08 + 0.12, 0.1);
-      o.start(t + i * 0.08);
-      o.stop(t + i * 0.08 + 0.5);
-    });
-  } catch(e) {}
-}
-
-function sfxLevelUp() {
-  if (!audioCtx || !audioOn) return;
-  try {
-    const t = audioCtx.currentTime;
-    [440, 550, 660, 880].forEach((f, i) => {
-      const o = audioCtx.createOscillator();
-      const g = audioCtx.createGain();
-      o.type = 'sine';
-      o.frequency.value = f;
-      g.gain.value = 0.0;
-      o.connect(g); g.connect(audioCtx.destination);
-      g.gain.setTargetAtTime(0.1, t + i * 0.1, 0.01);
-      g.gain.setTargetAtTime(0.0, t + i * 0.1 + 0.15, 0.08);
-      o.start(t + i * 0.1);
-      o.stop(t + i * 0.1 + 0.35);
-    });
-  } catch(e) {}
+function playTone(freq, duration, gain, vol) {
+  const osc = audioCtx.createOscillator();
+  const env = audioCtx.createGain();
+  osc.frequency.value = freq;
+  osc.type = 'sine';
+  env.gain.setValueAtTime(vol, audioCtx.currentTime);
+  env.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+  osc.connect(env);
+  env.connect(gain);
+  osc.start(audioCtx.currentTime);
+  osc.stop(audioCtx.currentTime + duration);
 }
 
 function toggleAudio() {
   audioOn = !audioOn;
-  const btn = document.getElementById('musicBtn');
-  if (btn) {
-    btn.textContent = audioOn ? '🎵 Music ON' : '🔇 Music OFF';
-    btn.classList.toggle('off', !audioOn);
-  }
-  if (!audioCtx) return;
-  if (audioOn) {
-    masterGain.gain.setTargetAtTime(0.28, audioCtx.currentTime, 0.3);
-    musicNextTime = audioCtx.currentTime + 0.05;
-    scheduleMusicLoop();
-  } else {
-    masterGain.gain.setTargetAtTime(0.0, audioCtx.currentTime, 0.3);
-    stopMusicLoop();
-  }
+  if (audioCtx) masterGain.gain.value = audioOn ? 0.28 : 0.0;
+  document.getElementById('musicBtn').classList.toggle('off');
+  document.getElementById('musicBtn').textContent = audioOn ? '🎵 Music ON' : '🔇 Music OFF';
 }
 
 // ── GAME ENGINE ───────────────────────────────────────────────────────────────
-const canvas = document.getElementById('gc');
-const ctx = canvas.getContext('2d');
-
-const CELL = 22;
-let COLS, ROWS, W, H;
-let snake, dir, nextDir, food, enemies, score, lives, level, hiScore;
-let gameLoop, running, paused, dead, frameCount;
-
-// Drone enemies
-function makeEnemy() {
-  const margin = 2;
-  const sides = ['top','bottom','left','right'];
-  const side = sides[Math.floor(Math.random() * 4)];
-  let x, y, vx, vy;
-  const speed = 0.04 + level * 0.012;
-  if (side === 'top')    { x = randInt(margin,COLS-margin); y = 0;      vx = 0; vy = speed; }
-  else if (side === 'bottom') { x = randInt(margin,COLS-margin); y = ROWS-1; vx = 0; vy = -speed; }
-  else if (side === 'left')   { x = 0; y = randInt(margin,ROWS-margin);       vx = speed; vy = 0; }
-  else                         { x = COLS-1; y = randInt(margin,ROWS-margin);  vx = -speed; vy = 0; }
-  return { x, y, vx, vy, phase: Math.random() * Math.PI * 2 };
-}
-
-function randInt(a, b) { return a + Math.floor(Math.random() * (b - a)); }
-
-function placeFood() {
-  let pos;
-  do {
-    pos = { x: randInt(2, COLS-2), y: randInt(2, ROWS-2) };
-  } while (snake.some(s => s.x===pos.x && s.y===pos.y));
-  food = { ...pos, bonus: Math.random() < 0.2, pulse: 0 };
-}
-
-function resize() {
-  const wrap = document.getElementById('gameWrap');
-  const aw = wrap.clientWidth;
-  const ah = wrap.clientHeight;
-  COLS = Math.floor(aw / CELL);
-  ROWS = Math.floor(ah / CELL);
-  COLS = Math.max(16, Math.min(40, COLS));
-  ROWS = Math.max(14, Math.min(28, ROWS));
-  W = COLS * CELL;
-  H = ROWS * CELL;
-  canvas.width = W;
-  canvas.height = H;
-}
-
-function initGame() {
-  resize();
-  const cx = Math.floor(COLS / 2);
-  const cy = Math.floor(ROWS / 2);
-  snake = [{x:cx,y:cy},{x:cx-1,y:cy},{x:cx-2,y:cy}];
-  dir = {x:1,y:0};
-  nextDir = {x:1,y:0};
-  score = 0;
-  lives = 3;
-  level = 1;
-  frameCount = 0;
-  running = true;
-  paused = false;
-  dead = false;
-  enemies = [];
-  placeFood();
-  updateHUD();
-}
-
-function getSpeed() {
-  return Math.max(60, 180 - level * 18);
-}
+const GRID_W = 16, GRID_H = 12;
+const CELL = 32;
+let canvas, ctx, gameRunning = false, gamePaused = false;
+let playerX = 8, playerY = 6, score = 0, lives = 3, level = 1;
+let drops = [], drones = [], highScore = parseInt(localStorage.getItem('dwarfplug-hs') || '0');
+let dirX = 0, dirY = 0, nextDirX = 0, nextDirY = 0;
 
 function startGame() {
   initAudio();
   document.getElementById('startScreen').classList.add('hidden');
   document.getElementById('gameOverScreen').classList.add('hidden');
   document.getElementById('pauseScreen').classList.add('hidden');
-  initGame();
-  clearInterval(gameLoop);
-  gameLoop = setInterval(gameTick, getSpeed());
+  
+  canvas = document.getElementById('gc');
+  ctx = canvas.getContext('2d');
+  canvas.width = GRID_W * CELL;
+  canvas.height = GRID_H * CELL;
+  
+  playerX = 8; playerY = 6;
+  score = 0; lives = 3; level = 1;
+  drops = []; drones = [];
+  dirX = 0; dirY = 0; nextDirX = 0; nextDirY = 0;
+  
+  spawnDrops(3);
+  spawnDrones(1);
+  gameRunning = true;
+  gameLoop();
 }
 
-function gameTick() {
-  if (!running || paused) return;
-  frameCount++;
-  dir = { ...nextDir };
-  const head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
-
-  // Wall collision
-  if (head.x < 0 || head.x >= COLS || head.y < 0 || head.y >= ROWS) {
-    loseLife(); return;
+function spawnDrops(count) {
+  for (let i = 0; i < count; i++) {
+    let x, y;
+    do {
+      x = Math.floor(Math.random() * GRID_W);
+      y = Math.floor(Math.random() * GRID_H);
+    } while ((x === playerX && y === playerY) || drops.some(d => d.x === x && d.y === y));
+    drops.push({ x, y });
   }
-  // Self collision
-  if (snake.slice(1).some(s => s.x===head.x && s.y===head.y)) {
-    loseLife(); return;
+}
+
+function spawnDrones(count) {
+  for (let i = 0; i < count; i++) {
+    let x, y;
+    do {
+      x = Math.floor(Math.random() * GRID_W);
+      y = Math.floor(Math.random() * GRID_H);
+    } while (x === playerX && y === playerY);
+    drones.push({ x, y, vx: Math.random() > 0.5 ? 1 : -1, vy: Math.random() > 0.5 ? 1 : -1 });
   }
+}
 
-  snake.unshift(head);
-
-  // Food
-  if (head.x === food.x && head.y === food.y) {
-    const pts = food.bonus ? 50 : 10;
-    score += pts;
-    food.bonus ? sfxBonus() : sfxCollect();
-    placeFood();
-
-    // Level up every 100 points
-    const newLevel = 1 + Math.floor(score / 100);
-    if (newLevel > level) {
-      level = newLevel;
-      sfxLevelUp();
-      flashLevel();
-      // Add enemy
-      if (enemies.length < 3 + level) enemies.push(makeEnemy());
-      clearInterval(gameLoop);
-      gameLoop = setInterval(gameTick, getSpeed());
+function gameLoop() {
+  if (!gameRunning) return;
+  
+  if (!gamePaused) {
+    dirX = nextDirX; dirY = nextDirY;
+    const nx = playerX + dirX, ny = playerY + dirY;
+    if (nx >= 0 && nx < GRID_W && ny >= 0 && ny < GRID_H) {
+      playerX = nx; playerY = ny;
     }
-    // Add enemy periodically
-    if (score % 50 === 0 && enemies.length < 2 + level * 2) enemies.push(makeEnemy());
-  } else {
-    snake.pop();
+    
+    drops = drops.filter(d => !(d.x === playerX && d.y === playerY));
+    if (drops.length === 0) {
+      score += 100 * level;
+      level++;
+      spawnDrops(2 + level);
+      if (level % 3 === 0) spawnDrones(1);
+      document.getElementById('hudLevel').textContent = 'LVL ' + level;
+      showLevelFlash('LEVEL ' + level);
+    }
+    
+    for (let d of drones) {
+      d.x += d.vx;
+      d.y += d.vy;
+      if (d.x <= 0 || d.x >= GRID_W - 1) d.vx *= -1;
+      if (d.y <= 0 || d.y >= GRID_H - 1) d.vy *= -1;
+      
+      if (d.x === playerX && d.y === playerY) {
+        lives--;
+        if (lives <= 0) {
+          endGame();
+          return;
+        }
+        playerX = 8; playerY = 6;
+      }
+    }
+    
+    document.getElementById('hudScore').textContent = score;
+    updateLives();
   }
-
-  // Move enemies (float positions)
-  enemies.forEach(e => {
-    e.x += e.vx;
-    e.y += e.vy;
-    e.phase += 0.05;
-    // Bounce off walls
-    if (e.x <= 0 || e.x >= COLS - 1) { e.vx *= -1; }
-    if (e.y <= 0 || e.y >= ROWS - 1) { e.vy *= -1; }
-    // Slight homing toward head
-    const hx = snake[0].x, hy = snake[0].y;
-    const dx = hx - e.x, dy = hy - e.y;
-    const dist = Math.sqrt(dx*dx + dy*dy) || 1;
-    const homingStr = 0.0015 + level * 0.0008;
-    e.vx += (dx/dist) * homingStr;
-    e.vy += (dy/dist) * homingStr;
-    // Cap speed
-    const spd = Math.sqrt(e.vx*e.vx + e.vy*e.vy);
-    const maxSpd = 0.06 + level * 0.015;
-    if (spd > maxSpd) { e.vx = (e.vx/spd)*maxSpd; e.vy = (e.vy/spd)*maxSpd; }
-  });
-
-  // Enemy collision (use rounded positions)
-  const hx = snake[0].x, hy = snake[0].y;
-  if (enemies.some(e => Math.abs(Math.round(e.x) - hx) < 1 && Math.abs(Math.round(e.y) - hy) < 1)) {
-    loseLife(); return;
-  }
-
-  if (score > (hiScore||0)) {
-    hiScore = score;
-    localStorage.setItem('plugrunner-hi', hiScore);
-  }
-  updateHUD();
-  draw();
+  
+  render();
+  requestAnimationFrame(gameLoop);
 }
 
-function loseLife() {
-  sfxDie();
-  lives--;
-  updateHUD();
-  if (lives <= 0) {
-    gameOver();
-  } else {
-    // Flash and respawn
-    const cx = Math.floor(COLS / 2);
-    const cy = Math.floor(ROWS / 2);
-    snake = [{x:cx,y:cy},{x:cx-1,y:cy},{x:cx-2,y:cy}];
-    dir = {x:1,y:0};
-    nextDir = {x:1,y:0};
-    enemies = [];
-    for (let i=0;i<level-1;i++) enemies.push(makeEnemy());
+function updateLives() {
+  const livesEl = document.getElementById('hudLives');
+  livesEl.innerHTML = '';
+  for (let i = 0; i < 3; i++) {
+    const span = document.createElement('span');
+    span.className = 'hud-life' + (i >= lives ? ' dead' : '');
+    span.textContent = '◈';
+    livesEl.appendChild(span);
   }
 }
 
-function gameOver() {
-  running = false;
-  clearInterval(gameLoop);
-  document.getElementById('goScore').textContent = score;
-  document.getElementById('goHi').textContent = 'BEST: ' + (hiScore||0);
+function render() {
+  ctx.fillStyle = '#060606';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  
+  ctx.strokeStyle = 'rgba(0,255,153,0.1)';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= GRID_W; i++) ctx.beginPath(), ctx.moveTo(i * CELL, 0), ctx.lineTo(i * CELL, canvas.height), ctx.stroke();
+  for (let i = 0; i <= GRID_H; i++) ctx.beginPath(), ctx.moveTo(0, i * CELL), ctx.lineTo(canvas.width, i * CELL), ctx.stroke();
+  
+  ctx.fillStyle = '#00ff99';
+  ctx.font = 'bold 24px Arial';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('🧔', playerX * CELL + CELL / 2, playerY * CELL + CELL / 2);
+  
+  ctx.fillStyle = '#ff3333';
+  for (let d of drones) {
+    ctx.fillText('🚁', d.x * CELL + CELL / 2, d.y * CELL + CELL / 2);
+  }
+  
+  ctx.fillStyle = '#ffd700';
+  for (let d of drops) {
+    ctx.fillText('📦', d.x * CELL + CELL / 2, d.y * CELL + CELL / 2);
+  }
+}
+
+function showLevelFlash(text) {
+  const el = document.getElementById('levelFlash');
+  document.getElementById('lfText').textContent = text;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 800);
+}
+
+function endGame() {
+  gameRunning = false;
+  if (score > highScore) {
+    highScore = score;
+    localStorage.setItem('dwarfplug-hs', highScore);
+  }
+  
+  const discount = generateDiscountCode(level);
+  const rewardSection = document.getElementById('rewardSection');
+  
+  if (discount) {
+    rewardSection.innerHTML = `
+      <div class="reward-box">
+        <div class="reward-percent">${discount.discount}% OFF</div>
+        <div class="reward-desc">UNLOCKED FOR LEVEL ${level}</div>
+        <div class="reward-code">${discount.code}</div>
+        <button class="btn-copy" onclick="copyToClipboard('${discount.code}')">📋 COPY CODE</button>
+      </div>
+    `;
+  } else {
+    rewardSection.innerHTML = '<div class="reward-box"><div class="reward-desc">Reach Level 3+ to unlock discounts!</div></div>';
+  }
+  
+  document.getElementById('goScore').textContent = level;
+  document.getElementById('goSub').textContent = discount ? 'DISCOUNT UNLOCKED!' : 'Keep Playing!';
+  document.getElementById('goHi').textContent = 'BEST LEVEL: ' + Math.max(level, Math.ceil(highScore / 100));
   document.getElementById('gameOverScreen').classList.remove('hidden');
 }
 
 function togglePause() {
-  if (!running) return;
-  paused = !paused;
-  document.getElementById('pauseScreen').classList.toggle('hidden', !paused);
-  if (!audioCtx) return;
-  if (paused) {
-    masterGain.gain.setTargetAtTime(0.0, audioCtx.currentTime, 0.15);
-    stopMusicLoop();
-  } else if (audioOn) {
-    masterGain.gain.setTargetAtTime(0.28, audioCtx.currentTime, 0.15);
-    musicNextTime = audioCtx.currentTime + 0.05;
-    scheduleMusicLoop();
-  }
-}
-
-function flashLevel() {
-  const el = document.getElementById('levelFlash');
-  document.getElementById('lfText').textContent = 'LEVEL ' + level;
-  el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), 1200);
-}
-
-function updateHUD() {
-  document.getElementById('hudScore').textContent = score;
-  document.getElementById('hudLevel').textContent = 'LVL ' + level;
-  const lifeEls = document.querySelectorAll('.hud-life');
-  lifeEls.forEach((el, i) => el.classList.toggle('dead', i >= lives));
-}
-
-// ── DRAW ──────────────────────────────────────────────────────────────────────
-const COLORS = {
-  bg: '#060606',
-  grid: 'rgba(0,255,153,0.03)',
-  gridLine: 'rgba(0,255,153,0.045)',
-  snakeHead: '#00ff99',
-  snakeBody: '#00d084',
-  snakeDark: '#009958',
-  food: '#ffd700',
-  foodBonus: '#ff6b00',
-  enemy: '#ff3333',
-  enemyGlow: 'rgba(255,51,51,0.4)',
-  wall: 'rgba(0,255,153,0.12)'
-};
-
-function draw() {
-  ctx.fillStyle = COLORS.bg;
-  ctx.fillRect(0, 0, W, H);
-
-  // Grid
-  ctx.strokeStyle = COLORS.gridLine;
-  ctx.lineWidth = 0.5;
-  for (let x=0; x<=COLS; x++) { ctx.beginPath(); ctx.moveTo(x*CELL,0); ctx.lineTo(x*CELL,H); ctx.stroke(); }
-  for (let y=0; y<=ROWS; y++) { ctx.beginPath(); ctx.moveTo(0,y*CELL); ctx.lineTo(W,y*CELL); ctx.stroke(); }
-
-  // Border glow
-  ctx.strokeStyle = 'rgba(0,255,153,0.18)';
-  ctx.lineWidth = 2;
-  ctx.strokeRect(1, 1, W-2, H-2);
-
-  // Food
-  food.pulse = (food.pulse || 0) + 0.1;
-  const fp = Math.sin(food.pulse) * 0.12 + 1;
-  const fx = (food.x + 0.5) * CELL;
-  const fy = (food.y + 0.5) * CELL;
-  const fc = food.bonus ? COLORS.foodBonus : COLORS.food;
-  ctx.save();
-  ctx.shadowColor = fc;
-  ctx.shadowBlur = 14;
-  ctx.fillStyle = fc;
-  ctx.beginPath();
-  if (food.bonus) {
-    // Star shape
-    const r1 = CELL*0.35*fp, r2 = CELL*0.15*fp;
-    for (let i=0; i<10; i++) {
-      const a = (i * Math.PI/5) - Math.PI/2;
-      const r = i%2===0 ? r1 : r2;
-      i===0 ? ctx.moveTo(fx+Math.cos(a)*r, fy+Math.sin(a)*r) : ctx.lineTo(fx+Math.cos(a)*r, fy+Math.sin(a)*r);
-    }
-    ctx.closePath();
+  gamePaused = !gamePaused;
+  if (gamePaused) {
+    document.getElementById('pauseScreen').classList.remove('hidden');
   } else {
-    ctx.arc(fx, fy, CELL*0.28*fp, 0, Math.PI*2);
+    document.getElementById('pauseScreen').classList.add('hidden');
   }
-  ctx.fill();
-  ctx.restore();
-
-  // Snake
-  snake.forEach((seg, i) => {
-    const x = seg.x * CELL + 1;
-    const y = seg.y * CELL + 1;
-    const sz = CELL - 2;
-    const radius = i === 0 ? 5 : 3;
-    if (i === 0) {
-      ctx.save();
-      ctx.shadowColor = COLORS.snakeHead;
-      ctx.shadowBlur = 12;
-    }
-    const progress = 1 - (i / snake.length) * 0.5;
-    ctx.fillStyle = i === 0 ? COLORS.snakeHead :
-                   (i < 3 ? COLORS.snakeBody : COLORS.snakeDark);
-    ctx.globalAlpha = 0.3 + progress * 0.7;
-    roundRect(ctx, x, y, sz, sz, radius);
-    ctx.fill();
-    if (i === 0) {
-      ctx.restore();
-      // Eyes
-      ctx.globalAlpha = 1;
-      ctx.fillStyle = '#000';
-      const ex = (dir.x === 0) ? 4 : (dir.x > 0 ? sz - 5 : 5);
-      const ey = (dir.y === 0) ? 4 : (dir.y > 0 ? sz - 5 : 5);
-      ctx.beginPath(); ctx.arc(x + ex, y + ey, 2, 0, Math.PI*2); ctx.fill();
-    }
-    ctx.globalAlpha = 1;
-  });
-
-  // Enemies
-  const t = Date.now() * 0.001;
-  enemies.forEach((e, idx) => {
-    const ex = e.x * CELL + CELL/2;
-    const ey = e.y * CELL + CELL/2;
-    const pulse = Math.sin(t * 3 + e.phase) * 0.15 + 1;
-    ctx.save();
-    ctx.shadowColor = COLORS.enemy;
-    ctx.shadowBlur = 18;
-    ctx.strokeStyle = COLORS.enemy;
-    ctx.lineWidth = 1.5;
-    ctx.globalAlpha = 0.9;
-
-    // Drone body - hexagon
-    ctx.beginPath();
-    for (let i=0;i<6;i++) {
-      const a = (i * Math.PI/3) - Math.PI/6;
-      const r = CELL*0.32*pulse;
-      i===0 ? ctx.moveTo(ex+Math.cos(a)*r, ey+Math.sin(a)*r) : ctx.lineTo(ex+Math.cos(a)*r, ey+Math.sin(a)*r);
-    }
-    ctx.closePath();
-    ctx.fillStyle = 'rgba(255,30,30,0.15)';
-    ctx.fill();
-    ctx.stroke();
-
-    // Center dot
-    ctx.fillStyle = COLORS.enemy;
-    ctx.shadowBlur = 6;
-    ctx.beginPath();
-    ctx.arc(ex, ey, 3, 0, Math.PI*2);
-    ctx.fill();
-
-    // Rotating arms
-    for (let arm=0;arm<4;arm++) {
-      const a = t * 2.5 + arm * Math.PI/2;
-      const r1 = CELL*0.32*pulse;
-      const r2 = CELL*0.46*pulse;
-      ctx.beginPath();
-      ctx.moveTo(ex+Math.cos(a)*r1, ey+Math.sin(a)*r1);
-      ctx.lineTo(ex+Math.cos(a)*r2, ey+Math.sin(a)*r2);
-      ctx.globalAlpha = 0.55;
-      ctx.stroke();
-    }
-    ctx.restore();
-  });
 }
 
-function roundRect(ctx, x, y, w, h, r) {
-  ctx.beginPath();
-  ctx.moveTo(x+r, y);
-  ctx.lineTo(x+w-r, y);
-  ctx.quadraticCurveTo(x+w, y, x+w, y+r);
-  ctx.lineTo(x+w, y+h-r);
-  ctx.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
-  ctx.lineTo(x+r, y+h);
-  ctx.quadraticCurveTo(x, y+h, x, y+h-r);
-  ctx.lineTo(x, y+r);
-  ctx.quadraticCurveTo(x, y, x+r, y);
-  ctx.closePath();
+function setDir(x, y) {
+  nextDirX = x;
+  nextDirY = y;
 }
 
-// ── INPUT ─────────────────────────────────────────────────────────────────────
-function setDir(dx, dy) {
-  if (!running || paused) return;
-  if (dx === 1 && dir.x === -1) return;
-  if (dx === -1 && dir.x === 1) return;
-  if (dy === 1 && dir.y === -1) return;
-  if (dy === -1 && dir.y === 1) return;
-  nextDir = {x:dx, y:dy};
-}
-
-document.addEventListener('keydown', e => {
-  const map = {
-    'ArrowUp':[-1],'w':[-1],'W':[-1],
-    'ArrowDown':[1],'s':[1],'S':[1],
-    'ArrowLeft':[-2],'a':[-2],'A':[-2],
-    'ArrowRight':[2],'d':[2],'D':[2],
-  };
-  if (e.key === 'p' || e.key === 'P' || e.key === 'Escape') { if(running) togglePause(); return; }
-  if (e.key === 'Enter' && !running) { startGame(); return; }
-  const v = map[e.key];
-  if (!v) return;
-  e.preventDefault();
-  if (v[0] === -1) setDir(0,-1);
-  else if (v[0] === 1) setDir(0,1);
-  else if (v[0] === -2) setDir(-1,0);
-  else if (v[0] === 2) setDir(1,0);
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'p' || e.key === 'P') togglePause();
+  if (e.key === 'w' || e.key === 'W' || e.key === 'ArrowUp') setDir(0, -1);
+  if (e.key === 's' || e.key === 'S' || e.key === 'ArrowDown') setDir(0, 1);
+  if (e.key === 'a' || e.key === 'A' || e.key === 'ArrowLeft') setDir(-1, 0);
+  if (e.key === 'd' || e.key === 'D' || e.key === 'ArrowRight') setDir(1, 0);
 });
 
-// Touch swipe
-let touchStartX=0, touchStartY=0;
-canvas.addEventListener('touchstart', e => { touchStartX=e.touches[0].clientX; touchStartY=e.touches[0].clientY; }, {passive:true});
-canvas.addEventListener('touchend', e => {
-  const dx = e.changedTouches[0].clientX - touchStartX;
-  const dy = e.changedTouches[0].clientY - touchStartY;
-  if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
-  if (Math.abs(dx) > Math.abs(dy)) setDir(dx > 0 ? 1 : -1, 0);
-  else setDir(0, dy > 0 ? 1 : -1);
-}, {passive:true});
+let touchStartX = 0, touchStartY = 0;
+document.addEventListener('touchstart', (e) => {
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+}, false);
 
-// ── INIT ──────────────────────────────────────────────────────────────────────
-hiScore = parseInt(localStorage.getItem('plugrunner-hi') || '0');
-resize();
-
-// Draw idle grid
-draw();
-ctx.fillStyle = COLORS.bg;
-ctx.fillRect(0,0,W,H);
-
-// Draw grid on start screen
-(function idleDraw() {
-  if (running) return;
-  ctx.fillStyle = COLORS.bg;
-  ctx.fillRect(0,0,W,H);
-  ctx.strokeStyle = COLORS.gridLine;
-  ctx.lineWidth = 0.5;
-  for(let x=0;x<=COLS;x++){ctx.beginPath();ctx.moveTo(x*CELL,0);ctx.lineTo(x*CELL,H);ctx.stroke();}
-  for(let y=0;y<=ROWS;y++){ctx.beginPath();ctx.moveTo(0,y*CELL);ctx.lineTo(W,y*CELL);ctx.stroke();}
-  ctx.strokeStyle='rgba(0,255,153,0.12)';ctx.lineWidth=2;ctx.strokeRect(1,1,W-2,H-2);
-  requestAnimationFrame(idleDraw);
-})();
-
-window.addEventListener('resize', () => {
-  if (!running) resize();
-});
+document.addEventListener('touchmove', (e) => {
+  const dx = e.touches[0].clientX - touchStartX;
+  const dy = e.touches[0].clientY - touchStartY;
+  if (Math.abs(dx) > Math.abs(dy)) {
+    setDir(dx > 0 ? 1 : -1, 0);
+  } else {
+    setDir(0, dy > 0 ? 1 : -1);
+  }
+}, false);
 </script>
+
 </body>
 </html>
