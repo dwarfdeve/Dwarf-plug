@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function() {
+    const accessTime = localStorage.getItem('dwarfplug-access-time');
+    const now = Date.now();
+    const thirtyMinutes = 30 * 60 * 1000;
+    
+    if (!accessTime || (now - parseInt(accessTime)) > thirtyMinutes) {
+      localStorage.removeItem('dwarfplug-access-time');
+      window.location.href = 'showcase.html';
+    }
+  })();
+</script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Dwarf Plug | Premium Discreet Cannabis Delivery Worldwide</title>
+<meta name="description" content="Order premium cannabis — flower, edibles, vapes, concentrates, oils, seeds and more. Delivered worldwide in odor-proof, vacuum-sealed, plain packaging. Crypto and gift card payments accepted."/>
+<link rel="canonical" href="https://dwarfdeve.github.io/Dwarf-plug/"/>
+<meta property="og:title" content="Dwarf Plug | Premium Discreet Cannabis Delivery Worldwide"/>
+<meta property="og:description" content="Flower, edibles, vapes, concentrates & more. Worldwide discreet delivery — crypto and gift card payments accepted. Vacuum-sealed, plain packaging."/>
+<meta property="og:type" content="website"/>
+<meta name="robots" content="index, follow"/>
+<meta name="theme-color" content="#00d084"/>
+<link rel="icon" href="imgs/logo_neon.jpg" type="image/jpeg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080808;--bg2:#0f0f0f;--bg3:#181818;--bg4:#202020;
+  --border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.12);
+  --green:#00d084;--green2:#00b870;--green-text:#00ff99;
+  --fg:#ececec;--fg2:#b8b8b8;--fg3:#808080;--fg4:#505050;
+  --amber:#ff9500;--red:#ff3333;--red-dim:#1a0000;
+  --gold:#ffd700;--gold2:#f0b429;--purple-text:#c084fc;--blue:#00ccff;
+  --btc:#f7931a;
+  --radius:8px;--radius-sm:6px;--radius-lg:14px;
+  --shadow-sm:0 2px 8px rgba(0,0,0,.55);
+  --shadow-md:0 4px 18px rgba(0,0,0,.65);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--fg);min-height:100vh;line-height:1.5;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overscroll-behavior-y:none;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:3px}
+
+/* ── HEADER ── */
+.header{position:fixed;top:0;left:0;right:0;z-index:50;height:56px;background:rgba(6,6,6,.98);border-bottom:1px solid rgba(0,255,153,.18);backdrop-filter:blur(24px);display:flex;align-items:center;padding:0 14px}
+.header-inner{width:100%;max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:38px;height:38px;flex-shrink:0;border-radius:10px;overflow:hidden;border:1.5px solid rgba(0,255,153,.45);box-shadow:0 0 12px rgba(0,255,153,.25);background:#000}
+.logo-icon img{width:100%;height:100%;object-fit:cover}
+.logo-text .logo-name{font-size:15px;font-weight:900;color:#00ff99;letter-spacing:-.3px}
+.logo-text .logo-sub{font-size:9px;color:var(--fg4);letter-spacing:.08em;text-transform:uppercase;display:block}
+.header-links{display:flex;align-items:center;gap:6px}
+.header-link{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:9px;transition:background .15s;border:1px solid transparent}
+.hl-tg{background:rgba(41,182,246,.1);border-color:rgba(41,182,246,.2)}
+.hl-reviews{background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.2)}
+.cart-btn{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:10px;background:linear-gradient(135deg,var(--green),var(--green2));color:#000;font-weight:800;font-size:13px;box-shadow:0 0 12px rgba(0,208,132,.3);transition:all .18s}
+.cart-btn:hover{transform:translateY(-1px);box-shadow:0 0 20px rgba(0,208,132,.5)}
+.cart-count{background:#000;color:#00ff99;width:18px;height:18px;border-radius:50%;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center}
+
+/* ── FLOATING CART BUBBLE ── */
+.cart-float{
+  position:fixed;bottom:28px;right:22px;z-index:190;
+  width:62px;height:62px;border-radius:50%;
+  background:linear-gradient(135deg,#00d084 0%,#00b870 100%);
+  color:#000;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 0 0 rgba(0,208,132,.6), 0 6px 24px rgba(0,0,0,.55);
+  transition:transform .2s, box-shadow .2s;
+}
+.cart-float:hover{transform:scale(1.08);box-shadow:0 0 0 8px rgba(0,208,132,.15), 0 8px 28px rgba(0,0,0,.6)}
+.cart-float.has-items{animation:cartPulse 2s ease-in-out infinite}
+@keyframes cartPulse{0%,100%{box-shadow:0 0 0 0 rgba(0,208,132,.55), 0 6px 24px rgba(0,0,0,.55)}60%{box-shadow:0 0 0 14px rgba(0,208,132,0), 0 6px 24px rgba(0,0,0,.55)}}
+.cart-float-icon{font-size:26px;line-height:1}
+.cart-float-badge{
+  position:absolute;top:-4px;right:-4px;
+  background:#ff3333;color:#fff;
+  min-width:22px;height:22px;border-radius:11px;
+  font-size:12px;font-weight:900;padding:0 5px;
+  display:none;align-items:center;justify-content:center;
+  border:2.5px solid var(--bg);
+  box-shadow:0 2px 8px rgba(255,51,51,.5);
+  animation:badgePop .3s cubic-bezier(.36,.07,.19,.97);
+}
+@keyframes badgePop{0%{transform:scale(0)}70%{transform:scale(1.2)}100%{transform:scale(1)}}
+.cart-float-badge.visible{display:flex}
+
+/* ── ANNOUNCE BAR ── */
+.announce-bar{position:sticky;top:56px;z-index:49;background:linear-gradient(90deg,rgba(255,215,0,.07),rgba(0,208,132,.06),rgba(255,215,0,.07));border-bottom:1px solid rgba(255,215,0,.2);overflow:hidden}
+.announce-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:10px;padding:8px 16px;flex-wrap:wrap}
+.announce-text{font-size:11.5px;font-weight:700;color:rgba(255,255,255,.75);letter-spacing:.01em;text-align:center;line-height:1.5}
+.announce-text strong{color:#ffd700}
+.announce-badge{font-size:9px;font-weight:900;padding:3px 9px;border-radius:4px;background:rgba(255,215,0,.14);border:1px solid rgba(255,215,0,.35);color:#ffd700;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;animation:abPulse 2.5s ease-in-out infinite}
+@keyframes abPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,215,0,0)}60%{box-shadow:0 0 0 4px rgba(255,215,0,0)}}
+
+/* ── REVIEWS STARS ── */
+.item-rating{display:flex;align-items:center;gap:4px;cursor:pointer;width:fit-content}
+.item-rating:hover .rating-stars{color:#ffd700}
+.rating-stars{font-size:12px;color:#f0a500;line-height:1;transition:color .15s}
+.rating-num{font-size:11px;font-weight:700;color:#ffd700}
+.rating-count{font-size:10px;color:var(--fg4)}
+
+/* ── REVIEWS MODAL ── */
+.rv-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:400;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;pointer-events:none;transition:opacity .22s}
+.rv-overlay.open{opacity:1;pointer-events:all}
+.rv-modal{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);max-width:500px;width:100%;max-height:88vh;display:flex;flex-direction:column;overflow:hidden}
+.rv-head{padding:16px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.rv-title{font-size:15px;font-weight:800}
+.rv-close{width:28px;height:28px;border-radius:7px;background:var(--bg3);border:1px solid var(--border);color:var(--fg3);font-size:14px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.rv-body{overflow-y:auto;padding:16px 18px;display:flex;flex-direction:column;gap:12px}
+.rv-summary{display:flex;align-items:center;gap:16px;padding:12px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius)}
+.rv-big-score{font-size:38px;font-weight:900;color:#ffd700;line-height:1}
+.rv-big-stars{font-size:20px;color:#f0a500;margin-bottom:2px}
+.rv-total{font-size:11px;color:var(--fg3)}
+.rv-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:12px}
+.rv-card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.rv-card-stars{font-size:13px;color:#f0a500}
+.rv-card-name{font-size:12px;font-weight:700;color:var(--fg)}
+.rv-card-date{font-size:10px;color:var(--fg4)}
+.rv-card-loc{font-size:10px;color:var(--fg4);margin-bottom:6px}
+.rv-card-body{font-size:12px;color:var(--fg2);line-height:1.6}
+.rv-verified{font-size:9px;font-weight:700;color:#00ff99;background:rgba(0,208,132,.1);border:1px solid rgba(0,255,153,.22);border-radius:3px;padding:1px 6px;letter-spacing:.06em}
+
+/* ── PRIVACY NOTICE ── */
+.privacy-notice{background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius-sm);padding:10px 12px;font-size:11px;color:var(--fg4);line-height:1.6;display:flex;align-items:flex-start;gap:7px}
+.privacy-notice .pn-icon{flex-shrink:0;font-size:13px;margin-top:1px}
+
+/* ── BUYER CODE ── */
+.buyer-code-box{background:rgba(0,208,132,.07);border:1.5px solid rgba(0,255,153,.25);border-radius:var(--radius);padding:12px 14px;display:flex;flex-direction:column;gap:5px}
+.bc-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:rgba(0,255,153,.6)}
+.bc-code{font-size:20px;font-weight:900;color:#00ff99;letter-spacing:3px;font-family:'Courier New',monospace;text-shadow:0 0 10px rgba(0,255,153,.3)}
+.bc-note{font-size:10px;color:var(--fg4);line-height:1.5}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(160deg,#050d05 0%,#0a1a08 30%,#070b0d 60%,#050d05 100%);border-bottom:1px solid rgba(0,255,153,.2);padding:36px 16px 40px;text-align:center;margin-top:56px}
+.hero-inner{max-width:800px;margin:0 auto}
+.live-badge{display:inline-flex;align-items:center;gap:7px;padding:6px 16px;border-radius:99px;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;background:rgba(0,208,132,.12);border:1px solid rgba(0,255,153,.3);color:#00ff99;margin-bottom:18px}
+.live-dot{width:7px;height:7px;background:#00ff99;border-radius:50%;animation:pulse 1.5s infinite;box-shadow:0 0 6px rgba(0,255,153,.6)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(30px,6vw,52px);font-weight:900;letter-spacing:-.5px;line-height:1.1;margin-bottom:12px;background:linear-gradient(135deg,#00ff99 0%,#ffd700 45%,#00ff99 90%);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:titleShift 5s linear infinite}
+@keyframes titleShift{0%{background-position:0%}100%{background-position:200%}}
+.hero p{font-size:15px;color:var(--fg3);max-width:500px;margin:0 auto 22px;line-height:1.6}
+
+.order-counter{display:inline-flex;align-items:center;gap:18px;padding:14px 26px;border-radius:var(--radius-lg);background:rgba(0,208,132,.08);border:1.5px solid rgba(0,255,153,.22);margin-bottom:22px;position:relative;overflow:hidden}
+.order-counter::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(0,255,153,.06),transparent);animation:shimmer 3s ease-in-out infinite}
+@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(200%)}}
+.oc-div{width:1px;height:38px;background:rgba(255,255,255,.1)}
+.oc-stat{display:flex;flex-direction:column;align-items:center;gap:2px}
+.oc-num{font-size:28px;font-weight:900;color:#00ff99;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.5px;text-shadow:0 0 8px rgba(0,255,153,.35)}
+.oc-label{font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:var(--fg3);font-weight:700}
+.oc-live{display:flex;align-items:center;gap:5px;font-size:11px;color:#00ff99;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+
+.trust-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:24px}
+.trust-badge{display:flex;align-items:center;gap:6px;padding:7px 13px;border-radius:var(--radius-sm);background:var(--bg3);border:1px solid var(--border);font-size:12px;color:var(--fg3)}
+.trust-badge span{color:#00ff99;font-weight:700}
+
+.hero-shop-btn{display:inline-flex;align-items:center;gap:9px;padding:14px 36px;border-radius:var(--radius-lg);background:linear-gradient(135deg,#00d084,#00b870);color:#000;font-weight:900;font-size:16px;box-shadow:0 0 28px rgba(0,208,132,.45),0 4px 16px rgba(0,0,0,.4);transition:all .2s;border:none;cursor:pointer}
+.hero-shop-btn:hover{transform:translateY(-2px);box-shadow:0 0 40px rgba(0,208,132,.65),0 8px 24px rgba(0,0,0,.5)}
+
+/* ── PAYMENT BANNER ── */
+.pay-banner{background:var(--bg2);border-bottom:1px solid var(--border);padding:14px 16px}
+.pay-banner-inner{max-width:1400px;margin:0 auto}
+.pay-banner-label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--fg4);text-align:center;margin-bottom:10px;font-weight:700}
+.pay-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+@media(min-width:600px){.pay-grid{grid-template-columns:repeat(4,1fr)}}
+.pay-card{display:flex;align-items:center;gap:9px;padding:10px 12px;border-radius:var(--radius);background:var(--bg3);border:1px solid var(--border)}
+.pay-icon{font-size:20px;flex-shrink:0}
+.pay-name{font-size:13px;font-weight:600}
+.pay-desc{font-size:10px;color:var(--fg3)}
+
+/* ── MAIN ── */
+.main{max-width:1400px;margin:0 auto;padding:28px 16px 80px;display:flex;flex-direction:column;gap:40px}
+
+/* ── SECTION HEADER ── */
+.sec-head{margin-bottom:14px}
+.sec-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;background:linear-gradient(135deg,var(--gold),#fff8e7,var(--gold));background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sec-sub{font-size:12px;color:var(--fg3);margin-top:2px}
+
+/* ── TIPS ACCORDION ── */
+.tips-list{display:flex;flex-direction:column;gap:7px}
+.tip-section{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.tip-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;padding:12px 15px;background:var(--bg3);font-size:13px;font-weight:600;cursor:pointer;gap:8px}
+.tip-toggle:hover{background:var(--bg4)}
+.tip-arrow{font-size:10px;color:var(--green-text);transition:transform .2s;flex-shrink:0}
+.tip-arrow.open{transform:rotate(180deg)}
+.tip-items{display:none}
+.tip-items.open{display:block}
+.tip-item-btn{width:100%;display:flex;align-items:center;justify-content:space-between;padding:10px 15px;border-top:1px solid var(--border);font-size:12px;color:var(--fg2);text-align:left;cursor:pointer;background:var(--bg2)}
+.tip-item-btn:hover{background:var(--bg3)}
+.tip-left{display:flex;align-items:center;gap:8px}
+.tip-num{width:19px;height:19px;border-radius:50%;background:rgba(0,208,132,.12);color:var(--green-text);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tip-body{display:none;padding:10px 15px 12px 42px;font-size:12px;color:var(--fg3);line-height:1.6;border-top:1px solid var(--border);background:var(--bg)}
+.tip-body.open{display:block}
+
+/* ── CATEGORY HEADER ── */
+.cat-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.cat-name{font-size:13px;font-weight:700;color:var(--green-text);white-space:nowrap}
+.cat-divider{flex:1;height:1px;background:rgba(255,255,255,.08)}
+
+/* ── ITEMS GRID ── */
+.items-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(min-width:768px){.items-grid{grid-template-columns:repeat(3,1fr);gap:16px}}
+@media(min-width:1100px){.items-grid{grid-template-columns:repeat(4,1fr)}}
+
+/* ── ITEM CARD ── */
+.item-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;display:flex;flex-direction:column;transition:all .2s;position:relative}
+.item-card:hover{border-color:rgba(0,255,153,.2);transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.item-img-wrap{position:relative;width:100%;aspect-ratio:1;background:var(--bg3);overflow:hidden}
+.item-img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.item-card:hover .item-img{transform:scale(1.05)}
+.item-info{padding:12px;flex:1}
+.item-name{font-size:14px;font-weight:800;color:var(--fg);margin-bottom:4px}
+.item-desc{font-size:11px;color:var(--fg3);line-height:1.4;margin-bottom:8px}
+.item-badges{display:flex;flex-wrap:wrap;gap:5px}
+.item-badge{font-size:9px;font-weight:900;padding:2px 6px;border-radius:4px;letter-spacing:.05em;text-transform:uppercase}
+.ib-aaaa{background:rgba(255,215,0,.1);color:var(--gold);border:1px solid rgba(255,215,0,.25)}
+.ib-hybrid{background:rgba(192,132,252,.1);color:var(--purple-text);border:1px solid rgba(192,132,252,.25)}
+.ib-indica{background:rgba(0,204,255,.1);color:var(--blue);border:1px solid rgba(0,204,255,.25)}
+.ib-sativa{background:rgba(255,149,0,.1);color:var(--amber);border:1px solid rgba(255,149,0,.25)}
+.ib-new{background:rgba(0,255,153,.1);color:var(--green-text);border:1px solid rgba(0,255,153,.25)}
+
+.item-foot{padding:12px;border-top:1px solid var(--border);background:rgba(255,255,255,.01)}
+.item-price-row{display:flex;align-items:baseline;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.item-price{font-size:18px;font-weight:900;color:var(--green-text)}
+.item-price-old{font-size:12px;color:var(--fg4);text-decoration:line-through}
+.item-disc-badge{font-size:9px;font-weight:900;background:var(--red-dim);color:var(--red);padding:2px 6px;border-radius:4px;border:1px solid rgba(255,51,51,.2)}
+
+.size-selector{display:grid;grid-template-columns:1fr;gap:6px;margin-bottom:10px}
+.size-btn{width:100%;padding:7px;border-radius:var(--radius-sm);background:var(--bg3);border:1px solid var(--border);font-size:11px;font-weight:700;color:var(--fg3);transition:all .15s;text-align:left}
+.size-btn:hover{background:var(--bg4);color:var(--fg)}
+.size-btn.active{background:rgba(0,208,132,.1);border-color:var(--green);color:var(--green-text)}
+
+.add-to-cart{width:100%;padding:10px;border-radius:var(--radius);background:var(--bg4);color:var(--fg);font-size:12px;font-weight:800;transition:all .2s;border:1px solid var(--border)}
+.add-to-cart:hover{background:var(--green);color:#000;border-color:var(--green);box-shadow:0 4px 12px rgba(0,208,132,.25)}
+
+/* ── MODALS ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:300;display:none;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(8px)}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);max-width:480px;width:100%;max-height:90vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.8)}
+.modal-head{padding:18px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.modal-title{font-size:17px;font-weight:900;color:#fff}
+.modal-close{width:32px;height:32px;border-radius:8px;background:var(--bg3);color:var(--fg3);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.modal-body{padding:20px;overflow-y:auto;flex:1}
+
+/* ── CART ── */
+.cart-list{display:flex;flex-direction:column;gap:14px;margin-bottom:24px}
+.cart-item{display:flex;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.cart-item-img{width:56px;height:56px;border-radius:8px;object-fit:cover;background:var(--bg3)}
+.cart-item-info{flex:1}
+.cart-item-name{font-size:13px;font-weight:800;color:#fff;margin-bottom:2px}
+.cart-item-size{font-size:11px;color:var(--fg4);margin-bottom:6px}
+.cart-item-price{font-size:14px;font-weight:800;color:var(--green-text)}
+.cart-item-remove{font-size:10px;color:var(--red);font-weight:700;text-transform:uppercase;margin-top:4px;cursor:pointer}
+.cart-empty{text-align:center;padding:40px 0;color:var(--fg4);font-size:13px}
+.cart-total-row{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-top:2px solid var(--border);margin-top:10px}
+.cart-total-label{font-size:14px;font-weight:700;color:var(--fg3)}
+.cart-total-val{font-size:22px;font-weight:900;color:var(--green-text)}
+
+.checkout-btn{width:100%;padding:16px;border-radius:var(--radius);background:linear-gradient(135deg,var(--green),var(--green2));color:#000;font-size:15px;font-weight:900;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 8px 24px rgba(0,208,132,.3);transition:all .2s}
+.checkout-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,208,132,.45)}
+
+/* ── FOOTER ── */
+.footer{background:var(--bg2);border-top:1px solid var(--border);padding:60px 16px 40px}
+.footer-inner{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:40px}
+@media(min-width:768px){.footer-inner{grid-template-columns:2fr 1fr 1fr}}
+.footer-brand .logo{margin-bottom:16px}
+.footer-desc{font-size:13px;color:var(--fg4);line-height:1.7;max-width:360px}
+.footer-head{font-size:12px;font-weight:900;color:#fff;text-transform:uppercase;letter-spacing:.1em;margin-bottom:20px}
+.footer-links{display:flex;flex-direction:column;gap:12px}
+.footer-link{font-size:13px;color:var(--fg3);transition:color .2s}
+.footer-link:hover{color:var(--green-text)}
+.footer-bottom{max-width:1400px;margin:40px auto 0;padding-top:30px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:20px;align-items:center}
+@media(min-width:768px){.footer-bottom{flex-direction:row;justify-content:space-between}}
+.copy{font-size:12px;color:var(--fg4)}
+.footer-payment{display:flex;gap:10px;font-size:18px;color:var(--fg4)}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);z-index:1000;background:rgba(0,0,0,.95);border:1px solid var(--green);color:var(--green-text);padding:12px 24px;border-radius:99px;font-size:13px;font-weight:800;pointer-events:none;opacity:0;transition:all .3s cubic-bezier(.18,.89,.32,1.28);box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ── SALES POP ── */
+.sp-card{position:fixed;bottom:20px;left:20px;z-index:180;background:rgba(15,15,15,.98);border:1px solid var(--border);border-radius:14px;padding:12px 16px;display:flex;align-items:center;gap:12px;max-width:280px;box-shadow:0 10px 30px rgba(0,0,0,.5);transform:translateX(-120%);transition:transform .5s cubic-bezier(.18,.89,.32,1.28);backdrop-filter:blur(10px)}
+.sp-card.show{transform:translateX(0)}
+.sp-icon{width:40px;height:40px;background:var(--bg3);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;border:1px solid var(--border2)}
+.sp-info{flex:1}
+.sp-headline{font-size:11px;color:var(--fg3);margin-bottom:2px}
+.sp-sub{font-size:12px;font-weight:800;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-time{font-size:10px;color:var(--green-text);font-weight:700;margin-top:2px}
+
+</style>
+</head>
+<body>
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="#" class="logo">
+        <div class="logo-icon"><img src="imgs/logo_neon.jpg" alt="Dwarf Plug"/></div>
+        <div class="logo-text">
+          <span class="logo-name">DWARF PLUG</span>
+          <span class="logo-sub">Premium Worldwide</span>
+        </div>
+      </a>
+      <div class="header-links">
+        <a href="https://t.me/dwarfplugshop?direct" target="_blank" class="header-link hl-tg" title="Telegram Channel">✈</a>
+        <button class="header-link hl-reviews" onclick="openReviews('_flower')" title="Customer Reviews">⭐</button>
+        <button class="cart-btn" onclick="openCart()">
+          🛒 <span class="cart-count" id="cartCount">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── FLOATING CART ── -->
+  <button class="cart-float" id="cartFloat" onclick="openCart()">
+    <span class="cart-float-icon">🛒</span>
+    <span class="cart-float-badge" id="cartBadge">0</span>
+  </button>
+
+  <!-- ── ANNOUNCE ── -->
+  <div class="announce-bar">
+    <div class="announce-inner">
+      <span class="announce-badge">Live Status</span>
+      <p class="announce-text">Orders placed now ship in <strong>< 4 hours</strong> • 24/7 Support Active</p>
+    </div>
+  </div>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="live-badge"><span class="live-dot"></span> Worldwide Discreet Delivery</div>
+      <h1>Premium Craft Cannabis</h1>
+      <p>Odor-proof, vacuum-sealed, plain packaging. Crypto and gift card payments accepted for total anonymity.</p>
+      
+      <div class="order-counter">
+        <div class="oc-stat"><span class="oc-num" id="counterOrders">3,204</span><span class="oc-label">Successful Drops</span></div>
+        <div class="oc-div"></div>
+        <div class="oc-stat"><span class="oc-num">99.8%</span><span class="oc-label">Landing Rate</span></div>
+      </div>
+
+      <div class="trust-badges">
+        <div class="trust-badge"><span>✓</span> 100% Discreet</div>
+        <div class="trust-badge"><span>✓</span> Reship Guarantee</div>
+        <div class="trust-badge"><span>✓</span> AAA+ Quality</div>
+      </div>
+
+      <button class="hero-shop-btn" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">
+        Browse Premium Catalog ↓
+      </button>
+    </div>
+  </section>
+
+  <!-- ── PAY BANNER ── -->
+  <div class="pay-banner">
+    <div class="pay-banner-inner">
+      <div class="pay-banner-label">Accepted Payments</div>
+      <div class="pay-grid">
+        <div class="pay-card"><span class="pay-icon">₿</span><div><div class="pay-name">Bitcoin</div><div class="pay-desc">BTC / Lightning</div></div></div>
+        <div class="pay-card"><span class="pay-icon">Ξ</span><div><div class="pay-name">Ethereum</div><div class="pay-desc">ETH / USDT</div></div></div>
+        <div class="pay-card"><span class="pay-icon">🪙</span><div><div class="pay-name">Monero</div><div class="pay-desc">XMR (Recommended)</div></div></div>
+        <div class="pay-card"><span class="pay-icon">🎁</span><div><div class="pay-name">Gift Cards</div><div class="pay-desc">Amazon / Razer</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ MAIN ═══ -->
+  <main class="main" id="catalog">
+
+    <!-- HOW TO ORDER -->
+    <section>
+      <div class="sec-head">
+        <div class="sec-title">How to Order</div>
+        <div class="sec-sub">Simple, fast, discreet — 3 steps</div>
+      </div>
+      <div class="tips-list">
+        <div class="tip-section">
+          <button class="tip-toggle" onclick="toggleTip(this)">
+            <span>📋 Ordering Steps</span><span class="tip-arrow">▼</span>
+          </button>
+          <div class="tip-items">
+            <div>
+              <button class="tip-item-btn" onclick="toggleTipBody(this)">
+                <span class="tip-left"><span class="tip-num">1</span> Add items to your cart</span>
+                <span style="color:var(--fg4);font-size:10px">▼</span>
+              </button>
+              <div class="tip-body">Browse the catalog, select your size, and click "Add to Cart". Build your full order before checking out.</div>
+            </div>
+            <div>
+              <button class="tip-item-btn" onclick="toggleTipBody(this)">
+                <span class="tip-left"><span class="tip-num">2</span> Click "Order via Telegram" in your cart</span>
+                <span style="color:var(--fg4);font-size:10px">▼</span>
+              </button>
+              <div class="tip-body">Your cart generates a full order summary. Copy it, then send it to us on Telegram. We reply within minutes.</div>
+            </div>
+            <div>
+              <button class="tip-item-btn" onclick="toggleTipBody(this)">
+                <span class="tip-left"><span class="tip-num">3</span> Pay & receive tracking</span>
+                <span style="color:var(--fg4);font-size:10px">▼</span>
+              </button>
+              <div class="tip-body">We send your payment address. After confirmation, your package ships same-day. Tracking number provided within 24h.</div>
+            </div>
+          </div>
+        </div>
+        <div class="tip-section">
+          <button class="tip-toggle" onclick="toggleTip(this)">
+            <span>📦 Packaging & Shipping</span><span class="tip-arrow">▼</span>
+          </button>
+          <div class="tip-items">
+            <div>
+              <button class="tip-item-btn" onclick="toggleTipBody(this)">
+                <span class="tip-left"><span class="tip-num">1</span> Triple vacuum-sealed & odor-proof</span>
+                <span style="color:var(--fg4);font-size:10px">▼</span>
+              </button>
+              <div class="tip-body">Every order is triple-vacuum-sealed in professional odor-proof bags. Zero smell. X-ray safe materials used throughout.</div>
+            </div>
+            <div>
+              <button class="tip-item-btn" onclick="toggleTipBody(this)">
+                <span class="tip-left"><span class="tip-num">2</span> Discreet plain labeling</span>
+                <span style="color:var(--fg4);font-size:10px">▼</span>
+              </button>
+              <div class="tip-body">No markings, logos, or anything indicating contents. Looks like any regular ecommerce delivery — books, clothing, etc.</div>
+            </div>
+            <div>
+              <button class="tip-item-btn" onclick="toggleTipBody(this)">
+                <span class="tip-left"><span class="tip-num">3</span> Reship guarantee</span>
+                <span style="color:var(--fg4);font-size:10px">▼</span>
+              </button>
+              <div class="tip-body">In the rare event of a seizure, we reship at no extra charge. We stand behind every single order we send out.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ FLOWER ═══ -->
+    <section>
+      <div class="sec-head">
+        <div class="sec-title">🌿 Premium Flower</div>
+        <div class="sec-sub">Bulk Exotics — Ounces & Kilograms Only</div>
+      </div>
+      <div class="cat-header"><span class="cat-name">Top Shelf Strains</span><div class="cat-divider"></div></div>
+      <div class="items-grid">
+
+        <!-- Blue Dream -->
+        <div class="item-card" id="card-blue-dream">
+          <div class="item-img-wrap"><img class="item-img" src="imgs/pack_blue_dream.png" alt="Blue Dream" onerror="this.src='imgs/hero_flower.png'"/></div>
+          <div class="item-info">
+            <div class="item-name">Blue Dream</div>
+            <div class="item-desc">Sweet berry • Balanced head + body high • Daytime use</div>
+            <div class="item-badges"><span class="item-badge ib-aaaa">AAAA+</span><span class="item-badge ib-hybrid">Hybrid</span></div>
+          </div>
+          <div class="item-foot">
+            <div class="item-price-row"><span class="item-price-old" id="orig-blue-dream">$469</span><span class="item-price" id="price-blue-dream">$350</span><div class="item-disc-badge">25% OFF</div></div>
+            <div class="size-selector" data-item="blue-dream" data-name="Blue Dream" data-img="imgs/pack_blue_dream.png">
+              <button class="size-btn active" data-price="350" data-orig="469" onclick="selectSize(this,'blue-dream')">1 oz (28g) · $350</button>
+              <button class="size-btn" data-price="1200" data-orig="1600" onclick="selectSize(this,'blue-dream')">QP (4 oz) · $1,200</button>
+              <button class="size-btn" data-price="2200" data-orig="3000" onclick="selectSize(this,'blue-dream')">HP (8 oz) · $2,200</button>
+              <button class="size-btn" data-price="4000" data-orig="5500" onclick="selectSize(this,'blue-dream')">1 lb (16 oz) · $4,000</button>
+              <button class="size-btn" data-price="8500" data-orig="11000" onclick="selectSize(this,'blue-dream')">1 kg (35 oz) · $8,500</button>
+            </div>
+            <button class="add-to-cart" onclick="addToCart('blue-dream')">+ Add to Cart</button>
+          </div>
+        </div>
+
+        <!-- OG Kush -->
+        <div class="item-card" id="card-og-kush">
+          <div class="item-img-wrap"><img class="item-img" src="imgs/pack_og_kush.png" alt="OG Kush" onerror="this.src='imgs/hero_flower.png'"/></div>
+          <div class="item-info">
+            <div class="item-name">OG Kush</div>
+            <div class="item-desc">Earthy pine & citrus • Heavy full-body • Classic legend</div>
+            <div class="item-badges"><span class="item-badge ib-aaaa">AAAA+</span><span class="item-badge ib-indica">Indica</span></div>
+          </div>
+          <div class="item-foot">
+            <div class="item-price-row"><span class="item-price-old" id="orig-og-kush">$469</span><span class="item-price" id="price-og-kush">$350</span><div class="item-disc-badge">25% OFF</div></div>
+            <div class="size-selector" data-item="og-kush" data-name="OG Kush" data-img="imgs/pack_og_kush.png">
+              <button class="size-btn active" data-price="350" data-orig="469" onclick="selectSize(this,'og-kush')">1 oz (28g) · $350</button>
+              <button class="size-btn" data-price="1200" data-orig="1600" onclick="selectSize(this,'og-kush')">QP (4 oz) · $1,200</button>
+              <button class="size-btn" data-price="2200" data-orig="3000" onclick="selectSize(this,'og-kush')">HP (8 oz) · $2,200</button>
+              <button class="size-btn" data-price="4000" data-orig="5500" onclick="selectSize(this,'og-kush')">1 lb (16 oz) · $4,000</button>
+              <button class="size-btn" data-price="8500" data-orig="11000" onclick="selectSize(this,'og-kush')">1 kg (35 oz) · $8,500</button>
+            </div>
+            <button class="add-to-cart" onclick="addToCart('og-kush')">+ Add to Cart</button>
+          </div>
+        </div>
+
+        <!-- Gelato 33 -->
+        <div class="item-card" id="card-gelato33">
+          <div class="item-img-wrap"><img class="item-img" src="imgs/pack_gelato33.png" alt="Gelato 33" onerror="this.src='imgs/hero_flower.png'"/></div>
+          <div class="item-info">
+            <div class="item-name">Gelato 33</div>
+            <div class="item-desc">Sweet citrus & lavender • Euphoric • Dense frosty nugs</div>
+            <div class="item-badges"><span class="item-badge ib-aaaa">AAAA+</span><span class="item-badge ib-hybrid">Hybrid</span></div>
+          </div>
+          <div class="item-foot">
+            <div class="item-price-row"><span class="item-price-old" id="orig-gelato33">$544</span><span class="item-price" id="price-gelato33">$400</span><div class="item-disc-badge">26% OFF</div></div>
+            <div class="size-selector" data-item="gelato33" data-name="Gelato 33" data-img="imgs/pack_gelato33.png">
+              <button class="size-btn active" data-price="400" data-orig="544" onclick="selectSize(this,'gelato33')">1 oz (28g) · $400</button>
+              <button class="size-btn" data-price="1400" data-orig="1800" onclick="selectSize(this,'gelato33')">QP (4 oz) · $1,400</button>
+              <button class="size-btn" data-price="2600" data-orig="3400" onclick="selectSize(this,'gelato33')">HP (8 oz) · $2,600</button>
+              <button class="size-btn" data-price="4800" data-orig="6200" onclick="selectSize(this,'gelato33')">1 lb (16 oz) · $4,800</button>
+              <button class="size-btn" data-price="9500" data-orig="12500" onclick="selectSize(this,'gelato33')">1 kg (35 oz) · $9,500</button>
+            </div>
+            <button class="add-to-cart" onclick="addToCart('gelato33')">+ Add to Cart</button>
+          </div>
+        </div>
+
+        <!-- Gorilla Glue #4 -->
+        <div class="item-card" id="card-gorilla-glue">
+          <div class="item-img-wrap"><img class="item-img" src="imgs/pack_gorilla_glue.png" alt="Gorilla Glue #4" onerror="this.src='imgs/hero_flower.png'"/></div>
+          <div class="item-info">
+            <div class="item-name">Gorilla Glue #4</div>
+            <div class="item-desc">Earthy pine & chocolate • Heavy hitter • Ultra-sticky</div>
+            <div class="item-badges"><span class="item-badge ib-aaaa">AAAA+</span><span class="item-badge ib-hybrid">Hybrid</span></div>
+          </div>
+          <div class="item-foot">
+            <div class="item-price-row"><span class="item-price-old" id="orig-gorilla-glue">$544</span><span class="item-price" id="price-gorilla-glue">$400</span><div class="item-disc-badge">26% OFF</div></div>
+            <div class="size-selector" data-item="gorilla-glue" data-name="Gorilla Glue #4" data-img="imgs/pack_gorilla_glue.png">
+              <button class="size-btn active" data-price="400" data-orig="544" onclick="selectSize(this,'gorilla-glue')">1 oz (28g) · $400</button>
+              <button class="size-btn" data-price="1400" data-orig="1800" onclick="selectSize(this,'gorilla-glue')">QP (4 oz) · $1,400</button>
+              <button class="size-btn" data-price="2600" data-orig="3400" onclick="selectSize(this,'gorilla-glue')">HP (8 oz) · $2,600</button>
+              <button class="size-btn" data-price="4800" data-orig="6200" onclick="selectSize(this,'gorilla-glue')">1 lb (16 oz) · $4,800</button>
+              <button class="size-btn" data-price="9500" data-orig="12500" onclick="selectSize(this,'gorilla-glue')">1 kg (35 oz) · $9,500</button>
+            </div>
+            <button class="add-to-cart" onclick="addToCart('gorilla-glue')">+ Add to Cart</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══ HASH ═══ -->
+    <section>
+      <div class="sec-head">
+        <div class="sec-title">🍫 Premium Hash</div>
+        <div class="sec-sub">Import Slabs — 100g to 1kg Wholesale</div>
+      </div>
+      <div class="cat-header"><span class="cat-name">Traditional Imports</span><div class="cat-divider"></div></div>
+      <div class="items-grid">
+
+        <!-- Dutch Polm -->
+        <div class="item-card" id="card-dutch-polm">
+          <div class="item-img-wrap"><img class="item-img" src="imgs/pack_polm_hash.png" alt="Dutch Polm Hash" onerror="this.src='imgs/prod_hash_new.png'"/></div>
+          <div class="item-info">
+            <div class="item-name">Dutch Polm Hash</div>
+            <div class="item-desc">Netherlands pollen press • Smooth blonde slab • Mild & pure</div>
+            <div class="item-badges"><span class="item-badge ib-new">NEW</span><span class="item-badge ib-aaaa">AAAA</span></div>
+          </div>
+          <div class="item-foot">
+            <div class="item-price-row"><span class="item-price-old" id="orig-dutch-polm">$1300</span><span class="item-price" id="price-dutch-polm">$950</span><div class="item-disc-badge">27% OFF</div></div>
+            <div class="size-selector" data-item="dutch-polm" data-name="Dutch Polm Hash" data-img="imgs/pack_polm_hash.png">
+              <button class="size-btn active" data-price="950" data-orig="1300" onclick="selectSize(this,'dutch-polm')">100g Slab · $950</button>
+              <button class="size-btn" data-price="2200" data-orig="3000" onclick="selectSize(this,'dutch-polm')">250g Block · $2,200</button>
+              <button class="size-btn" data-price="4000" data-orig="5500" onclick="selectSize(this,'dutch-polm')">500g Plate · $4,000</button>
+              <button class="size-btn" data-price="7500" data-orig="10000" onclick="selectSize(this,'dutch-polm')">1 kg Bulk · $7,500</button>
+            </div>
+            <button class="add-to-cart" onclick="addToCart('dutch-polm')">+ Add to Cart</button>
+          </div>
+        </div>
+
+        <!-- Royal Afghani Black -->
+        <div class="item-card" id="card-afghani-black">
+          <div class="item-img-wrap"><img class="item-img" src="imgs/pack_afghani_black.png" alt="Royal Afghani Black" onerror="this.src='imgs/prod_hash_new.png'"/></div>
+          <div class="item-info">
+            <div class="item-name">Royal Afghani Black</div>
+            <div class="item-desc">Kandahar region • Ultra-dark pressed slab • Intense heavy body</div>
+            <div class="item-badges"><span class="item-badge ib-new">NEW</span><span class="item-badge ib-aaaa">AAAA+</span></div>
+          </div>
+          <div class="item-foot">
+            <div class="item-price-row"><span class="item-price-old" id="orig-afghani-black">$1836</span><span class="item-price" id="price-afghani-black">$1350</span><div class="item-disc-badge">26% OFF</div></div>
+            <div class="size-selector" data-item="afghani-black" data-name="Royal Afghani Black" data-img="imgs/pack_afghani_black.png">
+              <button class="size-btn active" data-price="1350" data-orig="1836" onclick="selectSize(this,'afghani-black')">100g Slab · $1,350</button>
+              <button class="size-btn" data-price="3200" data-orig="4200" onclick="selectSize(this,'afghani-black')">250g Block · $3,200</button>
+              <button class="size-btn" data-price="6000" data-orig="8000" onclick="selectSize(this,'afghani-black')">500g Plate · $6,000</button>
+              <button class="size-btn" data-price="11000" data-orig="15000" onclick="selectSize(this,'afghani-black')">1 kg Bulk · $11,000</button>
+            </div>
+            <button class="add-to-cart" onclick="addToCart('afghani-black')">+ Add to Cart</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══ EDIBLES ═══ -->
+    <section>
+      <div class="sec-head">
+        <div class="sec-title">🍬 Edibles</div>
+        <div class="sec-sub">Bulk Dispensary Packs — 10+ Packs Only</div>
+      </div>
+      <div class="items-grid">
+
+        <div class="item-card" id="card-gummies">
+          <div class="item-img-wrap"><img class="item-img" src="imgs/pack_gummies.png" alt="THC Gummies"/></div>
+          <div class="item-info">
+            <div class="item-name">THC Gummies</div>
+            <div class="item-desc">Mixed fruit flavors • 10mg each • 20-piece pack</div>
+          </div>
+          <div class="item-foot">
+            <div class="item-price-row"><span class="item-price-old" id="orig-gummies">$1311</span><span class="item-price" id="price-gummies">$950</span><div class="item-disc-badge">27% OFF</div></div>
+            <div class="size-selector" data-item="gummies" data-name="THC Gummies" data-img="imgs/pack_gummies.png">
+              <button class="size-btn active" data-price="950" data-orig="1311" onclick="selectSize(this,'gummies')">10 packs · $950</button>
+              <button class="size-btn" data-price="1800" data-orig="2500" onclick="selectSize(this,'gummies')">20 packs (Case) · $1,800</button>
+              <button class="size-btn" data-price="4200" data-orig="6000" onclick="selectSize(this,'gummies')">50 packs (Bulk) · $4,200</button>
+              <button class="size-btn" data-price="7500" data-orig="11000" onclick="selectSize(this,'gummies')">100 packs (Wholesale) · $7,500</button>
+            </div>
+            <button class="add-to-cart" onclick="addToCart('gummies')">+ Add to Cart</button>
+          </div>
+        </div>
+
+        <div class="item-card" id="card-chocolate">
+          <div class="item-img-wrap"><img class="item-img" src="imgs/pack_chocolate.png" alt="THC Chocolate"/></div>
+          <div class="item-info">
+            <div class="item-name">THC Chocolate Bar</div>
+            <div class="item-desc">Dark, milk or white • 100mg per bar • 10 segments × 10mg</div>
+          </div>
+          <div class="item-foot">
+            <div class="item-price-row"><span class="item-price-old" id="orig-chocolate">$1186</span><span class="item-price" id="price-chocolate">$850</span><div class="item-disc-badge">28% OFF</div></div>
+            <div class="size-selector" data-item="chocolate" data-name="THC Chocolate Bar" data-img="imgs/pack_chocolate.png">
+              <button class="size-btn active" data-price="850" data-orig="1186" onclick="selectSize(this,'chocolate')">10 bars · $850</button>
+              <button class="size-btn" data-price="1600" data-orig="2250" onclick="selectSize(this,'chocolate')">20 bars (Case) · $1,600</button>
+              <button class="size-btn" data-price="3800" data-orig="5500" onclick="selectSize(this,'chocolate')">50 bars (Bulk) · $3,800</button>
+              <button class="size-btn" data-price="7000" data-orig="10000" onclick="selectSize(this,'chocolate')">100 bars (Wholesale) · $7,000</button>
+            </div>
+            <button class="add-to-cart" onclick="addToCart('chocolate')">+ Add to Cart</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="#" class="logo">
+          <div class="logo-icon"><img src="imgs/logo_neon.jpg" alt="Dwarf Plug"/></div>
+          <div class="logo-text">
+            <span class="logo-name">DWARF PLUG</span>
+            <span class="logo-sub">Bulk Worldwide</span>
+          </div>
+        </a>
+        <p class="footer-desc">The industry leader in discreet, bulk cannabis logistics. Providing premium craft products to private clients globally since 2018.</p>
+      </div>
+      <div>
+        <div class="footer-head">Quick Links</div>
+        <div class="footer-links">
+          <a href="#catalog" class="footer-link">Catalog</a>
+          <a href="https://t.me/dwarfplugshop?direct" target="_blank" class="footer-link">Telegram Support</a>
+          <button class="footer-link" onclick="openReviews('_flower')">Customer Reviews</button>
+        </div>
+      </div>
+      <div>
+        <div class="footer-head">Security</div>
+        <div class="footer-links">
+          <span class="footer-link">✓ PGP Encrypted Comm</span>
+          <span class="footer-link">✓ No Logs Policy</span>
+          <span class="footer-link">✓ Vacuum Stealth</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="copy">© 2024 DWARF PLUG. All rights reserved.</div>
+      <div class="footer-payment">₿ Ξ 🪙</div>
+    </div>
+  </footer>
+
+  <!-- ═══ CART MODAL ═══ -->
+  <div class="modal-overlay" id="cartModalOverlay">
+    <div class="modal">
+      <div class="modal-head">
+        <div class="modal-title">Your Cart</div>
+        <div class="modal-close" onclick="closeCart()">✕</div>
+      </div>
+      <div class="modal-body">
+        <div class="cart-list" id="cartList"></div>
+        <div class="cart-total-row">
+          <span class="cart-total-label">Total Amount:</span>
+          <span class="cart-total-val" id="cartTotal">$0</span>
+        </div>
+        
+        <div class="privacy-notice" style="margin-bottom:20px">
+          <span class="pn-icon">🔒</span>
+          <div>Checkout is handled via Telegram for 100% anonymity. No data is stored on our servers.</div>
+        </div>
+
+        <button class="checkout-btn" onclick="checkout()">
+          ✈ Order via Telegram
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ REVIEWS MODAL ═══ -->
+  <div class="rv-overlay" id="rvOverlay">
+    <div class="rv-modal">
+      <div class="rv-head">
+        <div class="rv-title" id="rvTitle">Customer Reviews</div>
+        <div class="rv-close" onclick="closeReviews()">✕</div>
+      </div>
+      <div class="rv-body" id="rvBody"></div>
+    </div>
+  </div>
+
+  <!-- ═══ SALES POP ═══ -->
+  <div class="sp-card" id="spCard">
+    <div class="sp-icon" id="spIcon">🌿</div>
+    <div class="sp-info">
+      <div class="sp-headline" id="spHeadline">New York just ordered</div>
+      <div class="sp-sub" id="spSub">Blue Dream — 1 oz</div>
+      <div class="sp-time" id="spTime">Just now</div>
+    </div>
+  </button>
+
+  <div class="toast" id="toast">Item added to cart</div>
+
+  <script>
+  // ── CART LOGIC ───────────────────────────────────────────────────────────────
+  let cart = [];
+
+  function selectSize(btn, itemId) {
+    const selector = btn.parentElement;
+    selector.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    
+    // Update displayed price
+    const card = document.getElementById('card-' + itemId);
+    card.querySelector('.item-price').textContent = '$' + parseInt(btn.dataset.price).toLocaleString();
+    card.querySelector('.item-price-old').textContent = '$' + parseInt(btn.dataset.orig).toLocaleString();
+  }
+
+  function addToCart(itemId) {
+    const card = document.getElementById('card-' + itemId);
+    const selector = card.querySelector('.size-selector');
+    const activeBtn = selector.querySelector('.size-btn.active');
+    
+    const item = {
+      id: itemId,
+      name: selector.dataset.name,
+      img: selector.dataset.img,
+      size: activeBtn.textContent.split(' · ')[0],
+      price: parseInt(activeBtn.dataset.price)
+    };
+    
+    cart.push(item);
+    updateCartUI();
+    showToast('Added ' + item.name + ' to cart');
+  }
+
+  function removeFromCart(index) {
+    cart.splice(index, 1);
+    updateCartUI();
+  }
+
+  function updateCartUI() {
+    const count = cart.length;
+    document.getElementById('cartCount').textContent = count;
+    document.getElementById('cartBadge').textContent = count;
+    document.getElementById('cartBadge').style.display = count > 0 ? 'flex' : 'none';
+    
+    const list = document.getElementById('cartList');
+    list.innerHTML = '';
+    
+    if (cart.length === 0) {
+      list.innerHTML = '<div class="cart-empty">Your cart is empty</div>';
+      document.getElementById('cartTotal').textContent = '$0';
+      return;
+    }
+    
+    let total = 0;
+    cart.forEach((item, i) => {
+      total += item.price;
+      list.innerHTML += `
+        <div class="cart-item">
+          <img src="${item.img}" class="cart-item-img" />
+          <div class="cart-item-info">
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-size">${item.size}</div>
+            <div class="cart-item-price">$${item.price.toLocaleString()}</div>
+            <div class="cart-item-remove" onclick="removeFromCart(${i})">Remove</div>
+          </div>
+        </div>
+      `;
+    });
+    
+    document.getElementById('cartTotal').textContent = '$' + total.toLocaleString();
+  }
+
+  function openCart() { document.getElementById('cartModalOverlay').classList.add('open'); }
+  function closeCart() { document.getElementById('cartModalOverlay').classList.remove('open'); }
+
+  function checkout() {
+    if (cart.length === 0) return;
+    
+    let summary = "NEW ORDER FROM DWARF PLUG WEBSITE\n\n";
+    cart.forEach(item => {
+      summary += `• ${item.name} (${item.size}) - $${item.price}\n`;
+    });
+    summary += `\nTOTAL: ${document.getElementById('cartTotal').textContent}\n\n`;
+    summary += "Please provide your shipping details and preferred payment method.";
+    
+    const encoded = encodeURIComponent(summary);
+    window.open('https://t.me/dwarfplugshop?text=' + encoded, '_blank');
+  }
+
+  // ── REVIEWS ──────────────────────────────────────────────────────────────────
+  const REVIEWS_DB = {
+    _flower: [
+      {name:'M.*** — Toronto, CA',stars:5,date:'Jun 12 2025',text:'Wholesale order of Blue Dream arrived in 8 days. Triple-vac sealed, zero smell through customs. The quality is insane.',verified:true},
+      {name:'D.*** — Berlin, DE',stars:5,date:'Jun 8 2025',text:'Second bulk order. Packaging was completely discreet — looked like a regular parcel. HP arrived in perfect condition.',verified:true}
+    ]
+  };
+
+  function openReviews(cat) {
+    const body = document.getElementById('rvBody');
+    body.innerHTML = '';
+    const reviews = REVIEWS_DB[cat] || [];
+    
+    reviews.forEach(r => {
+      body.innerHTML += `
+        <div class="rv-card">
+          <div class="rv-card-head">
+            <div class="rv-card-stars">${'⭐'.repeat(r.stars)}</div>
+            <div class="rv-verified">VERIFIED BUYER</div>
+          </div>
+          <div class="rv-card-name">${r.name}</div>
+          <div class="rv-card-date">${r.date}</div>
+          <div class="rv-card-body">${r.text}</div>
+        </div>
+      `;
+    });
+    
+    document.getElementById('rvOverlay').classList.add('open');
+  }
+  function closeReviews() { document.getElementById('rvOverlay').classList.remove('open'); }
+
+  // ── UTILS ────────────────────────────────────────────────────────────────────
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+  }
+
+  // Counter
+  (function() {
+    const el = document.getElementById('counterOrders');
+    let count = 3204;
+    setInterval(() => {
+      if (Math.random() < 0.3) {
+        count += 1;
+        el.textContent = count.toLocaleString();
+      }
+    }, 10000);
+  })();
+
+  // Sales Pop
+  (function() {
+    const ORDERS = [
+      { city:'London', name:'OG Kush', size:'1 lb' },
+      { city:'Dubai', name:'Blue Dream', size:'1 kg' },
+      { city:'Tokyo', name:'Gorilla Glue', size:'QP' }
+    ];
+    let idx = 0;
+    function showNext() {
+      const o = ORDERS[idx % ORDERS.length];
+      idx++;
+      document.getElementById('spHeadline').textContent = o.city + ' just ordered';
+      document.getElementById('spSub').textContent = o.name + ' — ' + o.size;
+      const card = document.getElementById('spCard');
+      card.classList.add('show');
+      setTimeout(() => card.classList.remove('show'), 5000);
+    }
+    setTimeout(showNext, 5000);
+    setInterval(showNext, 25000);
+  })();
+
+  function toggleTip(btn) {
+    btn.nextElementSibling.classList.toggle('open');
+    btn.querySelector('.tip-arrow').classList.toggle('open');
+  }
+  function toggleTipBody(btn) {
+    btn.nextElementSibling.classList.toggle('open');
+  }
+  </script>
+
+</body>
+</html>

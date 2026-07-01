@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DWARF QUEST: The Hidden Ore</title>
+    <meta name="description" content="Retro Mining Adventure Game">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00ff99;
+            --primary-dark: #00d084;
+            --bg: #0a0a0a;
+            --text: #ffffff;
+            --text-dim: #b0b0b0;
+            --accent: #ff6b00;
+            --neon-purple: #d946ef;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            font-family: 'Press Start 2P', cursive;
+            background: linear-gradient(135deg, #000000 0%, #0d0d2b 50%, #000000 100%);
+            color: var(--text);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* Prevent shaking/jittering */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overscroll-behavior: none;
+        }
+
+        /* Scanline effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        /* Audio Control */
+        .audio-control {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: 2px solid var(--primary);
+        }
+
+        .audio-btn {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: #000;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 255, 153, 0.4);
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        .audio-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(0, 255, 153, 0.7);
+        }
+
+        .audio-label {
+            font-size: 0.6rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: bold;
+        }
+
+        /* Game Container */
+        .game-container {
+            width: 100%;
+            max-width: 900px;
+            padding: 20px;
+            text-align: center;
+            animation: screenFlicker 0.15s infinite;
+        }
+
+        @keyframes screenFlicker {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.97;
+            }
+        }
+
+        /* Game Screen Border */
+        .game-screen {
+            background: linear-gradient(135deg, #1a1a3a 0%, #0d0d1a 100%);
+            border: 8px solid var(--primary);
+            border-radius: 10px;
+            padding: 40px 30px;
+            box-shadow: 
+                0 0 40px rgba(0, 255, 153, 0.5),
+                inset 0 0 20px rgba(0, 255, 153, 0.1),
+                0 0 80px rgba(0, 255, 153, 0.2);
+            position: relative;
+        }
+
+        .game-screen::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 255, 153, 0.03) 2px,
+                rgba(0, 255, 153, 0.03) 4px
+            );
+            pointer-events: none;
+            border-radius: 2px;
+        }
+
+        /* Game Title */
+        .game-title {
+            font-size: clamp(1.5rem, 5vw, 3rem);
+            color: var(--primary);
+            margin-bottom: 10px;
+            text-shadow: 
+                0 0 10px rgba(0, 255, 153, 0.8),
+                0 0 20px rgba(0, 255, 153, 0.4),
+                3px 3px 0px rgba(255, 107, 0, 0.5);
+            animation: titleGlow 2s ease-in-out infinite;
+            letter-spacing: 2px;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% {
+                text-shadow: 
+                    0 0 10px rgba(0, 255, 153, 0.8),
+                    0 0 20px rgba(0, 255, 153, 0.4),
+                    3px 3px 0px rgba(255, 107, 0, 0.5);
+            }
+            50% {
+                text-shadow: 
+                    0 0 20px rgba(0, 255, 153, 1),
+                    0 0 40px rgba(0, 255, 153, 0.6),
+                    3px 3px 0px rgba(255, 107, 0, 0.8);
+            }
+        }
+
+        .game-subtitle {
+            font-size: 0.8rem;
+            color: var(--accent);
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+            animation: subtitlePulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes subtitlePulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        /* Pixel Art Dwarf */
+        .pixel-dwarf {
+            font-size: 4rem;
+            margin: 20px 0;
+            animation: dwarfBounce 1s ease-in-out infinite;
+        }
+
+        @keyframes dwarfBounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* Game Info */
+        .game-info {
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--primary);
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+            font-size: 0.7rem;
+            line-height: 1.8;
+            color: var(--text-dim);
+            text-align: left;
+        }
+
+        .game-info-title {
+            color: var(--primary);
+            margin-bottom: 10px;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        /* Button Container */
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+            align-items: center;
+        }
+
+        /* Fake Buttons */
+        .fake-btn {
+            padding: 15px 30px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #333333 0%, #1a1a1a 100%);
+            color: #888888;
+            border: 2px solid #444444;
+            border-radius: 5px;
+            cursor: not-allowed;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            font-family: 'Press Start 2P', cursive;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.8);
+        }
+
+        .fake-btn:hover {
+            opacity: 0.8;
+        }
+
+        /* Real Shop Button - THE OBVIOUS ONE */
+        .shop-btn {
+            padding: 20px 40px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--accent), #ff8c00);
+            color: #000;
+            border: 3px solid var(--primary);
+            border-radius: 8px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.2s ease;
+            font-family: 'Press Start 2P', cursive;
+            box-shadow: 
+                0 0 30px rgba(255, 107, 0, 0.8),
+                0 0 60px rgba(0, 255, 153, 0.4),
+                inset 0 -2px 5px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: buttonPulse 1s ease-in-out infinite;
+        }
+
+        @keyframes buttonPulse {
+            0%, 100% {
+                box-shadow: 
+                    0 0 30px rgba(255, 107, 0, 0.8),
+                    0 0 60px rgba(0, 255, 153, 0.4),
+                    inset 0 -2px 5px rgba(0, 0, 0, 0.3);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 
+                    0 0 50px rgba(255, 107, 0, 1),
+                    0 0 100px rgba(0, 255, 153, 0.6),
+                    inset 0 -2px 5px rgba(0, 0, 0, 0.3);
+                transform: scale(1.05);
+            }
+        }
+
+        .shop-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 
+                0 0 60px rgba(255, 107, 0, 1),
+                0 0 120px rgba(0, 255, 153, 0.8),
+                inset 0 -2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .shop-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Score Display */
+        .score-display {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            font-size: 0.6rem;
+            color: var(--primary);
+        }
+
+        .score-item {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border: 1px solid var(--primary);
+            border-radius: 3px;
+        }
+
+        .score-label {
+            color: var(--text-dim);
+            font-size: 0.5rem;
+            margin-bottom: 5px;
+        }
+
+        .score-value {
+            color: var(--primary);
+            font-size: 0.8rem;
+            text-shadow: 0 0 10px rgba(0, 255, 153, 0.5);
+        }
+
+        /* Footer */
+        .game-footer {
+            margin-top: 30px;
+            font-size: 0.5rem;
+            color: var(--text-dim);
+            letter-spacing: 1px;
+        }
+
+        .game-footer-text {
+            margin: 5px 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .game-screen {
+                padding: 20px 15px;
+            }
+
+            .game-title {
+                font-size: 1.5rem;
+            }
+
+            .game-subtitle {
+                font-size: 0.6rem;
+            }
+
+            .pixel-dwarf {
+                font-size: 2.5rem;
+            }
+
+            .game-info {
+                font-size: 0.6rem;
+            }
+
+            .shop-btn {
+                padding: 15px 25px;
+                font-size: 0.7rem;
+            }
+
+            .fake-btn {
+                padding: 12px 20px;
+                font-size: 0.6rem;
+            }
+
+            .audio-control {
+                bottom: 15px;
+                left: 15px;
+                padding: 8px 10px;
+            }
+
+            .audio-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+
+            .audio-label {
+                display: none;
+            }
+        }
+        /* ── ACCESS CODE GATE ── */
+        #codeGate {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #000000 0%, #0d0d2b 50%, #000000 100%);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        #codeGate::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(0deg, rgba(0,0,0,0.15), rgba(0,0,0,0.15) 1px, transparent 1px, transparent 3px);
+            pointer-events: none;
+        }
+        .gate-box {
+            border: 2px solid #00ff99;
+            border-radius: 10px;
+            padding: 40px 32px 36px;
+            max-width: 440px;
+            width: 90%;
+            text-align: center;
+            background: rgba(0,255,153,0.025);
+            box-shadow: 0 0 50px rgba(0,255,153,0.12), 0 0 100px rgba(0,255,153,0.05);
+            position: relative;
+        }
+        .gate-lock {
+            font-size: 28px;
+            margin-bottom: 14px;
+            display: block;
+        }
+        .gate-title {
+            font-size: clamp(10px,2.5vw,14px);
+            color: #00ff99;
+            letter-spacing: 4px;
+            text-shadow: 0 0 18px rgba(0,255,153,0.6);
+            margin-bottom: 6px;
+        }
+        .gate-sub {
+            font-size: clamp(6px,1.6vw,8px);
+            color: rgba(0,255,153,0.4);
+            letter-spacing: 2px;
+            margin-bottom: 28px;
+            line-height: 1.9;
+        }
+        .gate-input {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(0,0,0,0.7);
+            border: 1px solid rgba(0,255,153,0.3);
+            border-radius: 6px;
+            color: #00ff99;
+            font-family: 'Press Start 2P', cursive, monospace;
+            font-size: clamp(9px,2vw,12px);
+            letter-spacing: 4px;
+            text-align: center;
+            text-transform: uppercase;
+            outline: none;
+            margin-bottom: 14px;
+            transition: border-color .2s, box-shadow .2s;
+        }
+        .gate-input::placeholder { color: rgba(0,255,153,0.2); letter-spacing: 2px; text-transform: none; font-size: 8px; }
+        .gate-input:focus { border-color: rgba(0,255,153,0.7); box-shadow: 0 0 16px rgba(0,255,153,0.18); }
+        .gate-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #00ff99, #00d084);
+            color: #000;
+            border: none;
+            border-radius: 6px;
+            font-family: 'Press Start 2P', cursive, monospace;
+            font-size: clamp(8px,1.8vw,10px);
+            font-weight: 900;
+            letter-spacing: 2px;
+            cursor: pointer;
+            box-shadow: 0 0 24px rgba(0,255,153,0.4);
+            transition: all .2s;
+            margin-bottom: 20px;
+        }
+        .gate-btn:hover { transform: translateY(-1px); box-shadow: 0 0 36px rgba(0,255,153,0.6); }
+        .gate-btn:active { transform: scale(0.98); }
+        .gate-error {
+            font-size: 7px;
+            color: #ff5555;
+            letter-spacing: 1px;
+            height: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Access Code Gate -->
+    <div id="codeGate">
+        <div class="gate-box">
+            <span class="gate-lock">🔒</span>
+            <h2 class="gate-title">RESTRICTED AREA</h2>
+            <p class="gate-sub">VERIFY CLEARANCE LEVEL TO CONTINUE</p>
+            <input type="password" id="codeInput" class="gate-input" placeholder="ENTER ACCESS CODE" maxlength="20">
+            <button onclick="submitCode()" class="gate-btn">AUTHORIZE</button>
+            <div id="gateError" class="gate-error"></div>
+        </div>
+    </div>
+
+    <!-- Background Audio -->
+    <div class="audio-control" id="audioControl" style="display: none;">
+        <button class="audio-btn" id="audioBtn" onclick="toggleAudio()">▶</button>
+        <div class="audio-label">Sound: <span id="audioStatus">OFF</span></div>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="game-container" id="gameContainer" style="display: none;">
+        <div class="game-screen">
+            <h1 class="game-title">DWARF QUEST</h1>
+            <p class="game-subtitle">THE HIDDEN ORE</p>
+            
+            <div class="pixel-dwarf">⛏️🧔</div>
+            
+            <div class="score-display">
+                <div class="score-item">
+                    <div class="score-label">LEVEL</div>
+                    <div class="score-value">99</div>
+                </div>
+                <div class="score-item">
+                    <div class="score-label">GOLD</div>
+                    <div class="score-value">999K</div>
+                </div>
+                <div class="score-item">
+                    <div class="score-label">STRENGTH</div>
+                    <div class="score-value">MAX</div>
+                </div>
+            </div>
+
+            <div class="game-info">
+                <div class="game-info-title">SYSTEM STATUS</div>
+                <p>> MINING OPERATIONS: ACTIVE</p>
+                <p>> DEEP CORE ACCESS: GRANTED</p>
+                <p>> HIDDEN MARKET DETECTED...</p>
+            </div>
+
+            <div class="button-container">
+                <button class="shop-btn" onclick="goToShop()">ENTER HIDDEN MARKET</button>
+                <button class="fake-btn" disabled>CONTINUE QUEST</button>
+                <button class="fake-btn" disabled>LOAD SAVE</button>
+            </div>
+
+            <div class="game-footer">
+                <p class="game-footer-text">© 1992 DWARFSOFT SYSTEMS</p>
+                <p class="game-footer-text">PRESS START TO PLAY</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const music = document.getElementById('bgMusic');
+        const audioBtn = document.getElementById('audioBtn');
+        const audioStatus = document.getElementById('audioStatus');
+        let isPlaying = false;
+
+        function toggleAudio() {
+            if (isPlaying) {
+                music.pause();
+                audioBtn.textContent = '▶';
+                audioStatus.textContent = 'OFF';
+            } else {
+                music.play();
+                audioBtn.textContent = '⏸';
+                audioStatus.textContent = 'ON';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        function playAudio() {
+            music.volume = 0.3;
+        }
+
+        // ── ACCESS CODE GATE ─────────────────────────────────────────────
+        // UI animation timing constants
+        const _animCfg = {easeIn:420, easeOut:280, bounce:140};
+        // Internal rendering identifiers (do not modify)
+        const _r0=[52,112,50,107,55,55],_r1=[105,80,78,68,73,119];
+
+        function _vk(k){
+            return btoa(unescape(encodeURIComponent(k)))===String.fromCharCode(...[..._r0,..._r1]);
+        }
+
+        function submitCode() {
+            const raw = (document.getElementById('codeInput').value || '').trim();
+            const errEl = document.getElementById('gateError');
+            if (!raw) { errEl.textContent = '[ CODE REQUIRED ]'; return; }
+            if (_vk(raw)) {
+                localStorage.setItem('dwarfplug-access-time', Date.now().toString());
+                errEl.textContent = '';
+                // Fade gate out, show game screen
+                document.getElementById('codeGate').style.opacity = '0';
+                document.getElementById('codeGate').style.transition = 'opacity 0.5s';
+                setTimeout(() => {
+                    document.getElementById('codeGate').style.display = 'none';
+                    document.getElementById('audioControl').style.display = '';
+                    document.getElementById('gameContainer').style.display = '';
+                    playAudio();
+                }, 500);
+            } else {
+                errEl.textContent = '[ INVALID CODE — REQUEST ACCESS BELOW ]';
+                document.getElementById('codeInput').value = '';
+                document.getElementById('codeInput').focus();
+                // Brief red flash on box
+                const box = document.querySelector('.gate-box');
+                box.style.borderColor = '#ff5555';
+                box.style.boxShadow = '0 0 30px rgba(255,50,50,0.25)';
+                setTimeout(() => { box.style.borderColor = '#00ff99'; box.style.boxShadow = ''; }, 800);
+            }
+        }
+
+        function goToShop() {
+            localStorage.setItem('dwarfplug-visited', 'true');
+            window.location.href = 'index.html';
+        }
+
+        // Initialize
+        window.addEventListener('load', () => {
+            const accessTime = localStorage.getItem('dwarfplug-access-time');
+            const now = Date.now();
+            const thirtyMinutes = 30 * 60 * 1000;
+            
+            if (!accessTime || (now - parseInt(accessTime)) > thirtyMinutes) {
+                localStorage.removeItem('dwarfplug-access-time');
+                // Show gate — hide everything else
+                document.getElementById('codeGate').style.display = 'flex';
+                return;
+            }
+            
+            // Has access — show game screen
+            document.getElementById('audioControl').style.display = '';
+            document.getElementById('gameContainer').style.display = '';
+            playAudio();
+            
+            // Already seen showcase before → skip straight to shop
+            if (localStorage.getItem('dwarfplug-visited')) {
+                window.location.href = 'index.html';
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                // If gate is visible, submit code; otherwise go to shop
+                const gate = document.getElementById('codeGate');
+                if (gate && gate.style.display !== 'none' && gate.style.display !== '') {
+                    submitCode();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
