@@ -66,29 +66,12 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .cart-count{background:#000;color:#00ff99;width:18px;height:18px;border-radius:50%;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center}
 
 /* ── FLOATING CART BUBBLE ── */
-.cart-float{
-  position:fixed;bottom:28px;right:22px;z-index:190;
-  width:62px;height:62px;border-radius:50%;
-  background:linear-gradient(135deg,#00d084 0%,#00b870 100%);
-  color:#000;border:none;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 0 0 0 rgba(0,208,132,.6), 0 6px 24px rgba(0,0,0,.55);
-  transition:transform .2s, box-shadow .2s;
-}
+.cart-float{position:fixed;bottom:28px;right:22px;z-index:190;width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,#00d084 0%,#00b870 100%);color:#000;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 0 rgba(0,208,132,.6), 0 6px 24px rgba(0,0,0,.55);transition:transform .2s, box-shadow .2s}
 .cart-float:hover{transform:scale(1.08);box-shadow:0 0 0 8px rgba(0,208,132,.15), 0 8px 28px rgba(0,0,0,.6)}
 .cart-float.has-items{animation:cartPulse 2s ease-in-out infinite}
 @keyframes cartPulse{0%,100%{box-shadow:0 0 0 0 rgba(0,208,132,.55), 0 6px 24px rgba(0,0,0,.55)}60%{box-shadow:0 0 0 14px rgba(0,208,132,0), 0 6px 24px rgba(0,0,0,.55)}}
 .cart-float-icon{font-size:26px;line-height:1}
-.cart-float-badge{
-  position:absolute;top:-4px;right:-4px;
-  background:#ff3333;color:#fff;
-  min-width:22px;height:22px;border-radius:11px;
-  font-size:12px;font-weight:900;padding:0 5px;
-  display:none;align-items:center;justify-content:center;
-  border:2.5px solid var(--bg);
-  box-shadow:0 2px 8px rgba(255,51,51,.5);
-  animation:badgePop .3s cubic-bezier(.36,.07,.19,.97);
-}
+.cart-float-badge{position:absolute;top:-4px;right:-4px;background:#ff3333;color:#fff;min-width:22px;height:22px;border-radius:11px;font-size:12px;font-weight:900;padding:0 5px;display:none;align-items:center;justify-content:center;border:2.5px solid var(--bg);box-shadow:0 2px 8px rgba(255,51,51,.5);animation:badgePop .3s cubic-bezier(.36,.07,.19,.97)}
 @keyframes badgePop{0%{transform:scale(0)}70%{transform:scale(1.2)}100%{transform:scale(1)}}
 .cart-float-badge.visible{display:flex}
 
@@ -221,6 +204,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .item-badges{display:flex;flex-wrap:wrap;gap:5px}
 .item-badge{font-size:9px;font-weight:900;padding:2px 6px;border-radius:4px;letter-spacing:.05em;text-transform:uppercase}
 .ib-aaaa{background:rgba(255,215,0,.1);color:var(--gold);border:1px solid rgba(255,215,0,.25)}
+.ib-aaaa-plus{background:rgba(255,215,0,.15);color:#ffed4e;border:1px solid rgba(255,237,78,.35)}
 .ib-hybrid{background:rgba(192,132,252,.1);color:var(--purple-text);border:1px solid rgba(192,132,252,.25)}
 .ib-indica{background:rgba(0,204,255,.1);color:var(--blue);border:1px solid rgba(0,204,255,.25)}
 .ib-sativa{background:rgba(255,149,0,.1);color:var(--amber);border:1px solid rgba(255,149,0,.25)}
@@ -328,7 +312,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   <div class="announce-bar">
     <div class="announce-inner">
       <span class="announce-badge">Live Status</span>
-      <p class="announce-text">Orders placed now ship in <strong>< 4 hours</strong> • 24/7 Support Active</p>
+      <p class="announce-text">Orders placed now ship in <strong>< 4 hours</strong> • 24/7 Support Active • <strong><a href="game.html" style="color:#ffd700;text-decoration:underline">Play Discount Quest</a></strong></p>
     </div>
   </div>
 
@@ -337,7 +321,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     <div class="hero-inner">
       <div class="live-badge"><span class="live-dot"></span> Worldwide Discreet Delivery</div>
       <h1>Premium Craft Cannabis</h1>
-      <p>Odor-proof, vacuum-sealed, plain packaging. Crypto and gift card payments accepted for total anonymity.</p>
+      <p>Lab-tested, hand-trimmed, premium-grade. Odor-proof, vacuum-sealed, plain packaging. Crypto and gift card payments accepted for total anonymity.</p>
       
       <div class="order-counter">
         <div class="oc-stat"><span class="oc-num" id="counterOrders">3,204</span><span class="oc-label">Successful Drops</span></div>
@@ -348,7 +332,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       <div class="trust-badges">
         <div class="trust-badge"><span>✓</span> 100% Discreet</div>
         <div class="trust-badge"><span>✓</span> Reship Guarantee</div>
-        <div class="trust-badge"><span>✓</span> AAA+ Quality</div>
+        <div class="trust-badge"><span>✓</span> Lab-Tested</div>
       </div>
 
       <button class="hero-shop-btn" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">
@@ -443,7 +427,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     <section>
       <div class="sec-head">
         <div class="sec-title">🌿 Premium Flower</div>
-        <div class="sec-sub">Bulk Exotics — Ounces & Kilograms Only</div>
+        <div class="sec-sub">Hand-trimmed, lab-tested — AAA+ to AAAA+ strains</div>
       </div>
       <div class="cat-header"><span class="cat-name">Top Shelf Strains</span><div class="cat-divider"></div></div>
       <div class="items-grid">
@@ -453,17 +437,19 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
           <div class="item-img-wrap"><img class="item-img" src="imgs/pack_blue_dream.png" alt="Blue Dream" onerror="this.src='imgs/hero_flower.png'"/></div>
           <div class="item-info">
             <div class="item-name">Blue Dream</div>
-            <div class="item-desc">Sweet berry • Balanced head + body high • Daytime use</div>
-            <div class="item-badges"><span class="item-badge ib-aaaa">AAAA+</span><span class="item-badge ib-hybrid">Hybrid</span></div>
+            <div class="item-desc">Sweet berry • Balanced head + body high • Daytime use • Hand-trimmed • Lab-tested</div>
+            <div class="item-badges"><span class="item-badge ib-aaaa-plus">AAAA+</span><span class="item-badge ib-hybrid">Hybrid</span></div>
           </div>
           <div class="item-foot">
-            <div class="item-price-row"><span class="item-price-old" id="orig-blue-dream">$469</span><span class="item-price" id="price-blue-dream">$350</span><div class="item-disc-badge">25% OFF</div></div>
+            <div class="item-price-row"><span class="item-price-old" id="orig-blue-dream">$75</span><span class="item-price" id="price-blue-dream">$60</span><div class="item-disc-badge">20% OFF</div></div>
             <div class="size-selector" data-item="blue-dream" data-name="Blue Dream" data-img="imgs/pack_blue_dream.png">
-              <button class="size-btn active" data-price="350" data-orig="469" onclick="selectSize(this,'blue-dream')">1 oz (28g) · $350</button>
-              <button class="size-btn" data-price="1200" data-orig="1600" onclick="selectSize(this,'blue-dream')">QP (4 oz) · $1,200</button>
-              <button class="size-btn" data-price="2200" data-orig="3000" onclick="selectSize(this,'blue-dream')">HP (8 oz) · $2,200</button>
-              <button class="size-btn" data-price="4000" data-orig="5500" onclick="selectSize(this,'blue-dream')">1 lb (16 oz) · $4,000</button>
-              <button class="size-btn" data-price="8500" data-orig="11000" onclick="selectSize(this,'blue-dream')">1 kg (35 oz) · $8,500</button>
+              <button class="size-btn active" data-price="60" data-orig="75" onclick="selectSize(this,'blue-dream')">1/8 oz (3.5g) · $60</button>
+              <button class="size-btn" data-price="108" data-orig="135" onclick="selectSize(this,'blue-dream')">1/4 oz (7g) · $108</button>
+              <button class="size-btn" data-price="198" data-orig="248" onclick="selectSize(this,'blue-dream')">1/2 oz (14g) · $198</button>
+              <button class="size-btn" data-price="375" data-orig="469" onclick="selectSize(this,'blue-dream')">1 oz (28g) · $375</button>
+              <button class="size-btn" data-price="1320" data-orig="1650" onclick="selectSize(this,'blue-dream')">QP (4 oz) · $1,320</button>
+              <button class="size-btn" data-price="2460" data-orig="3075" onclick="selectSize(this,'blue-dream')">HP (8 oz) · $2,460</button>
+              <button class="size-btn" data-price="4560" data-orig="5700" onclick="selectSize(this,'blue-dream')">1 lb (16 oz) · $4,560</button>
             </div>
             <button class="add-to-cart" onclick="addToCart('blue-dream')">+ Add to Cart</button>
           </div>
@@ -474,17 +460,19 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
           <div class="item-img-wrap"><img class="item-img" src="imgs/pack_og_kush.png" alt="OG Kush" onerror="this.src='imgs/hero_flower.png'"/></div>
           <div class="item-info">
             <div class="item-name">OG Kush</div>
-            <div class="item-desc">Earthy pine & citrus • Heavy full-body • Classic legend</div>
-            <div class="item-badges"><span class="item-badge ib-aaaa">AAAA+</span><span class="item-badge ib-indica">Indica</span></div>
+            <div class="item-desc">Earthy pine & citrus • Heavy full-body • Classic legend • Dense nugs • Premium cure</div>
+            <div class="item-badges"><span class="item-badge ib-aaaa-plus">AAAA+</span><span class="item-badge ib-indica">Indica</span></div>
           </div>
           <div class="item-foot">
-            <div class="item-price-row"><span class="item-price-old" id="orig-og-kush">$469</span><span class="item-price" id="price-og-kush">$350</span><div class="item-disc-badge">25% OFF</div></div>
+            <div class="item-price-row"><span class="item-price-old" id="orig-og-kush">$75</span><span class="item-price" id="price-og-kush">$60</span><div class="item-disc-badge">20% OFF</div></div>
             <div class="size-selector" data-item="og-kush" data-name="OG Kush" data-img="imgs/pack_og_kush.png">
-              <button class="size-btn active" data-price="350" data-orig="469" onclick="selectSize(this,'og-kush')">1 oz (28g) · $350</button>
-              <button class="size-btn" data-price="1200" data-orig="1600" onclick="selectSize(this,'og-kush')">QP (4 oz) · $1,200</button>
-              <button class="size-btn" data-price="2200" data-orig="3000" onclick="selectSize(this,'og-kush')">HP (8 oz) · $2,200</button>
-              <button class="size-btn" data-price="4000" data-orig="5500" onclick="selectSize(this,'og-kush')">1 lb (16 oz) · $4,000</button>
-              <button class="size-btn" data-price="8500" data-orig="11000" onclick="selectSize(this,'og-kush')">1 kg (35 oz) · $8,500</button>
+              <button class="size-btn active" data-price="60" data-orig="75" onclick="selectSize(this,'og-kush')">1/8 oz (3.5g) · $60</button>
+              <button class="size-btn" data-price="108" data-orig="135" onclick="selectSize(this,'og-kush')">1/4 oz (7g) · $108</button>
+              <button class="size-btn" data-price="198" data-orig="248" onclick="selectSize(this,'og-kush')">1/2 oz (14g) · $198</button>
+              <button class="size-btn" data-price="375" data-orig="469" onclick="selectSize(this,'og-kush')">1 oz (28g) · $375</button>
+              <button class="size-btn" data-price="1320" data-orig="1650" onclick="selectSize(this,'og-kush')">QP (4 oz) · $1,320</button>
+              <button class="size-btn" data-price="2460" data-orig="3075" onclick="selectSize(this,'og-kush')">HP (8 oz) · $2,460</button>
+              <button class="size-btn" data-price="4560" data-orig="5700" onclick="selectSize(this,'og-kush')">1 lb (16 oz) · $4,560</button>
             </div>
             <button class="add-to-cart" onclick="addToCart('og-kush')">+ Add to Cart</button>
           </div>
@@ -495,17 +483,19 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
           <div class="item-img-wrap"><img class="item-img" src="imgs/pack_gelato33.png" alt="Gelato 33" onerror="this.src='imgs/hero_flower.png'"/></div>
           <div class="item-info">
             <div class="item-name">Gelato 33</div>
-            <div class="item-desc">Sweet citrus & lavender • Euphoric • Dense frosty nugs</div>
-            <div class="item-badges"><span class="item-badge ib-aaaa">AAAA+</span><span class="item-badge ib-hybrid">Hybrid</span></div>
+            <div class="item-desc">Sweet citrus & lavender • Euphoric • Dense frosty nugs • Premium genetics • Hand-selected</div>
+            <div class="item-badges"><span class="item-badge ib-aaaa-plus">AAAA+</span><span class="item-badge ib-hybrid">Hybrid</span></div>
           </div>
           <div class="item-foot">
-            <div class="item-price-row"><span class="item-price-old" id="orig-gelato33">$544</span><span class="item-price" id="price-gelato33">$400</span><div class="item-disc-badge">26% OFF</div></div>
+            <div class="item-price-row"><span class="item-price-old" id="orig-gelato33">$88</span><span class="item-price" id="price-gelato33">$70</span><div class="item-disc-badge">20% OFF</div></div>
             <div class="size-selector" data-item="gelato33" data-name="Gelato 33" data-img="imgs/pack_gelato33.png">
-              <button class="size-btn active" data-price="400" data-orig="544" onclick="selectSize(this,'gelato33')">1 oz (28g) · $400</button>
-              <button class="size-btn" data-price="1400" data-orig="1800" onclick="selectSize(this,'gelato33')">QP (4 oz) · $1,400</button>
-              <button class="size-btn" data-price="2600" data-orig="3400" onclick="selectSize(this,'gelato33')">HP (8 oz) · $2,600</button>
-              <button class="size-btn" data-price="4800" data-orig="6200" onclick="selectSize(this,'gelato33')">1 lb (16 oz) · $4,800</button>
-              <button class="size-btn" data-price="9500" data-orig="12500" onclick="selectSize(this,'gelato33')">1 kg (35 oz) · $9,500</button>
+              <button class="size-btn active" data-price="70" data-orig="88" onclick="selectSize(this,'gelato33')">1/8 oz (3.5g) · $70</button>
+              <button class="size-btn" data-price="126" data-orig="158" onclick="selectSize(this,'gelato33')">1/4 oz (7g) · $126</button>
+              <button class="size-btn" data-price="231" data-orig="289" onclick="selectSize(this,'gelato33')">1/2 oz (14g) · $231</button>
+              <button class="size-btn" data-price="435" data-orig="544" onclick="selectSize(this,'gelato33')">1 oz (28g) · $435</button>
+              <button class="size-btn" data-price="1540" data-orig="1925" onclick="selectSize(this,'gelato33')">QP (4 oz) · $1,540</button>
+              <button class="size-btn" data-price="2860" data-orig="3575" onclick="selectSize(this,'gelato33')">HP (8 oz) · $2,860</button>
+              <button class="size-btn" data-price="5320" data-orig="6650" onclick="selectSize(this,'gelato33')">1 lb (16 oz) · $5,320</button>
             </div>
             <button class="add-to-cart" onclick="addToCart('gelato33')">+ Add to Cart</button>
           </div>
@@ -516,19 +506,113 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
           <div class="item-img-wrap"><img class="item-img" src="imgs/pack_gorilla_glue.png" alt="Gorilla Glue #4" onerror="this.src='imgs/hero_flower.png'"/></div>
           <div class="item-info">
             <div class="item-name">Gorilla Glue #4</div>
-            <div class="item-desc">Earthy pine & chocolate • Heavy hitter • Ultra-sticky</div>
-            <div class="item-badges"><span class="item-badge ib-aaaa">AAAA+</span><span class="item-badge ib-hybrid">Hybrid</span></div>
+            <div class="item-desc">Earthy pine & chocolate • Heavy hitter • Ultra-sticky • Legendary strain • Premium quality</div>
+            <div class="item-badges"><span class="item-badge ib-aaaa-plus">AAAA+</span><span class="item-badge ib-hybrid">Hybrid</span></div>
           </div>
           <div class="item-foot">
-            <div class="item-price-row"><span class="item-price-old" id="orig-gorilla-glue">$544</span><span class="item-price" id="price-gorilla-glue">$400</span><div class="item-disc-badge">26% OFF</div></div>
+            <div class="item-price-row"><span class="item-price-old" id="orig-gorilla-glue">$88</span><span class="item-price" id="price-gorilla-glue">$70</span><div class="item-disc-badge">20% OFF</div></div>
             <div class="size-selector" data-item="gorilla-glue" data-name="Gorilla Glue #4" data-img="imgs/pack_gorilla_glue.png">
-              <button class="size-btn active" data-price="400" data-orig="544" onclick="selectSize(this,'gorilla-glue')">1 oz (28g) · $400</button>
-              <button class="size-btn" data-price="1400" data-orig="1800" onclick="selectSize(this,'gorilla-glue')">QP (4 oz) · $1,400</button>
-              <button class="size-btn" data-price="2600" data-orig="3400" onclick="selectSize(this,'gorilla-glue')">HP (8 oz) · $2,600</button>
-              <button class="size-btn" data-price="4800" data-orig="6200" onclick="selectSize(this,'gorilla-glue')">1 lb (16 oz) · $4,800</button>
-              <button class="size-btn" data-price="9500" data-orig="12500" onclick="selectSize(this,'gorilla-glue')">1 kg (35 oz) · $9,500</button>
+              <button class="size-btn active" data-price="70" data-orig="88" onclick="selectSize(this,'gorilla-glue')">1/8 oz (3.5g) · $70</button>
+              <button class="size-btn" data-price="126" data-orig="158" onclick="selectSize(this,'gorilla-glue')">1/4 oz (7g) · $126</button>
+              <button class="size-btn" data-price="231" data-orig="289" onclick="selectSize(this,'gorilla-glue')">1/2 oz (14g) · $231</button>
+              <button class="size-btn" data-price="435" data-orig="544" onclick="selectSize(this,'gorilla-glue')">1 oz (28g) · $435</button>
+              <button class="size-btn" data-price="1540" data-orig="1925" onclick="selectSize(this,'gorilla-glue')">QP (4 oz) · $1,540</button>
+              <button class="size-btn" data-price="2860" data-orig="3575" onclick="selectSize(this,'gorilla-glue')">HP (8 oz) · $2,860</button>
+              <button class="size-btn" data-price="5320" data-orig="6650" onclick="selectSize(this,'gorilla-glue')">1 lb (16 oz) · $5,320</button>
             </div>
             <button class="add-to-cart" onclick="addToCart('gorilla-glue')">+ Add to Cart</button>
+          </div>
+        </div>
+
+        <!-- Purple Punch -->
+        <div class="item-card" id="card-purple-punch">
+          <div class="item-img-wrap"><img class="item-img" src="imgs/pack_purple_punch.png" alt="Purple Punch" onerror="this.src='imgs/hero_flower.png'"/></div>
+          <div class="item-info">
+            <div class="item-name">Purple Punch</div>
+            <div class="item-desc">Grape candy & blueberry • Sedating body melt • Sleep aid • Vibrant purple • Premium genetics</div>
+            <div class="item-badges"><span class="item-badge ib-aaaa">AAAA</span><span class="item-badge ib-indica">Indica</span></div>
+          </div>
+          <div class="item-foot">
+            <div class="item-price-row"><span class="item-price-old" id="orig-purple-punch">$69</span><span class="item-price" id="price-purple-punch">$55</span><div class="item-disc-badge">20% OFF</div></div>
+            <div class="size-selector" data-item="purple-punch" data-name="Purple Punch" data-img="imgs/pack_purple_punch.png">
+              <button class="size-btn active" data-price="55" data-orig="69" onclick="selectSize(this,'purple-punch')">1/8 oz (3.5g) · $55</button>
+              <button class="size-btn" data-price="99" data-orig="124" onclick="selectSize(this,'purple-punch')">1/4 oz (7g) · $99</button>
+              <button class="size-btn" data-price="182" data-orig="228" onclick="selectSize(this,'purple-punch')">1/2 oz (14g) · $182</button>
+              <button class="size-btn" data-price="342" data-orig="428" onclick="selectSize(this,'purple-punch')">1 oz (28g) · $342</button>
+              <button class="size-btn" data-price="1210" data-orig="1513" onclick="selectSize(this,'purple-punch')">QP (4 oz) · $1,210</button>
+              <button class="size-btn" data-price="2260" data-orig="2825" onclick="selectSize(this,'purple-punch')">HP (8 oz) · $2,260</button>
+              <button class="size-btn" data-price="4160" data-orig="5200" onclick="selectSize(this,'purple-punch')">1 lb (16 oz) · $4,160</button>
+            </div>
+            <button class="add-to-cart" onclick="addToCart('purple-punch')">+ Add to Cart</button>
+          </div>
+        </div>
+
+        <!-- Wedding Cake -->
+        <div class="item-card" id="card-wedding-cake">
+          <div class="item-img-wrap"><img class="item-img" src="imgs/pack_wedding_cake.png" alt="Wedding Cake" onerror="this.src='imgs/hero_flower.png'"/></div>
+          <div class="item-info">
+            <div class="item-name">Wedding Cake</div>
+            <div class="item-desc">Vanilla cake & earth • Relaxing & euphoric • Heavy trichomes • Dense buds • Premium cure</div>
+            <div class="item-badges"><span class="item-badge ib-aaaa">AAAA</span><span class="item-badge ib-hybrid">Hybrid</span></div>
+          </div>
+          <div class="item-foot">
+            <div class="item-price-row"><span class="item-price-old" id="orig-wedding-cake">$69</span><span class="item-price" id="price-wedding-cake">$55</span><div class="item-disc-badge">20% OFF</div></div>
+            <div class="size-selector" data-item="wedding-cake" data-name="Wedding Cake" data-img="imgs/pack_wedding_cake.png">
+              <button class="size-btn active" data-price="55" data-orig="69" onclick="selectSize(this,'wedding-cake')">1/8 oz (3.5g) · $55</button>
+              <button class="size-btn" data-price="99" data-orig="124" onclick="selectSize(this,'wedding-cake')">1/4 oz (7g) · $99</button>
+              <button class="size-btn" data-price="182" data-orig="228" onclick="selectSize(this,'wedding-cake')">1/2 oz (14g) · $182</button>
+              <button class="size-btn" data-price="342" data-orig="428" onclick="selectSize(this,'wedding-cake')">1 oz (28g) · $342</button>
+              <button class="size-btn" data-price="1210" data-orig="1513" onclick="selectSize(this,'wedding-cake')">QP (4 oz) · $1,210</button>
+              <button class="size-btn" data-price="2260" data-orig="2825" onclick="selectSize(this,'wedding-cake')">HP (8 oz) · $2,260</button>
+              <button class="size-btn" data-price="4160" data-orig="5200" onclick="selectSize(this,'wedding-cake')">1 lb (16 oz) · $4,160</button>
+            </div>
+            <button class="add-to-cart" onclick="addToCart('wedding-cake')">+ Add to Cart</button>
+          </div>
+        </div>
+
+        <!-- Girl Scout Cookies -->
+        <div class="item-card" id="card-gsc">
+          <div class="item-img-wrap"><img class="item-img" src="imgs/hero_flower.png" alt="Girl Scout Cookies" onerror="this.src='imgs/hero_flower.png'"/></div>
+          <div class="item-info">
+            <div class="item-name">Girl Scout Cookies</div>
+            <div class="item-desc">Sweet vanilla & mint • Euphoric & uplifting • Iconic strain • Hand-trimmed • Lab-tested</div>
+            <div class="item-badges"><span class="item-badge ib-aaaa">AAAA</span><span class="item-badge ib-hybrid">Hybrid</span></div>
+          </div>
+          <div class="item-foot">
+            <div class="item-price-row"><span class="item-price-old" id="orig-gsc">$72</span><span class="item-price" id="price-gsc">$58</span><div class="item-disc-badge">19% OFF</div></div>
+            <div class="size-selector" data-item="gsc" data-name="Girl Scout Cookies" data-img="imgs/hero_flower.png">
+              <button class="size-btn active" data-price="58" data-orig="72" onclick="selectSize(this,'gsc')">1/8 oz (3.5g) · $58</button>
+              <button class="size-btn" data-price="104" data-orig="130" onclick="selectSize(this,'gsc')">1/4 oz (7g) · $104</button>
+              <button class="size-btn" data-price="190" data-orig="238" onclick="selectSize(this,'gsc')">1/2 oz (14g) · $190</button>
+              <button class="size-btn" data-price="358" data-orig="448" onclick="selectSize(this,'gsc')">1 oz (28g) · $358</button>
+              <button class="size-btn" data-price="1260" data-orig="1575" onclick="selectSize(this,'gsc')">QP (4 oz) · $1,260</button>
+              <button class="size-btn" data-price="2340" data-orig="2925" onclick="selectSize(this,'gsc')">HP (8 oz) · $2,340</button>
+              <button class="size-btn" data-price="4320" data-orig="5400" onclick="selectSize(this,'gsc')">1 lb (16 oz) · $4,320</button>
+            </div>
+            <button class="add-to-cart" onclick="addToCart('gsc')">+ Add to Cart</button>
+          </div>
+        </div>
+
+        <!-- Sour Diesel -->
+        <div class="item-card" id="card-sour-diesel">
+          <div class="item-img-wrap"><img class="item-img" src="imgs/hero_flower.png" alt="Sour Diesel" onerror="this.src='imgs/hero_flower.png'"/></div>
+          <div class="item-info">
+            <div class="item-name">Sour Diesel</div>
+            <div class="item-desc">Fuel & citrus • Energetic & creative • Daytime strain • Premium genetics • Hand-selected</div>
+            <div class="item-badges"><span class="item-badge ib-aaaa">AAAA</span><span class="item-badge ib-sativa">Sativa</span></div>
+          </div>
+          <div class="item-foot">
+            <div class="item-price-row"><span class="item-price-old" id="orig-sour-diesel">$72</span><span class="item-price" id="price-sour-diesel">$58</span><div class="item-disc-badge">19% OFF</div></div>
+            <div class="size-selector" data-item="sour-diesel" data-name="Sour Diesel" data-img="imgs/hero_flower.png">
+              <button class="size-btn active" data-price="58" data-orig="72" onclick="selectSize(this,'sour-diesel')">1/8 oz (3.5g) · $58</button>
+              <button class="size-btn" data-price="104" data-orig="130" onclick="selectSize(this,'sour-diesel')">1/4 oz (7g) · $104</button>
+              <button class="size-btn" data-price="190" data-orig="238" onclick="selectSize(this,'sour-diesel')">1/2 oz (14g) · $190</button>
+              <button class="size-btn" data-price="358" data-orig="448" onclick="selectSize(this,'sour-diesel')">1 oz (28g) · $358</button>
+              <button class="size-btn" data-price="1260" data-orig="1575" onclick="selectSize(this,'sour-diesel')">QP (4 oz) · $1,260</button>
+              <button class="size-btn" data-price="2340" data-orig="2925" onclick="selectSize(this,'sour-diesel')">HP (8 oz) · $2,340</button>
+              <button class="size-btn" data-price="4320" data-orig="5400" onclick="selectSize(this,'sour-diesel')">1 lb (16 oz) · $4,320</button>
+            </div>
+            <button class="add-to-cart" onclick="addToCart('sour-diesel')">+ Add to Cart</button>
           </div>
         </div>
 
@@ -539,9 +623,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     <section>
       <div class="sec-head">
         <div class="sec-title">🍫 Premium Hash</div>
-        <div class="sec-sub">Import Slabs — 100g to 1kg Wholesale</div>
+        <div class="sec-sub">Import Slabs & Concentrates — Full Range</div>
       </div>
-      <div class="cat-header"><span class="cat-name">Traditional Imports</span><div class="cat-divider"></div></div>
+      <div class="cat-header"><span class="cat-name">Traditional Imports & Modern Concentrates</span><div class="cat-divider"></div></div>
       <div class="items-grid">
 
         <!-- Dutch Polm -->
@@ -549,16 +633,20 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
           <div class="item-img-wrap"><img class="item-img" src="imgs/pack_polm_hash.png" alt="Dutch Polm Hash" onerror="this.src='imgs/prod_hash_new.png'"/></div>
           <div class="item-info">
             <div class="item-name">Dutch Polm Hash</div>
-            <div class="item-desc">Netherlands pollen press • Smooth blonde slab • Mild & pure</div>
+            <div class="item-desc">Netherlands pollen press • Smooth blonde slab • Mild & pure • Hand-pressed • Premium quality</div>
             <div class="item-badges"><span class="item-badge ib-new">NEW</span><span class="item-badge ib-aaaa">AAAA</span></div>
           </div>
           <div class="item-foot">
-            <div class="item-price-row"><span class="item-price-old" id="orig-dutch-polm">$1300</span><span class="item-price" id="price-dutch-polm">$950</span><div class="item-disc-badge">27% OFF</div></div>
+            <div class="item-price-row"><span class="item-price-old" id="orig-dutch-polm">$75</span><span class="item-price" id="price-dutch-polm">$60</span><div class="item-disc-badge">20% OFF</div></div>
             <div class="size-selector" data-item="dutch-polm" data-name="Dutch Polm Hash" data-img="imgs/pack_polm_hash.png">
-              <button class="size-btn active" data-price="950" data-orig="1300" onclick="selectSize(this,'dutch-polm')">100g Slab · $950</button>
-              <button class="size-btn" data-price="2200" data-orig="3000" onclick="selectSize(this,'dutch-polm')">250g Block · $2,200</button>
-              <button class="size-btn" data-price="4000" data-orig="5500" onclick="selectSize(this,'dutch-polm')">500g Plate · $4,000</button>
-              <button class="size-btn" data-price="7500" data-orig="10000" onclick="selectSize(this,'dutch-polm')">1 kg Bulk · $7,500</button>
+              <button class="size-btn active" data-price="60" data-orig="75" onclick="selectSize(this,'dutch-polm')">5g · $60</button>
+              <button class="size-btn" data-price="113" data-orig="141" onclick="selectSize(this,'dutch-polm')">10g · $113</button>
+              <button class="size-btn" data-price="275" data-orig="344" onclick="selectSize(this,'dutch-polm')">25g · $275</button>
+              <button class="size-btn" data-price="538" data-orig="673" onclick="selectSize(this,'dutch-polm')">50g · $538</button>
+              <button class="size-btn" data-price="1040" data-orig="1300" onclick="selectSize(this,'dutch-polm')">100g · $1,040</button>
+              <button class="size-btn" data-price="2399" data-orig="2999" onclick="selectSize(this,'dutch-polm')">250g · $2,399</button>
+              <button class="size-btn" data-price="4500" data-orig="5625" onclick="selectSize(this,'dutch-polm')">500g · $4,500</button>
+              <button class="size-btn" data-price="8500" data-orig="10625" onclick="selectSize(this,'dutch-polm')">1 kg · $8,500</button>
             </div>
             <button class="add-to-cart" onclick="addToCart('dutch-polm')">+ Add to Cart</button>
           </div>
@@ -569,18 +657,88 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
           <div class="item-img-wrap"><img class="item-img" src="imgs/pack_afghani_black.png" alt="Royal Afghani Black" onerror="this.src='imgs/prod_hash_new.png'"/></div>
           <div class="item-info">
             <div class="item-name">Royal Afghani Black</div>
-            <div class="item-desc">Kandahar region • Ultra-dark pressed slab • Intense heavy body</div>
-            <div class="item-badges"><span class="item-badge ib-new">NEW</span><span class="item-badge ib-aaaa">AAAA+</span></div>
+            <div class="item-desc">Kandahar region • Ultra-dark pressed slab • Intense heavy body • Premium import • Hand-pressed</div>
+            <div class="item-badges"><span class="item-badge ib-new">NEW</span><span class="item-badge ib-aaaa-plus">AAAA+</span></div>
           </div>
           <div class="item-foot">
-            <div class="item-price-row"><span class="item-price-old" id="orig-afghani-black">$1836</span><span class="item-price" id="price-afghani-black">$1350</span><div class="item-disc-badge">26% OFF</div></div>
+            <div class="item-price-row"><span class="item-price-old" id="orig-afghani-black">$106</span><span class="item-price" id="price-afghani-black">$85</span><div class="item-disc-badge">20% OFF</div></div>
             <div class="size-selector" data-item="afghani-black" data-name="Royal Afghani Black" data-img="imgs/pack_afghani_black.png">
-              <button class="size-btn active" data-price="1350" data-orig="1836" onclick="selectSize(this,'afghani-black')">100g Slab · $1,350</button>
-              <button class="size-btn" data-price="3200" data-orig="4200" onclick="selectSize(this,'afghani-black')">250g Block · $3,200</button>
-              <button class="size-btn" data-price="6000" data-orig="8000" onclick="selectSize(this,'afghani-black')">500g Plate · $6,000</button>
-              <button class="size-btn" data-price="11000" data-orig="15000" onclick="selectSize(this,'afghani-black')">1 kg Bulk · $11,000</button>
+              <button class="size-btn active" data-price="85" data-orig="106" onclick="selectSize(this,'afghani-black')">5g · $85</button>
+              <button class="size-btn" data-price="160" data-orig="200" onclick="selectSize(this,'afghani-black')">10g · $160</button>
+              <button class="size-btn" data-price="389" data-orig="486" onclick="selectSize(this,'afghani-black')">25g · $389</button>
+              <button class="size-btn" data-price="761" data-orig="951" onclick="selectSize(this,'afghani-black')">50g · $761</button>
+              <button class="size-btn" data-price="1469" data-orig="1836" onclick="selectSize(this,'afghani-black')">100g · $1,469</button>
+              <button class="size-btn" data-price="3399" data-orig="4249" onclick="selectSize(this,'afghani-black')">250g · $3,399</button>
+              <button class="size-btn" data-price="6400" data-orig="8000" onclick="selectSize(this,'afghani-black')">500g · $6,400</button>
+              <button class="size-btn" data-price="12000" data-orig="15000" onclick="selectSize(this,'afghani-black')">1 kg · $12,000</button>
             </div>
             <button class="add-to-cart" onclick="addToCart('afghani-black')">+ Add to Cart</button>
+          </div>
+        </div>
+
+        <!-- Pakistani Cream Hash -->
+        <div class="item-card" id="card-pakistani-cream">
+          <div class="item-img-wrap"><img class="item-img" src="imgs/pack_pakistani_cream.png" alt="Pakistani Cream Hash" onerror="this.src='imgs/prod_hash_new.png'"/></div>
+          <div class="item-info">
+            <div class="item-name">Pakistani Cream Hash</div>
+            <div class="item-desc">Chitral mountains • Soft cream pressed • Euphoric & smooth • Premium import • Hand-selected</div>
+            <div class="item-badges"><span class="item-badge ib-new">NEW</span><span class="item-badge ib-aaaa">AAAA</span></div>
+          </div>
+          <div class="item-foot">
+            <div class="item-price-row"><span class="item-price-old" id="orig-pakistani-cream">$81</span><span class="item-price" id="price-pakistani-cream">$65</span><div class="item-disc-badge">20% OFF</div></div>
+            <div class="size-selector" data-item="pakistani-cream" data-name="Pakistani Cream Hash" data-img="imgs/pack_pakistani_cream.png">
+              <button class="size-btn active" data-price="65" data-orig="81" onclick="selectSize(this,'pakistani-cream')">5g · $65</button>
+              <button class="size-btn" data-price="123" data-orig="154" onclick="selectSize(this,'pakistani-cream')">10g · $123</button>
+              <button class="size-btn" data-price="298" data-orig="373" onclick="selectSize(this,'pakistani-cream')">25g · $298</button>
+              <button class="size-btn" data-price="583" data-orig="729" onclick="selectSize(this,'pakistani-cream')">50g · $583</button>
+              <button class="size-btn" data-price="1126" data-orig="1408" onclick="selectSize(this,'pakistani-cream')">100g · $1,126</button>
+              <button class="size-btn" data-price="2599" data-orig="3249" onclick="selectSize(this,'pakistani-cream')">250g · $2,599</button>
+              <button class="size-btn" data-price="4900" data-orig="6125" onclick="selectSize(this,'pakistani-cream')">500g · $4,900</button>
+              <button class="size-btn" data-price="9200" data-orig="11500" onclick="selectSize(this,'pakistani-cream')">1 kg · $9,200</button>
+            </div>
+            <button class="add-to-cart" onclick="addToCart('pakistani-cream')">+ Add to Cart</button>
+          </div>
+        </div>
+
+        <!-- Live Rosin -->
+        <div class="item-card" id="card-live-rosin">
+          <div class="item-img-wrap"><img class="item-img" src="imgs/prod_hash_new.png" alt="Live Rosin" onerror="this.src='imgs/prod_hash_new.png'"/></div>
+          <div class="item-info">
+            <div class="item-name">Live Rosin</div>
+            <div class="item-desc">Full-melt concentrate • Solventless extraction • Premium terpenes • Lab-tested • Fresh frozen</div>
+            <div class="item-badges"><span class="item-badge ib-aaaa-plus">AAAA+</span><span class="item-badge ib-new">SOLVENTLESS</span></div>
+          </div>
+          <div class="item-foot">
+            <div class="item-price-row"><span class="item-price-old" id="orig-live-rosin">$120</span><span class="item-price" id="price-live-rosin">$95</span><div class="item-disc-badge">21% OFF</div></div>
+            <div class="size-selector" data-item="live-rosin" data-name="Live Rosin" data-img="imgs/prod_hash_new.png">
+              <button class="size-btn active" data-price="95" data-orig="120" onclick="selectSize(this,'live-rosin')">1g · $95</button>
+              <button class="size-btn" data-price="180" data-orig="228" onclick="selectSize(this,'live-rosin')">2g · $180</button>
+              <button class="size-btn" data-price="450" data-orig="570" onclick="selectSize(this,'live-rosin')">5g · $450</button>
+              <button class="size-btn" data-price="850" data-orig="1075" onclick="selectSize(this,'live-rosin')">10g · $850</button>
+              <button class="size-btn" data-price="1900" data-orig="2400" onclick="selectSize(this,'live-rosin')">25g · $1,900</button>
+            </div>
+            <button class="add-to-cart" onclick="addToCart('live-rosin')">+ Add to Cart</button>
+          </div>
+        </div>
+
+        <!-- Premium Shatter -->
+        <div class="item-card" id="card-shatter">
+          <div class="item-img-wrap"><img class="item-img" src="imgs/prod_hash_new.png" alt="Premium Shatter" onerror="this.src='imgs/prod_hash_new.png'"/></div>
+          <div class="item-info">
+            <div class="item-name">Premium Shatter</div>
+            <div class="item-desc">Glass-clear concentrate • Snap & break texture • High potency • Lab-tested • Premium quality</div>
+            <div class="item-badges"><span class="item-badge ib-aaaa">AAAA</span><span class="item-badge ib-new">CONCENTRATE</span></div>
+          </div>
+          <div class="item-foot">
+            <div class="item-price-row"><span class="item-price-old" id="orig-shatter">$85</span><span class="item-price" id="price-shatter">$68</span><div class="item-disc-badge">20% OFF</div></div>
+            <div class="size-selector" data-item="shatter" data-name="Premium Shatter" data-img="imgs/prod_hash_new.png">
+              <button class="size-btn active" data-price="68" data-orig="85" onclick="selectSize(this,'shatter')">1g · $68</button>
+              <button class="size-btn" data-price="128" data-orig="160" onclick="selectSize(this,'shatter')">2g · $128</button>
+              <button class="size-btn" data-price="320" data-orig="400" onclick="selectSize(this,'shatter')">5g · $320</button>
+              <button class="size-btn" data-price="600" data-orig="750" onclick="selectSize(this,'shatter')">10g · $600</button>
+              <button class="size-btn" data-price="1400" data-orig="1750" onclick="selectSize(this,'shatter')">25g · $1,400</button>
+            </div>
+            <button class="add-to-cart" onclick="addToCart('shatter')">+ Add to Cart</button>
           </div>
         </div>
 
@@ -591,7 +749,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     <section>
       <div class="sec-head">
         <div class="sec-title">🍬 Edibles</div>
-        <div class="sec-sub">Bulk Dispensary Packs — 10+ Packs Only</div>
+        <div class="sec-sub">Lab-dosed THC edibles — consistent, delicious, potent</div>
       </div>
       <div class="items-grid">
 
@@ -599,15 +757,16 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
           <div class="item-img-wrap"><img class="item-img" src="imgs/pack_gummies.png" alt="THC Gummies"/></div>
           <div class="item-info">
             <div class="item-name">THC Gummies</div>
-            <div class="item-desc">Mixed fruit flavors • 10mg each • 20-piece pack</div>
+            <div class="item-desc">Mixed fruit flavors • 10mg each • 20-piece pack • Lab-tested • Premium quality</div>
           </div>
           <div class="item-foot">
-            <div class="item-price-row"><span class="item-price-old" id="orig-gummies">$1311</span><span class="item-price" id="price-gummies">$950</span><div class="item-disc-badge">27% OFF</div></div>
+            <div class="item-price-row"><span class="item-price-old" id="orig-gummies">$161</span><span class="item-price" id="price-gummies">$129</span><div class="item-disc-badge">20% OFF</div></div>
             <div class="size-selector" data-item="gummies" data-name="THC Gummies" data-img="imgs/pack_gummies.png">
-              <button class="size-btn active" data-price="950" data-orig="1311" onclick="selectSize(this,'gummies')">10 packs · $950</button>
-              <button class="size-btn" data-price="1800" data-orig="2500" onclick="selectSize(this,'gummies')">20 packs (Case) · $1,800</button>
-              <button class="size-btn" data-price="4200" data-orig="6000" onclick="selectSize(this,'gummies')">50 packs (Bulk) · $4,200</button>
-              <button class="size-btn" data-price="7500" data-orig="11000" onclick="selectSize(this,'gummies')">100 packs (Wholesale) · $7,500</button>
+              <button class="size-btn active" data-price="129" data-orig="161" onclick="selectSize(this,'gummies')">1 pack (20pc) · $129</button>
+              <button class="size-btn" data-price="239" data-orig="299" onclick="selectSize(this,'gummies')">2 packs · $239</button>
+              <button class="size-btn" data-price="549" data-orig="686" onclick="selectSize(this,'gummies')">5 packs · $549</button>
+              <button class="size-btn" data-price="1049" data-orig="1311" onclick="selectSize(this,'gummies')">10 packs · $1,049</button>
+              <button class="size-btn" data-price="1999" data-orig="2499" onclick="selectSize(this,'gummies')">20 packs (case) · $1,999</button>
             </div>
             <button class="add-to-cart" onclick="addToCart('gummies')">+ Add to Cart</button>
           </div>
@@ -617,17 +776,52 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
           <div class="item-img-wrap"><img class="item-img" src="imgs/pack_chocolate.png" alt="THC Chocolate"/></div>
           <div class="item-info">
             <div class="item-name">THC Chocolate Bar</div>
-            <div class="item-desc">Dark, milk or white • 100mg per bar • 10 segments × 10mg</div>
+            <div class="item-desc">Dark, milk or white • 100mg per bar • 10 segments × 10mg • Lab-tested • Premium quality</div>
           </div>
           <div class="item-foot">
-            <div class="item-price-row"><span class="item-price-old" id="orig-chocolate">$1186</span><span class="item-price" id="price-chocolate">$850</span><div class="item-disc-badge">28% OFF</div></div>
+            <div class="item-price-row"><span class="item-price-old" id="orig-chocolate">$149</span><span class="item-price" id="price-chocolate">$119</span><div class="item-disc-badge">20% OFF</div></div>
             <div class="size-selector" data-item="chocolate" data-name="THC Chocolate Bar" data-img="imgs/pack_chocolate.png">
-              <button class="size-btn active" data-price="850" data-orig="1186" onclick="selectSize(this,'chocolate')">10 bars · $850</button>
-              <button class="size-btn" data-price="1600" data-orig="2250" onclick="selectSize(this,'chocolate')">20 bars (Case) · $1,600</button>
-              <button class="size-btn" data-price="3800" data-orig="5500" onclick="selectSize(this,'chocolate')">50 bars (Bulk) · $3,800</button>
-              <button class="size-btn" data-price="7000" data-orig="10000" onclick="selectSize(this,'chocolate')">100 bars (Wholesale) · $7,000</button>
+              <button class="size-btn active" data-price="119" data-orig="149" onclick="selectSize(this,'chocolate')">1 bar · $119</button>
+              <button class="size-btn" data-price="219" data-orig="274" onclick="selectSize(this,'chocolate')">2 bars · $219</button>
+              <button class="size-btn" data-price="499" data-orig="624" onclick="selectSize(this,'chocolate')">5 bars · $499</button>
+              <button class="size-btn" data-price="949" data-orig="1186" onclick="selectSize(this,'chocolate')">10 bars · $949</button>
+              <button class="size-btn" data-price="1799" data-orig="2249" onclick="selectSize(this,'chocolate')">20 bars (case) · $1,799</button>
             </div>
             <button class="add-to-cart" onclick="addToCart('chocolate')">+ Add to Cart</button>
+          </div>
+        </div>
+
+        <div class="item-card" id="card-cookies">
+          <div class="item-img-wrap"><img class="item-img" src="imgs/pack_cookies.png" alt="THC Cookies"/></div>
+          <div class="item-info">
+            <div class="item-name">THC Cookies</div>
+            <div class="item-desc">Classic baked • 50mg per cookie • 4-pack per order • Lab-tested • Premium quality</div>
+          </div>
+          <div class="item-foot">
+            <div class="item-price-row"><span class="item-price-old" id="orig-cookies">$174</span><span class="item-price" id="price-cookies">$139</span><div class="item-disc-badge">20% OFF</div></div>
+            <div class="size-selector" data-item="cookies" data-name="THC Cookies" data-img="imgs/pack_cookies.png">
+              <button class="size-btn active" data-price="139" data-orig="174" onclick="selectSize(this,'cookies')">4-pack · $139</button>
+              <button class="size-btn" data-price="259" data-orig="324" onclick="selectSize(this,'cookies')">8-pack · $259</button>
+              <button class="size-btn" data-price="609" data-orig="761" onclick="selectSize(this,'cookies')">20-pack (wholesale) · $609</button>
+            </div>
+            <button class="add-to-cart" onclick="addToCart('cookies')">+ Add to Cart</button>
+          </div>
+        </div>
+
+        <div class="item-card" id="card-capsules">
+          <div class="item-img-wrap"><img class="item-img" src="imgs/pack_capsules.png" alt="THC Capsules"/></div>
+          <div class="item-info">
+            <div class="item-name">THC Capsules</div>
+            <div class="item-desc">Precise dosing • 25mg per cap • Tasteless & discreet • Lab-tested • Premium quality</div>
+          </div>
+          <div class="item-foot">
+            <div class="item-price-row"><span class="item-price-old" id="orig-capsules">$199</span><span class="item-price" id="price-capsules">$159</span><div class="item-disc-badge">20% OFF</div></div>
+            <div class="size-selector" data-item="capsules" data-name="THC Capsules" data-img="imgs/pack_capsules.png">
+              <button class="size-btn active" data-price="159" data-orig="199" onclick="selectSize(this,'capsules')">20 caps · $159</button>
+              <button class="size-btn" data-price="299" data-orig="374" onclick="selectSize(this,'capsules')">40 caps · $299</button>
+              <button class="size-btn" data-price="699" data-orig="874" onclick="selectSize(this,'capsules')">100 caps (bulk) · $699</button>
+            </div>
+            <button class="add-to-cart" onclick="addToCart('capsules')">+ Add to Cart</button>
           </div>
         </div>
 
@@ -644,15 +838,16 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
           <div class="logo-icon"><img src="imgs/logo_neon.jpg" alt="Dwarf Plug"/></div>
           <div class="logo-text">
             <span class="logo-name">DWARF PLUG</span>
-            <span class="logo-sub">Bulk Worldwide</span>
+            <span class="logo-sub">Premium Worldwide</span>
           </div>
         </a>
-        <p class="footer-desc">The industry leader in discreet, bulk cannabis logistics. Providing premium craft products to private clients globally since 2018.</p>
+        <p class="footer-desc">The industry leader in discreet, premium cannabis logistics. Providing lab-tested, hand-trimmed products to private clients globally since 2018.</p>
       </div>
       <div>
         <div class="footer-head">Quick Links</div>
         <div class="footer-links">
           <a href="#catalog" class="footer-link">Catalog</a>
+          <a href="game.html" class="footer-link">Discount Quest</a>
           <a href="https://t.me/dwarfplugshop?direct" target="_blank" class="footer-link">Telegram Support</a>
           <button class="footer-link" onclick="openReviews('_flower')">Customer Reviews</button>
         </div>
@@ -660,8 +855,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       <div>
         <div class="footer-head">Security</div>
         <div class="footer-links">
+          <span class="footer-link">✓ Lab-Tested Products</span>
           <span class="footer-link">✓ PGP Encrypted Comm</span>
-          <span class="footer-link">✓ No Logs Policy</span>
           <span class="footer-link">✓ Vacuum Stealth</span>
         </div>
       </div>
@@ -730,7 +925,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       <div class="sp-sub" id="spSub">Blue Dream — 1 oz</div>
       <div class="sp-time" id="spTime">Just now</div>
     </div>
-  </button>
+  </div>
 
   <div class="toast" id="toast">Item added to cart</div>
 
@@ -743,7 +938,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     selector.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     
-    // Update displayed price
     const card = document.getElementById('card-' + itemId);
     card.querySelector('.item-price').textContent = '$' + parseInt(btn.dataset.price).toLocaleString();
     card.querySelector('.item-price-old').textContent = '$' + parseInt(btn.dataset.orig).toLocaleString();
@@ -804,7 +998,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       `;
     });
     
-    // Check for active discount code
     const discountCode = localStorage.getItem('dwarfplug-discount-code');
     const discountLevel = parseInt(localStorage.getItem('dwarfplug-discount-level') || '0');
     let discountPercent = 0;
@@ -856,8 +1049,11 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   // ── REVIEWS ──────────────────────────────────────────────────────────────────
   const REVIEWS_DB = {
     _flower: [
-      {name:'M.*** — Toronto, CA',stars:5,date:'Jun 12 2025',text:'Wholesale order of Blue Dream arrived in 8 days. Triple-vac sealed, zero smell through customs. The quality is insane.',verified:true},
-      {name:'D.*** — Berlin, DE',stars:5,date:'Jun 8 2025',text:'Second bulk order. Packaging was completely discreet — looked like a regular parcel. HP arrived in perfect condition.',verified:true}
+      {name:'M.*** — Toronto, CA',stars:5,date:'Jun 12 2025',text:'Package arrived in 8 days. Triple-vac sealed, zero smell through customs. The bud itself is insane — dense, frosty, exactly what was pictured. Will be back.',verified:true},
+      {name:'D.*** — Berlin, DE',stars:5,date:'Jun 8 2025',text:'Second order. Delivery was faster than expected. Packaging was completely discreet — looked like a regular parcel. Quality is top shelf, no complaints.',verified:true},
+      {name:'R.*** — Amsterdam, NL',stars:4,date:'May 29 2025',text:'Solid product and good communication on Telegram. Took 10 days to arrive but they kept me updated. Would order again.',verified:true},
+      {name:'S.*** — Sydney, AU',stars:5,date:'May 22 2025',text:'Best plug I\'ve found online. Stealthy, fast, and the quality is genuinely premium. My third order and zero issues.',verified:true},
+      {name:'A.*** — Dubai, UAE',stars:5,date:'May 18 2025',text:'Thought it was a scam at first. Took the risk on a small order — arrived in 6 days, quality was better than what I get locally. Ordered 3x since.',verified:true}
     ]
   };
 
@@ -892,7 +1088,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     setTimeout(() => t.classList.remove('show'), 2000);
   }
 
-  // Counter
   (function() {
     const el = document.getElementById('counterOrders');
     let count = 3204;
@@ -904,12 +1099,13 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     }, 10000);
   })();
 
-  // Sales Pop
   (function() {
     const ORDERS = [
-      { city:'London', name:'OG Kush', size:'1 lb' },
-      { city:'Dubai', name:'Blue Dream', size:'1 kg' },
-      { city:'Tokyo', name:'Gorilla Glue', size:'QP' }
+      { city:'London', name:'OG Kush', size:'1 oz' },
+      { city:'Dubai', name:'Blue Dream', size:'QP' },
+      { city:'Tokyo', name:'Gorilla Glue', size:'HP' },
+      { city:'Amsterdam', name:'Live Rosin', size:'10g' },
+      { city:'Berlin', name:'Pakistani Cream', size:'50g' }
     ];
     let idx = 0;
     function showNext() {
