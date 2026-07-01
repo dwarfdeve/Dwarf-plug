@@ -637,14 +637,88 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   <div class="modal-overlay" id="cartModalOverlay">
     <div class="modal">
       <div class="modal-head">
-        <div class="modal-title">Your Cart</div>
+        <div class="modal-title">Your Cart & Order Details</div>
         <div class="modal-close" onclick="closeCart()">✕</div>
       </div>
       <div class="modal-body">
-        <div class="cart-list" id="cartList"></div>
-        <div class="cart-total-row">
-          <span class="cart-total-label">Total Amount:</span>
-          <span class="cart-total-val" id="cartTotal">$0</span>
+        <!-- CART ITEMS -->
+        <div style="margin-bottom:24px">
+          <div style="font-size:12px;font-weight:700;color:var(--green-text);margin-bottom:10px;text-transform:uppercase;letter-spacing:.1em">📦 Order Items</div>
+          <div class="cart-list" id="cartList"></div>
+          <div class="cart-total-row">
+            <span class="cart-total-label">Subtotal:</span>
+            <span class="cart-total-val" id="cartTotal">$0</span>
+          </div>
+        </div>
+
+        <!-- CUSTOMER INFO FORM -->
+        <div style="margin-bottom:24px;padding:16px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius)">
+          <div style="font-size:12px;font-weight:700;color:var(--green-text);margin-bottom:12px;text-transform:uppercase;letter-spacing:.1em">👤 Your Information</div>
+          
+          <div style="margin-bottom:12px">
+            <label style="font-size:11px;color:var(--fg3);display:block;margin-bottom:4px;font-weight:600">Full Name *</label>
+            <input type="text" id="custName" placeholder="Your full name" style="width:100%;padding:8px;border-radius:var(--radius-sm);background:var(--bg2);border:1px solid var(--border);color:var(--fg);font-size:12px"/>
+          </div>
+          
+          <div style="margin-bottom:12px">
+            <label style="font-size:11px;color:var(--fg3);display:block;margin-bottom:4px;font-weight:600">Email Address *</label>
+            <input type="email" id="custEmail" placeholder="your@email.com" style="width:100%;padding:8px;border-radius:var(--radius-sm);background:var(--bg2);border:1px solid var(--border);color:var(--fg);font-size:12px"/>
+          </div>
+          
+          <div style="margin-bottom:12px">
+            <label style="font-size:11px;color:var(--fg3);display:block;margin-bottom:4px;font-weight:600">Telegram Handle (or Phone) *</label>
+            <input type="text" id="custTelegram" placeholder="@yourhandle or +1234567890" style="width:100%;padding:8px;border-radius:var(--radius-sm);background:var(--bg2);border:1px solid var(--border);color:var(--fg);font-size:12px"/>
+          </div>
+        </div>
+
+        <!-- SHIPPING INFO -->
+        <div style="margin-bottom:24px;padding:16px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius)">
+          <div style="font-size:12px;font-weight:700;color:var(--green-text);margin-bottom:12px;text-transform:uppercase;letter-spacing:.1em">📍 Shipping Address</div>
+          
+          <div style="margin-bottom:12px">
+            <label style="font-size:11px;color:var(--fg3);display:block;margin-bottom:4px;font-weight:600">Full Address *</label>
+            <input type="text" id="custAddress" placeholder="Street address, building, apt" style="width:100%;padding:8px;border-radius:var(--radius-sm);background:var(--bg2);border:1px solid var(--border);color:var(--fg);font-size:12px"/>
+          </div>
+          
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+            <div>
+              <label style="font-size:11px;color:var(--fg3);display:block;margin-bottom:4px;font-weight:600">City *</label>
+              <input type="text" id="custCity" placeholder="City" style="width:100%;padding:8px;border-radius:var(--radius-sm);background:var(--bg2);border:1px solid var(--border);color:var(--fg);font-size:12px"/>
+            </div>
+            <div>
+              <label style="font-size:11px;color:var(--fg3);display:block;margin-bottom:4px;font-weight:600">Country *</label>
+              <input type="text" id="custCountry" placeholder="Country" style="width:100%;padding:8px;border-radius:var(--radius-sm);background:var(--bg2);border:1px solid var(--border);color:var(--fg);font-size:12px"/>
+            </div>
+          </div>
+          
+          <div style="margin-bottom:12px">
+            <label style="font-size:11px;color:var(--fg3);display:block;margin-bottom:4px;font-weight:600">Postal Code</label>
+            <input type="text" id="custPostal" placeholder="Postal/ZIP code" style="width:100%;padding:8px;border-radius:var(--radius-sm);background:var(--bg2);border:1px solid var(--border);color:var(--fg);font-size:12px"/>
+          </div>
+        </div>
+
+        <!-- PAYMENT METHOD -->
+        <div style="margin-bottom:24px;padding:16px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius)">
+          <div style="font-size:12px;font-weight:700;color:var(--green-text);margin-bottom:12px;text-transform:uppercase;letter-spacing:.1em">💰 Payment Method</div>
+          
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <label style="display:flex;align-items:center;gap:8px;padding:8px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-size:11px">
+              <input type="radio" name="payMethod" value="Bitcoin" style="cursor:pointer"/>
+              <span>₿ Bitcoin</span>
+            </label>
+            <label style="display:flex;align-items:center;gap:8px;padding:8px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-size:11px">
+              <input type="radio" name="payMethod" value="Ethereum" style="cursor:pointer"/>
+              <span>Ξ Ethereum</span>
+            </label>
+            <label style="display:flex;align-items:center;gap:8px;padding:8px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-size:11px">
+              <input type="radio" name="payMethod" value="Monero" style="cursor:pointer"/>
+              <span>🪙 Monero</span>
+            </label>
+            <label style="display:flex;align-items:center;gap:8px;padding:8px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-size:11px">
+              <input type="radio" name="payMethod" value="Gift Card" style="cursor:pointer"/>
+              <span>🎁 Gift Card</span>
+            </label>
+          </div>
         </div>
         
         <div class="privacy-notice" style="margin-bottom:20px">
@@ -653,7 +727,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
         </div>
 
         <button class="checkout-btn" onclick="checkout()">
-          ✈ Order via Telegram
+          ✈ Send Order to Telegram
         </button>
       </div>
     </div>
@@ -757,7 +831,56 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   function closeCart() { document.getElementById('cartModalOverlay').classList.remove('open'); }
 
   function checkout() {
-    window.location.href = 'https://t.me/dwarfplugshop?direct';
+    if (cart.length === 0) {
+      showToast('Your cart is empty');
+      return;
+    }
+    
+    const name = document.getElementById('custName').value.trim();
+    const email = document.getElementById('custEmail').value.trim();
+    const telegram = document.getElementById('custTelegram').value.trim();
+    const address = document.getElementById('custAddress').value.trim();
+    const city = document.getElementById('custCity').value.trim();
+    const country = document.getElementById('custCountry').value.trim();
+    const payMethod = document.querySelector('input[name="payMethod"]:checked')?.value || 'Not specified';
+    
+    if (!name || !email || !telegram || !address || !city || !country) {
+      showToast('Please fill in all required fields (*)'); 
+      return;
+    }
+    
+    let orderSummary = '🔐 NEW ORDER FROM DWARF PLUG WEBSITE\n\n';
+    orderSummary += '═══ 📦 ORDER ITEMS ═══\n';
+    cart.forEach(item => {
+      orderSummary += `• ${item.name} (${item.size}) - $${item.price.toLocaleString()}\n`;
+    });
+    orderSummary += `\n💰 TOTAL: ${document.getElementById('cartTotal').textContent}\n\n`;
+    
+    orderSummary += '═══ 👤 CUSTOMER INFORMATION ═══\n';
+    orderSummary += `Name: ${name}\n`;
+    orderSummary += `Email: ${email}\n`;
+    orderSummary += `Telegram/Phone: ${telegram}\n\n`;
+    
+    orderSummary += '═══ 📍 SHIPPING ADDRESS ═══\n';
+    orderSummary += `Address: ${address}\n`;
+    orderSummary += `City: ${city}\n`;
+    orderSummary += `Country: ${country}\n`;
+    const postal = document.getElementById('custPostal').value.trim();
+    if (postal) orderSummary += `Postal Code: ${postal}\n`;
+    orderSummary += '\n';
+    
+    orderSummary += '═══ 💳 PAYMENT METHOD ═══\n';
+    orderSummary += `Preferred Method: ${payMethod}\n\n`;
+    
+    orderSummary += '═══ ⚠️ NEXT STEPS ═══\n';
+    orderSummary += '1. We will verify your order details\n';
+    orderSummary += '2. Send you a payment address for your chosen method\n';
+    orderSummary += '3. Upon payment confirmation, your package ships same-day\n';
+    orderSummary += '4. Tracking number provided within 24 hours\n\n';
+    orderSummary += 'Please confirm this order and provide any additional preferences.';
+    
+    const encoded = encodeURIComponent(orderSummary);
+    window.open('https://t.me/dwarfplugshop?text=' + encoded, '_blank');
   }
 
   // ── REVIEWS ──────────────────────────────────────────────────────────────────
