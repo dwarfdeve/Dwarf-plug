@@ -283,6 +283,22 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .irv-count{font-size:10px;color:var(--fg3);font-weight:600;text-decoration:underline;text-underline-offset:2px}
 .irv-count:hover{color:var(--gold)}
 
+/* ── RECENTLY VIEWED TRAY ── */
+#rvTray{position:fixed;bottom:0;left:0;right:0;z-index:500;background:rgba(6,15,6,.96);border-top:1px solid rgba(0,255,153,.12);backdrop-filter:blur(12px);padding:10px 16px 14px;transform:translateY(110%);transition:transform .38s cubic-bezier(.22,1,.36,1);pointer-events:none}
+#rvTray.visible{transform:translateY(0);pointer-events:all}
+.rvt-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.rvt-label{font-size:9px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:rgba(0,255,153,.4)}
+.rvt-dismiss{background:none;border:none;color:var(--fg3);font-size:14px;cursor:pointer;line-height:1;padding:2px 4px;border-radius:4px;transition:color .15s}
+.rvt-dismiss:hover{color:var(--fg)}
+.rvt-items{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none}
+.rvt-items::-webkit-scrollbar{display:none}
+.rvt-item{flex:0 0 auto;display:flex;align-items:center;gap:8px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:7px 10px;cursor:pointer;transition:all .18s;min-width:0;max-width:180px}
+.rvt-item:hover{border-color:rgba(0,255,153,.28);background:var(--bg3);transform:translateY(-1px)}
+.rvt-img{width:36px;height:36px;border-radius:7px;object-fit:cover;flex-shrink:0;background:var(--bg3)}
+.rvt-info{min-width:0}
+.rvt-name{font-size:11px;font-weight:700;color:var(--fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:110px}
+.rvt-price{font-size:10px;font-weight:800;color:var(--green-text);margin-top:1px}
+
 /* ── COPY ORDER BUTTON ── */
 .copy-order-btn{width:100%;padding:12px;border-radius:var(--radius);background:var(--bg3);border:1px solid var(--border2);color:var(--fg2);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:10px;transition:all .2s;cursor:pointer}
 .copy-order-btn:hover{background:var(--bg4);color:var(--fg);border-color:rgba(0,255,153,.25)}
@@ -1188,6 +1204,15 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 
   <div class="toast" id="toast">Item added to cart</div>
 
+  <!-- ═══ RECENTLY VIEWED TRAY ═══ -->
+  <div id="rvTray">
+    <div class="rvt-head">
+      <span class="rvt-label">Recently Viewed</span>
+      <button class="rvt-dismiss" onclick="dismissRvTray()" title="Dismiss">✕</button>
+    </div>
+    <div class="rvt-items" id="rvtItems"></div>
+  </div>
+
   <script>
   // ── CART LOGIC ───────────────────────────────────────────────────────────────
   let cart = [];
@@ -1200,6 +1225,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     const card = document.getElementById('card-' + itemId);
     card.querySelector('.item-price').textContent = '$' + parseInt(btn.dataset.price).toLocaleString();
     card.querySelector('.item-price-old').textContent = '$' + parseInt(btn.dataset.orig).toLocaleString();
+    trackView(itemId);
   }
 
   function addToCart(itemId) {
@@ -1215,6 +1241,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       price: parseInt(activeBtn.dataset.price)
     };
     
+    trackView(itemId);
     cart.push(item);
     updateCartUI();
     showToast('Added ' + item.name + ' to cart');
@@ -1673,24 +1700,76 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     const fill = document.getElementById('lsBarFill');
     let w = 0;
     const iv = setInterval(() => {
-      w = Math.min(w + (Math.random() * 5 + 2), 92);
+      w = Math.min(w + (Math.random() * 12 + 8), 92);
       if (fill) fill.style.width = w + '%';
-    }, 40);
+    }, 30);
     function dismiss() {
+      if (dismiss.called) return;
+      dismiss.called = true;
       clearInterval(iv);
       if (fill) fill.style.width = '100%';
       setTimeout(() => {
         ls.classList.add('fade');
-        setTimeout(() => { ls.style.display = 'none'; }, 600);
-      }, 280);
+        setTimeout(() => { ls.style.display = 'none'; }, 500);
+      }, 150);
     }
-    if (document.readyState === 'complete') { dismiss(); }
-    else { window.addEventListener('load', dismiss); }
-    setTimeout(dismiss, 3500);
+    if (document.readyState === 'complete') { setTimeout(dismiss, 400); }
+    else { window.addEventListener('load', () => setTimeout(dismiss, 400)); }
+    setTimeout(dismiss, 1400);
   })();
 
-  // ── INJECT PER-CARD REVIEW BUTTONS ──────────────────────────────────────────
+  // ── RECENTLY VIEWED ───────────────────────────────────────────────────────────
+  var _rvDismissed = false;
+  var _rvData = JSON.parse(localStorage.getItem('dp_rv') || '[]');
+
+  function trackView(itemId) {
+    const card = document.getElementById('card-' + itemId);
+    if (!card) return;
+    const sel = card.querySelector('.size-selector');
+    if (!sel) return;
+    const activeBtn = sel.querySelector('.size-btn.active');
+    const entry = {
+      id: itemId,
+      name: sel.dataset.name,
+      img: sel.dataset.img,
+      price: activeBtn ? parseInt(activeBtn.dataset.price) : 0
+    };
+    _rvData = _rvData.filter(function(r){ return r.id !== itemId; });
+    _rvData.unshift(entry);
+    if (_rvData.length > 4) _rvData = _rvData.slice(0, 4);
+    try { localStorage.setItem('dp_rv', JSON.stringify(_rvData)); } catch(e){}
+    renderRvTray();
+  }
+
+  function renderRvTray() {
+    if (_rvDismissed || _rvData.length === 0) return;
+    const container = document.getElementById('rvtItems');
+    if (!container) return;
+    container.innerHTML = '';
+    _rvData.forEach(function(r) {
+      const el = document.createElement('div');
+      el.className = 'rvt-item';
+      el.innerHTML = '<img class="rvt-img" src="' + r.img + '" onerror="this.src=\'imgs/hero_flower.png\'" alt="' + r.name + '"/>'
+        + '<div class="rvt-info"><div class="rvt-name">' + r.name + '</div>'
+        + '<div class="rvt-price">from $' + r.price.toLocaleString() + '</div></div>';
+      el.onclick = function() {
+        const target = document.getElementById('card-' + r.id);
+        if (target) { target.scrollIntoView({behavior:'smooth', block:'center'}); }
+      };
+      container.appendChild(el);
+    });
+    document.getElementById('rvTray').classList.add('visible');
+  }
+
+  function dismissRvTray() {
+    _rvDismissed = true;
+    document.getElementById('rvTray').classList.remove('visible');
+  }
+
   window.addEventListener('DOMContentLoaded', function() {
+    if (_rvData.length > 0) renderRvTray();
+
+    // ── INJECT PER-CARD REVIEW BUTTONS ────────────────────────────────────────
     document.querySelectorAll('.item-card[id]').forEach(function(card) {
       var itemId = card.id.replace('card-', '');
       var info = card.querySelector('.item-info');
@@ -1703,6 +1782,10 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       btn.innerHTML = '<span class="irv-stars">⭐⭐⭐⭐⭐</span><span class="irv-count">' + avg + ' · ' + (count || '5+') + ' reviews</span>';
       btn.onclick = function(e) { e.stopPropagation(); openReviews(itemId); };
       info.appendChild(btn);
+
+      // track view on card image click
+      var imgWrap = card.querySelector('.item-img-wrap');
+      if (imgWrap) imgWrap.addEventListener('click', function(){ trackView(itemId); });
     });
   });
   </script>
