@@ -268,7 +268,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 @keyframes lsBrand{0%{background-position:0%}100%{background-position:200%}}
 .ls-sub{font-size:9px;font-weight:800;letter-spacing:5px;color:rgba(0,255,153,.35);text-transform:uppercase;margin-bottom:28px}
 .ls-bar-wrap{width:180px;height:3px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden;margin-bottom:0}
-.ls-bar-fill{height:100%;width:0%;background:linear-gradient(90deg,#00d084,#00ff99);border-radius:2px;transition:width .1s ease}
+.ls-bar-fill{height:100%;width:0%;background:linear-gradient(90deg,#00d084,#00ff99);border-radius:2px}
+@keyframes lsBarAnim{0%{width:0%}50%{width:60%}80%{width:85%}95%{width:95%}100%{width:98%}}
 .ls-track{position:absolute;bottom:0;left:0;right:0;height:100px;overflow:hidden;pointer-events:none}
 .ls-track-line{position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(0,255,153,.4),transparent)}
 .ls-track-line.tl-top{top:0}
@@ -1808,26 +1809,18 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     setTimeout(function(){ stockTick(); schedTick(); }, 50000 + Math.random() * 50000);
   })();
 
-  // ── LOADING SCREEN — exactly 2 s simulated ───────────────────────────────────
+  // ── LOADING SCREEN — exactly 2 s ────────────────────────────────────────────
   (function() {
-    const ls = document.getElementById('loadScreen');
+    var ls = document.getElementById('loadScreen');
     if (!ls) return;
-    const fill = document.getElementById('lsBarFill');
-    // stage 1 (0–1700ms): smooth fill to 92% via CSS transition
-    if (fill) {
-      fill.style.transition = 'width 1.7s cubic-bezier(.08,.6,.4,1)';
-      requestAnimationFrame(function(){
-        requestAnimationFrame(function(){ fill.style.width = '92%'; });
-      });
-    }
-    // stage 2 (1700ms): snap to 100%
+    var fill = document.getElementById('lsBarFill');
+    // bar fills via CSS animation (no JS transitions needed)
+    if (fill) fill.style.animation = 'lsBarAnim 1.9s ease-in-out forwards';
+    // at 2000ms: fade then hide entirely via inline style (no class dependency)
     setTimeout(function() {
-      if (fill) { fill.style.transition = 'width .12s ease'; fill.style.width = '100%'; }
-    }, 1700);
-    // stage 3 (2000ms): fade out
-    setTimeout(function() {
-      ls.classList.add('fade');
-      setTimeout(function() { ls.style.display = 'none'; }, 550);
+      ls.style.opacity = '0';
+      ls.style.pointerEvents = 'none';
+      setTimeout(function() { ls.style.display = 'none'; }, 450);
     }, 2000);
   })();
 
