@@ -3,14 +3,16 @@
 <head>
 <script>
   (function() {
-    const accessTime = localStorage.getItem('dwarfplug-access-time');
-    const now = Date.now();
-    const thirtyMinutes = 30 * 60 * 1000;
-    
-    if (!accessTime || (now - parseInt(accessTime)) > thirtyMinutes) {
-      localStorage.removeItem('dwarfplug-access-time');
-      window.location.href = 'showcase.html';
-    }
+    // Cookie fallback for when localStorage is blocked (iframes, private mode, etc.)
+    function _getCookie(n){try{const m=document.cookie.match('(?:^|;)\\s*'+n+'=([^;]*)');return m?m[1]:null}catch(e){return null}}
+    const thirtyDays = 30 * 24 * 60 * 60 * 1000;
+    let ok = false;
+    try {
+      const accessTime = localStorage.getItem('dwarfplug-access-time');
+      if (accessTime && (Date.now() < parseInt(accessTime))) ok = true;
+    } catch(e) {}
+    if (!ok) { ok = _getCookie('dwarfplug-ok') === '1'; }
+    if (!ok) { window.location.replace('showcase.html'); }
   })();
 </script>
 <meta charset="UTF-8"/>
@@ -23,7 +25,7 @@
 <meta property="og:type" content="website"/>
 <meta name="robots" content="index, follow"/>
 <meta name="theme-color" content="#00d084"/>
-<link rel="icon" href="imgs/logo_neon.jpg" type="image/jpeg"/>
+<link rel="icon" href="imgs/logo_dwarf.jpg" type="image/jpeg"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet"/>
@@ -231,7 +233,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 /* ── FOOTER ── */
 .footer{background:var(--bg2);border-top:1px solid var(--border);padding:60px 16px 40px}
 .footer-inner{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:40px}
-@media(min-width:768px){.footer-inner{grid-template-columns:2fr 1fr 1fr}}
+@media(min-width:768px){.footer-inner{grid-template-columns:2fr 1fr 1fr 1.4fr}}
 .footer-brand .logo{margin-bottom:16px}
 .footer-desc{font-size:13px;color:var(--fg4);line-height:1.7;max-width:360px}
 .footer-head{font-size:12px;font-weight:900;color:#fff;text-transform:uppercase;letter-spacing:.1em;margin-bottom:20px}
@@ -247,6 +249,45 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);z-index:1000;background:rgba(0,0,0,.95);border:1px solid var(--green);color:var(--green-text);padding:12px 24px;border-radius:99px;font-size:13px;font-weight:800;pointer-events:none;opacity:0;transition:all .3s cubic-bezier(.18,.89,.32,1.28);box-shadow:0 10px 30px rgba(0,0,0,.5)}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
+/* ── PAY ANNOUNCE BANNER ── */
+.pay-announce{position:fixed;top:64px;left:50%;transform:translateX(-50%) translateY(-120%);z-index:900;max-width:520px;width:calc(100% - 24px);background:rgba(5,10,5,.98);border:1.5px solid rgba(255,215,0,.35);border-radius:14px;padding:14px 18px;display:flex;align-items:flex-start;gap:12px;box-shadow:0 12px 40px rgba(0,0,0,.7),0 0 24px rgba(255,215,0,.1);transition:transform .5s cubic-bezier(.34,1.56,.64,1),opacity .5s ease;opacity:0;backdrop-filter:blur(20px)}
+.pay-announce.show{transform:translateX(-50%) translateY(0);opacity:1}
+.pa-icon{font-size:26px;flex-shrink:0;margin-top:2px}
+.pa-body{flex:1}
+.pa-title{font-size:12px;font-weight:900;color:var(--gold);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.pa-msg{font-size:12px;color:var(--fg2);line-height:1.55}
+.pa-progress{height:2px;background:rgba(255,215,0,.15);border-radius:1px;margin-top:10px;overflow:hidden}
+.pa-progress-fill{height:100%;width:100%;background:linear-gradient(90deg,var(--gold),rgba(255,215,0,.4));border-radius:1px;transform:scaleX(0);transform-origin:left;transition:transform linear}
+
+/* ── LOADING SCREEN ── */
+#loadScreen{position:fixed;inset:0;z-index:9999;background:#050a05;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;transition:opacity .55s ease;pointer-events:all}
+#loadScreen.fade{opacity:0;pointer-events:none}
+.ls-logo{width:100px;height:100px;border-radius:22px;object-fit:cover;border:2.5px solid rgba(0,255,153,.6);box-shadow:0 0 40px rgba(0,255,153,.35),0 0 80px rgba(0,255,153,.12);margin-bottom:18px;animation:lsLogoPulse 2s ease-in-out infinite}
+@keyframes lsLogoPulse{0%,100%{box-shadow:0 0 40px rgba(0,255,153,.35),0 0 80px rgba(0,255,153,.12)}50%{box-shadow:0 0 60px rgba(0,255,153,.6),0 0 120px rgba(0,255,153,.2)}}
+.ls-brand{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;background:linear-gradient(135deg,#00ff99,#ffd700,#00ff99);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:lsBrand 3s linear infinite;letter-spacing:2px;margin-bottom:4px}
+@keyframes lsBrand{0%{background-position:0%}100%{background-position:200%}}
+.ls-sub{font-size:9px;font-weight:800;letter-spacing:5px;color:rgba(0,255,153,.35);text-transform:uppercase;margin-bottom:28px}
+.ls-bar-wrap{width:180px;height:3px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden;margin-bottom:0}
+.ls-bar-fill{height:100%;width:0%;background:linear-gradient(90deg,#00d084,#00ff99);border-radius:2px;transition:width .1s ease}
+.ls-track{position:absolute;bottom:0;left:0;right:0;height:100px;overflow:hidden;pointer-events:none}
+.ls-track-line{position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(0,255,153,.4),transparent)}
+.ls-track-line.tl-top{top:0}
+.ls-dwarf-wrap{position:absolute;bottom:10px;left:-80px;animation:lsRun 3.5s linear infinite}
+@keyframes lsRun{0%{left:-80px;transform:scaleX(1)}45%{left:calc(100vw + 80px);transform:scaleX(1)}45.01%{left:calc(100vw + 80px);transform:scaleX(-1)}90%{left:-80px;transform:scaleX(-1)}90.01%{left:-80px;transform:scaleX(1)}100%{left:-80px;transform:scaleX(1)}}
+.ls-dwarf-bounce{animation:lsBounce .32s ease-in-out infinite alternate;filter:drop-shadow(0 0 8px rgba(0,255,153,.5))}
+@keyframes lsBounce{0%{transform:translateY(0) rotate(-.8deg)}100%{transform:translateY(-7px) rotate(.8deg)}}
+
+/* ── ITEM REVIEW STARS ── */
+.item-rv-btn{display:flex;align-items:center;gap:5px;margin-top:7px;background:none;border:none;cursor:pointer;padding:0}
+.irv-stars{font-size:11px;letter-spacing:1px}
+.irv-count{font-size:10px;color:var(--fg3);font-weight:600;text-decoration:underline;text-underline-offset:2px}
+.irv-count:hover{color:var(--gold)}
+
+/* ── COPY ORDER BUTTON ── */
+.copy-order-btn{width:100%;padding:12px;border-radius:var(--radius);background:var(--bg3);border:1px solid var(--border2);color:var(--fg2);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:10px;transition:all .2s;cursor:pointer}
+.copy-order-btn:hover{background:var(--bg4);color:var(--fg);border-color:rgba(0,255,153,.25)}
+.copy-order-btn.copied{background:rgba(0,208,132,.12);border-color:rgba(0,255,153,.35);color:var(--green-text)}
+
 /* ── SALES POP ── */
 .sp-card{position:fixed;bottom:20px;left:20px;z-index:180;background:rgba(15,15,15,.98);border:1px solid var(--border);border-radius:14px;padding:12px 16px;display:flex;align-items:center;gap:12px;max-width:280px;box-shadow:0 10px 30px rgba(0,0,0,.5);transform:translateX(-120%);transition:transform .5s cubic-bezier(.18,.89,.32,1.28);backdrop-filter:blur(10px)}
 .sp-card.show{transform:translateX(0)}
@@ -259,11 +300,73 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 </head>
 <body>
 
+<!-- ═══ LOADING SCREEN ═══ -->
+<div id="loadScreen">
+  <img class="ls-logo" src="imgs/logo_dwarf.jpg" alt="Dwarf Plug" onerror="this.src='imgs/logo_neon.jpg'"/>
+  <div class="ls-brand">DWARF PLUG</div>
+  <div class="ls-sub">Premium Cannabis Worldwide</div>
+  <div class="ls-bar-wrap"><div class="ls-bar-fill" id="lsBarFill"></div></div>
+  <div class="ls-track">
+    <div class="ls-track-line tl-top"></div>
+    <div class="ls-dwarf-wrap">
+      <div class="ls-dwarf-bounce">
+        <svg width="56" height="72" viewBox="0 0 56 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- hat -->
+          <ellipse cx="28" cy="12" rx="14" ry="4" fill="#2a7a4f"/>
+          <polygon points="14,12 42,12 36,0 20,0" fill="#1d6b3f"/>
+          <rect x="11" y="11" width="34" height="5" rx="2.5" fill="#3a9f64"/>
+          <!-- head -->
+          <ellipse cx="28" cy="24" rx="11" ry="12" fill="#e8c49a"/>
+          <!-- beard -->
+          <ellipse cx="28" cy="34" rx="10" ry="7" fill="#e8e0d0"/>
+          <!-- eyes -->
+          <circle cx="23" cy="22" r="2" fill="#2c1810"/>
+          <circle cx="33" cy="22" r="2" fill="#2c1810"/>
+          <circle cx="24" cy="21.5" r=".7" fill="#fff"/>
+          <circle cx="34" cy="21.5" r=".7" fill="#fff"/>
+          <!-- nose -->
+          <ellipse cx="28" cy="27" rx="2.5" ry="1.5" fill="#d4a47a"/>
+          <!-- smile -->
+          <path d="M24 30 Q28 33 32 30" stroke="#8b5e3c" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <!-- body -->
+          <rect x="17" y="37" width="22" height="18" rx="5" fill="#1d6b3f"/>
+          <!-- buckle -->
+          <rect x="24" y="43" width="8" height="5" rx="1.5" fill="#ffd700"/>
+          <rect x="25.5" y="44.5" width="5" height="2" rx=".5" fill="#b8860b"/>
+          <!-- left arm -->
+          <g class="ls-arm-l">
+            <rect x="6" y="38" width="12" height="5" rx="2.5" fill="#1d6b3f" transform-origin="17 40.5" transform="rotate(20,17,40.5)"/>
+            <ellipse cx="7" cy="40" rx="3" ry="3.5" fill="#e8c49a" transform="rotate(20,17,40.5)"/>
+          </g>
+          <!-- right arm -->
+          <g class="ls-arm-r">
+            <rect x="38" y="38" width="12" height="5" rx="2.5" fill="#1d6b3f" transform-origin="39 40.5" transform="rotate(-20,39,40.5)"/>
+            <ellipse cx="49" cy="40" rx="3" ry="3.5" fill="#e8c49a" transform="rotate(-20,39,40.5)"/>
+          </g>
+          <!-- left leg -->
+          <rect x="17" y="53" width="9" height="14" rx="3" fill="#2a5a8f"/>
+          <!-- right leg -->
+          <rect x="30" y="53" width="9" height="14" rx="3" fill="#2a5a8f"/>
+          <!-- left boot -->
+          <ellipse cx="21.5" cy="67" rx="6" ry="4" fill="#1a1a1a"/>
+          <!-- right boot -->
+          <ellipse cx="34.5" cy="67" rx="6" ry="4" fill="#1a1a1a"/>
+          <!-- joint (held in right hand) -->
+          <rect x="50" y="37" width="8" height="2.5" rx="1.25" fill="#f5e6c8"/>
+          <rect x="57" y="36.5" width="2" height="3.5" rx="1" fill="#e8d4a0"/>
+          <circle cx="59" cy="36" r="1.5" fill="rgba(0,200,100,.4)"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+
   <!-- ═══ HEADER ═══ -->
   <header class="header">
     <div class="header-inner">
       <a href="#" class="logo">
-        <div class="logo-icon"><img src="imgs/logo_neon.jpg" alt="Dwarf Plug"/></div>
+        <div class="logo-icon"><img src="imgs/logo_dwarf.jpg" onerror="this.src='imgs/logo_neon.jpg'" alt="Dwarf Plug"/></div>
         <div class="logo-text">
           <span class="logo-name">DWARF PLUG</span>
           <span class="logo-sub">Bulk Worldwide</span>
@@ -280,7 +383,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
         </select>
       </div>
 <div class="header-links">
-        <a href="https://t.me/dwarfplugshop?direct" target="_blank" class="header-link hl-tg" title="Telegram Channel">✈</a>
+        <a href="https://t.me/dwarfplugshop" target="_blank" class="header-link hl-tg" title="Telegram Channel">✈</a>
         <button class="header-link hl-reviews" onclick="openReviews('_flower')" title="Customer Reviews">⭐</button>
         <button class="cart-btn" onclick="openCart()">
           🛒 <span class="cart-count" id="cartCount">0</span>
@@ -503,6 +606,132 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
           </div>
         </div>
 
+        <!-- White Widow -->
+        <div class="item-card" id="card-white-widow">
+          <div class="item-img-wrap"><img class="item-img" src="imgs/pack_white_widow.png" alt="White Widow" onerror="this.src='imgs/hero_flower.png'"/></div>
+          <div class="item-info">
+            <div class="item-name">White Widow</div>
+            <div class="item-desc">Classic Dutch legend • Balanced hybrid • Crystal resin coat • Earthy &amp; woody with citrus finish</div>
+            <div class="item-badges"><span class="item-badge ib-hot">🔥 HOT</span><span class="item-badge ib-aaaa">AAAA+</span><span class="item-badge" style="background:rgba(100,180,255,.12);color:#64b4ff;border-color:rgba(100,180,255,.2)">HYBRID</span></div>
+          </div>
+          <div class="item-foot">
+            <div class="item-price-row"><span class="item-price-old" id="orig-white-widow">$510</span><span class="item-price" id="price-white-widow">$375</span><div class="item-disc-badge">26% OFF</div></div>
+            <div class="size-selector" data-item="white-widow" data-name="White Widow" data-img="imgs/pack_white_widow.png">
+              <button class="size-btn active" data-price="375" data-orig="510" onclick="selectSize(this,'white-widow')">1 oz · $375</button>
+              <button class="size-btn" data-price="1300" data-orig="1760" onclick="selectSize(this,'white-widow')">QP · $1,300</button>
+              <button class="size-btn" data-price="2400" data-orig="3250" onclick="selectSize(this,'white-widow')">HP · $2,400</button>
+              <button class="size-btn" data-price="4400" data-orig="6000" onclick="selectSize(this,'white-widow')">1 lb · $4,400</button>
+              <button class="size-btn" data-price="9200" data-orig="12500" onclick="selectSize(this,'white-widow')">1 kg · $9,200</button>
+            </div>
+            <button class="add-to-cart" onclick="addToCart('white-widow')">+ Add to Cart</button>
+          </div>
+        </div>
+
+        <!-- Sour Diesel -->
+        <div class="item-card" id="card-sour-diesel">
+          <div class="item-img-wrap"><img class="item-img" src="imgs/pack_sour_diesel.png" alt="Sour Diesel" onerror="this.src='imgs/hero_flower.png'"/></div>
+          <div class="item-info">
+            <div class="item-name">Sour Diesel</div>
+            <div class="item-desc">Pure Sativa powerhouse • Energising cerebral high • Pungent diesel with citrus notes</div>
+            <div class="item-badges"><span class="item-badge ib-new">NEW</span><span class="item-badge ib-aaaa">AAAA+</span><span class="item-badge" style="background:rgba(255,210,80,.1);color:#ffd250;border-color:rgba(255,210,80,.2)">SATIVA</span></div>
+          </div>
+          <div class="item-foot">
+            <div class="item-price-row"><span class="item-price-old" id="orig-sour-diesel">$520</span><span class="item-price" id="price-sour-diesel">$380</span><div class="item-disc-badge">27% OFF</div></div>
+            <div class="size-selector" data-item="sour-diesel" data-name="Sour Diesel" data-img="imgs/pack_sour_diesel.png">
+              <button class="size-btn active" data-price="380" data-orig="520" onclick="selectSize(this,'sour-diesel')">1 oz · $380</button>
+              <button class="size-btn" data-price="1320" data-orig="1800" onclick="selectSize(this,'sour-diesel')">QP · $1,320</button>
+              <button class="size-btn" data-price="2450" data-orig="3350" onclick="selectSize(this,'sour-diesel')">HP · $2,450</button>
+              <button class="size-btn" data-price="4500" data-orig="6150" onclick="selectSize(this,'sour-diesel')">1 lb · $4,500</button>
+              <button class="size-btn" data-price="9400" data-orig="12800" onclick="selectSize(this,'sour-diesel')">1 kg · $9,400</button>
+            </div>
+            <button class="add-to-cart" onclick="addToCart('sour-diesel')">+ Add to Cart</button>
+          </div>
+        </div>
+
+        <!-- Purple Punch -->
+        <div class="item-card" id="card-purple-punch">
+          <div class="item-img-wrap"><img class="item-img" src="imgs/pack_purple_punch.png" alt="Purple Punch" onerror="this.src='imgs/hero_flower.png'"/></div>
+          <div class="item-info">
+            <div class="item-name">Purple Punch</div>
+            <div class="item-desc">Indica knockout • Grape &amp; blueberry candy aroma • Body-melting relaxation • Dense purple nugs</div>
+            <div class="item-badges"><span class="item-badge ib-hot">🔥 HOT</span><span class="item-badge ib-aaaa">AAAA+</span><span class="item-badge" style="background:rgba(180,100,255,.12);color:#c87aff;border-color:rgba(180,100,255,.2)">INDICA</span></div>
+          </div>
+          <div class="item-foot">
+            <div class="item-price-row"><span class="item-price-old" id="orig-purple-punch">$530</span><span class="item-price" id="price-purple-punch">$390</span><div class="item-disc-badge">26% OFF</div></div>
+            <div class="size-selector" data-item="purple-punch" data-name="Purple Punch" data-img="imgs/pack_purple_punch.png">
+              <button class="size-btn active" data-price="390" data-orig="530" onclick="selectSize(this,'purple-punch')">1 oz · $390</button>
+              <button class="size-btn" data-price="1360" data-orig="1840" onclick="selectSize(this,'purple-punch')">QP · $1,360</button>
+              <button class="size-btn" data-price="2550" data-orig="3450" onclick="selectSize(this,'purple-punch')">HP · $2,550</button>
+              <button class="size-btn" data-price="4700" data-orig="6350" onclick="selectSize(this,'purple-punch')">1 lb · $4,700</button>
+              <button class="size-btn" data-price="9800" data-orig="13200" onclick="selectSize(this,'purple-punch')">1 kg · $9,800</button>
+            </div>
+            <button class="add-to-cart" onclick="addToCart('purple-punch')">+ Add to Cart</button>
+          </div>
+        </div>
+
+        <!-- Wedding Cake -->
+        <div class="item-card" id="card-wedding-cake">
+          <div class="item-img-wrap"><img class="item-img" src="imgs/pack_wedding_cake.png" alt="Wedding Cake" onerror="this.src='imgs/hero_flower.png'"/></div>
+          <div class="item-info">
+            <div class="item-name">Wedding Cake</div>
+            <div class="item-desc">Indica-dominant hybrid • Sweet vanilla &amp; tangy earth • Euphoric then deeply sedating</div>
+            <div class="item-badges"><span class="item-badge ib-aaaa">AAAA+</span><span class="item-badge" style="background:rgba(180,100,255,.12);color:#c87aff;border-color:rgba(180,100,255,.2)">INDICA HYB</span></div>
+          </div>
+          <div class="item-foot">
+            <div class="item-price-row"><span class="item-price-old" id="orig-wedding-cake">$575</span><span class="item-price" id="price-wedding-cake">$420</span><div class="item-disc-badge">27% OFF</div></div>
+            <div class="size-selector" data-item="wedding-cake" data-name="Wedding Cake" data-img="imgs/pack_wedding_cake.png">
+              <button class="size-btn active" data-price="420" data-orig="575" onclick="selectSize(this,'wedding-cake')">1 oz · $420</button>
+              <button class="size-btn" data-price="1450" data-orig="1990" onclick="selectSize(this,'wedding-cake')">QP · $1,450</button>
+              <button class="size-btn" data-price="2700" data-orig="3700" onclick="selectSize(this,'wedding-cake')">HP · $2,700</button>
+              <button class="size-btn" data-price="5000" data-orig="6800" onclick="selectSize(this,'wedding-cake')">1 lb · $5,000</button>
+              <button class="size-btn" data-price="10500" data-orig="14200" onclick="selectSize(this,'wedding-cake')">1 kg · $10,500</button>
+            </div>
+            <button class="add-to-cart" onclick="addToCart('wedding-cake')">+ Add to Cart</button>
+          </div>
+        </div>
+
+        <!-- Zkittlez -->
+        <div class="item-card" id="card-zkittlez">
+          <div class="item-img-wrap"><img class="item-img" src="imgs/pack_zkittlez.png" alt="Zkittlez" onerror="this.src='imgs/hero_flower.png'"/></div>
+          <div class="item-info">
+            <div class="item-name">Zkittlez</div>
+            <div class="item-desc">Award-winning Indica • Full-body relaxation • Rainbow candy terpene profile • Multi-coloured nugs</div>
+            <div class="item-badges"><span class="item-badge ib-new">NEW</span><span class="item-badge ib-aaaa">AAAA</span><span class="item-badge" style="background:rgba(180,100,255,.12);color:#c87aff;border-color:rgba(180,100,255,.2)">INDICA</span></div>
+          </div>
+          <div class="item-foot">
+            <div class="item-price-row"><span class="item-price-old" id="orig-zkittlez">$490</span><span class="item-price" id="price-zkittlez">$360</span><div class="item-disc-badge">27% OFF</div></div>
+            <div class="size-selector" data-item="zkittlez" data-name="Zkittlez" data-img="imgs/pack_zkittlez.png">
+              <button class="size-btn active" data-price="360" data-orig="490" onclick="selectSize(this,'zkittlez')">1 oz · $360</button>
+              <button class="size-btn" data-price="1250" data-orig="1700" onclick="selectSize(this,'zkittlez')">QP · $1,250</button>
+              <button class="size-btn" data-price="2300" data-orig="3130" onclick="selectSize(this,'zkittlez')">HP · $2,300</button>
+              <button class="size-btn" data-price="4200" data-orig="5750" onclick="selectSize(this,'zkittlez')">1 lb · $4,200</button>
+              <button class="size-btn" data-price="8800" data-orig="12000" onclick="selectSize(this,'zkittlez')">1 kg · $8,800</button>
+            </div>
+            <button class="add-to-cart" onclick="addToCart('zkittlez')">+ Add to Cart</button>
+          </div>
+        </div>
+
+        <!-- Girl Scout Cookies -->
+        <div class="item-card" id="card-gsc">
+          <div class="item-img-wrap"><img class="item-img" src="imgs/pack_gsc.png" alt="Girl Scout Cookies" onerror="this.src='imgs/hero_flower.png'"/></div>
+          <div class="item-info">
+            <div class="item-name">Girl Scout Cookies</div>
+            <div class="item-desc">OG Kush × Durban Poison • Sweet minty dough • Euphoric cerebral + body stone • Legendary hybrid</div>
+            <div class="item-badges"><span class="item-badge ib-hot">🔥 HOT</span><span class="item-badge ib-aaaa">AAAA+</span><span class="item-badge" style="background:rgba(100,180,255,.12);color:#64b4ff;border-color:rgba(100,180,255,.2)">HYBRID</span></div>
+          </div>
+          <div class="item-foot">
+            <div class="item-price-row"><span class="item-price-old" id="orig-gsc">$548</span><span class="item-price" id="price-gsc">$400</span><div class="item-disc-badge">27% OFF</div></div>
+            <div class="size-selector" data-item="gsc" data-name="Girl Scout Cookies" data-img="imgs/pack_gsc.png">
+              <button class="size-btn active" data-price="400" data-orig="548" onclick="selectSize(this,'gsc')">1 oz · $400</button>
+              <button class="size-btn" data-price="1400" data-orig="1900" onclick="selectSize(this,'gsc')">QP · $1,400</button>
+              <button class="size-btn" data-price="2600" data-orig="3550" onclick="selectSize(this,'gsc')">HP · $2,600</button>
+              <button class="size-btn" data-price="4800" data-orig="6600" onclick="selectSize(this,'gsc')">1 lb · $4,800</button>
+              <button class="size-btn" data-price="10000" data-orig="13800" onclick="selectSize(this,'gsc')">1 kg · $10,000</button>
+            </div>
+            <button class="add-to-cart" onclick="addToCart('gsc')">+ Add to Cart</button>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -605,6 +834,130 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       </div>
     </section>
 
+    <!-- ═══ CONCENTRATES ═══ -->
+    <section>
+      <div class="sec-head">
+        <div class="sec-title">💎 Premium Concentrates</div>
+        <div class="sec-sub">Lab-Tested Extracts — 1g to oz Wholesale</div>
+      </div>
+      <div class="cat-header"><span class="cat-name">Top-Shelf Extracts</span><div class="cat-divider"></div></div>
+      <div class="items-grid">
+
+        <!-- Live Resin -->
+        <div class="item-card" id="card-live-resin">
+          <div class="item-img-wrap"><img class="item-img" src="imgs/pack_concentrate.png" alt="Live Resin" onerror="this.src='imgs/prod_concentrate_new.png'"/></div>
+          <div class="item-info">
+            <div class="item-name">Premium Live Resin</div>
+            <div class="item-desc">Fresh-frozen terpene-rich extract • Full-spectrum flavour profile • Golden amber</div>
+            <div class="item-badges"><span class="item-badge ib-hot">🔥 HOT</span><span class="item-badge ib-aaaa">AAAA+</span></div>
+          </div>
+          <div class="item-foot">
+            <div class="item-price-row"><span class="item-price-old" id="orig-live-resin">$120</span><span class="item-price" id="price-live-resin">$85</span><div class="item-disc-badge">29% OFF</div></div>
+            <div class="size-selector" data-item="live-resin" data-name="Premium Live Resin" data-img="imgs/pack_concentrate.png">
+              <button class="size-btn active" data-price="85" data-orig="120" onclick="selectSize(this,'live-resin')">1g · $85</button>
+              <button class="size-btn" data-price="280" data-orig="390" onclick="selectSize(this,'live-resin')">3.5g · $280</button>
+              <button class="size-btn" data-price="520" data-orig="730" onclick="selectSize(this,'live-resin')">7g · $520</button>
+              <button class="size-btn" data-price="1800" data-orig="2500" onclick="selectSize(this,'live-resin')">28g (oz) · $1,800</button>
+            </div>
+            <button class="add-to-cart" onclick="addToCart('live-resin')">+ Add to Cart</button>
+          </div>
+        </div>
+
+        <!-- BHO Shatter -->
+        <div class="item-card" id="card-bho-shatter">
+          <div class="item-img-wrap"><img class="item-img" src="imgs/prod_concentrate_new.png" alt="BHO Shatter" onerror="this.src='imgs/pack_concentrate.png'"/></div>
+          <div class="item-info">
+            <div class="item-name">BHO Glass Shatter</div>
+            <div class="item-desc">Butane honey oil • Glass-clear consistency • 80–90% THC • Snap &amp; pull</div>
+            <div class="item-badges"><span class="item-badge ib-new">NEW</span><span class="item-badge ib-aaaa">AAAA</span></div>
+          </div>
+          <div class="item-foot">
+            <div class="item-price-row"><span class="item-price-old" id="orig-bho-shatter">$95</span><span class="item-price" id="price-bho-shatter">$70</span><div class="item-disc-badge">26% OFF</div></div>
+            <div class="size-selector" data-item="bho-shatter" data-name="BHO Glass Shatter" data-img="imgs/prod_concentrate_new.png">
+              <button class="size-btn active" data-price="70" data-orig="95" onclick="selectSize(this,'bho-shatter')">1g · $70</button>
+              <button class="size-btn" data-price="230" data-orig="310" onclick="selectSize(this,'bho-shatter')">3.5g · $230</button>
+              <button class="size-btn" data-price="430" data-orig="580" onclick="selectSize(this,'bho-shatter')">7g · $430</button>
+              <button class="size-btn" data-price="1500" data-orig="2050" onclick="selectSize(this,'bho-shatter')">28g (oz) · $1,500</button>
+            </div>
+            <button class="add-to-cart" onclick="addToCart('bho-shatter')">+ Add to Cart</button>
+          </div>
+        </div>
+
+        <!-- Premium Hash Oil -->
+        <div class="item-card" id="card-hash-oil">
+          <div class="item-img-wrap"><img class="item-img" src="imgs/prod_oils_new.png" alt="Hash Oil" onerror="this.src='imgs/pack_concentrate.png'"/></div>
+          <div class="item-info">
+            <div class="item-name">Premium Hash Oil</div>
+            <div class="item-desc">RSO-style full-spectrum oil • 75–85% THC • Syringe for precision dosing</div>
+            <div class="item-badges"><span class="item-badge ib-aaaa">AAAA</span></div>
+          </div>
+          <div class="item-foot">
+            <div class="item-price-row"><span class="item-price-old" id="orig-hash-oil">$110</span><span class="item-price" id="price-hash-oil">$80</span><div class="item-disc-badge">27% OFF</div></div>
+            <div class="size-selector" data-item="hash-oil" data-name="Premium Hash Oil" data-img="imgs/prod_oils_new.png">
+              <button class="size-btn active" data-price="80" data-orig="110" onclick="selectSize(this,'hash-oil')">1g · $80</button>
+              <button class="size-btn" data-price="260" data-orig="360" onclick="selectSize(this,'hash-oil')">3.5g · $260</button>
+              <button class="size-btn" data-price="480" data-orig="660" onclick="selectSize(this,'hash-oil')">7g · $480</button>
+              <button class="size-btn" data-price="1600" data-orig="2200" onclick="selectSize(this,'hash-oil')">28g (oz) · $1,600</button>
+            </div>
+            <button class="add-to-cart" onclick="addToCart('hash-oil')">+ Add to Cart</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══ PREROLLS ═══ -->
+    <section>
+      <div class="sec-head">
+        <div class="sec-title">🚬 Infused Prerolls</div>
+        <div class="sec-sub">Ready-to-Smoke — 5-packs to 50-pack Wholesale</div>
+      </div>
+      <div class="cat-header"><span class="cat-name">King-Size Infused</span><div class="cat-divider"></div></div>
+      <div class="items-grid">
+
+        <!-- Infused King Preroll -->
+        <div class="item-card" id="card-infused-preroll">
+          <div class="item-img-wrap"><img class="item-img" src="imgs/pack_preroll.png" alt="Infused Prerolls" onerror="this.src='imgs/prod_preroll_new.png'"/></div>
+          <div class="item-info">
+            <div class="item-name">Infused King-Size Prerolls</div>
+            <div class="item-desc">AAAA+ flower + live resin + kief-rolled • 1.5g each • Slow-burning RAW paper</div>
+            <div class="item-badges"><span class="item-badge ib-hot">🔥 HOT</span><span class="item-badge ib-new">NEW</span><span class="item-badge ib-aaaa">AAAA+</span></div>
+          </div>
+          <div class="item-foot">
+            <div class="item-price-row"><span class="item-price-old" id="orig-infused-preroll">$245</span><span class="item-price" id="price-infused-preroll">$180</span><div class="item-disc-badge">27% OFF</div></div>
+            <div class="size-selector" data-item="infused-preroll" data-name="Infused King-Size Prerolls" data-img="imgs/pack_preroll.png">
+              <button class="size-btn active" data-price="180" data-orig="245" onclick="selectSize(this,'infused-preroll')">5-Pack · $180</button>
+              <button class="size-btn" data-price="340" data-orig="470" onclick="selectSize(this,'infused-preroll')">10-Pack · $340</button>
+              <button class="size-btn" data-price="800" data-orig="1100" onclick="selectSize(this,'infused-preroll')">25-Pack · $800</button>
+              <button class="size-btn" data-price="1450" data-orig="2000" onclick="selectSize(this,'infused-preroll')">50-Pack (Wholesale) · $1,450</button>
+            </div>
+            <button class="add-to-cart" onclick="addToCart('infused-preroll')">+ Add to Cart</button>
+          </div>
+        </div>
+
+        <!-- Classic Prerolls -->
+        <div class="item-card" id="card-classic-preroll">
+          <div class="item-img-wrap"><img class="item-img" src="imgs/prod_preroll_new.png" alt="Classic Prerolls" onerror="this.src='imgs/pack_preroll.png'"/></div>
+          <div class="item-info">
+            <div class="item-name">Classic AAAA Prerolls</div>
+            <div class="item-desc">AAAA flower only • 1g each • Rotating strains per batch • Filtered tips</div>
+            <div class="item-badges"><span class="item-badge ib-aaaa">AAAA</span></div>
+          </div>
+          <div class="item-foot">
+            <div class="item-price-row"><span class="item-price-old" id="orig-classic-preroll">$165</span><span class="item-price" id="price-classic-preroll">$120</span><div class="item-disc-badge">27% OFF</div></div>
+            <div class="size-selector" data-item="classic-preroll" data-name="Classic AAAA Prerolls" data-img="imgs/prod_preroll_new.png">
+              <button class="size-btn active" data-price="120" data-orig="165" onclick="selectSize(this,'classic-preroll')">5-Pack · $120</button>
+              <button class="size-btn" data-price="220" data-orig="300" onclick="selectSize(this,'classic-preroll')">10-Pack · $220</button>
+              <button class="size-btn" data-price="520" data-orig="710" onclick="selectSize(this,'classic-preroll')">25-Pack · $520</button>
+              <button class="size-btn" data-price="980" data-orig="1350" onclick="selectSize(this,'classic-preroll')">50-Pack (Wholesale) · $980</button>
+            </div>
+            <button class="add-to-cart" onclick="addToCart('classic-preroll')">+ Add to Cart</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
   </main>
 
   <!-- ═══ FOOTER ═══ -->
@@ -612,7 +965,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     <div class="footer-inner">
       <div class="footer-brand">
         <a href="#" class="logo">
-          <div class="logo-icon"><img src="imgs/logo_neon.jpg" alt="Dwarf Plug"/></div>
+          <div class="logo-icon"><img src="imgs/logo_dwarf.jpg" onerror="this.src='imgs/logo_neon.jpg'" alt="Dwarf Plug"/></div>
           <div class="logo-text">
             <span class="logo-name">DWARF PLUG</span>
             <span class="logo-sub">Bulk Worldwide</span>
@@ -624,7 +977,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
         <div class="footer-head">Quick Links</div>
         <div class="footer-links">
           <a href="#catalog" class="footer-link">Catalog</a>
-          <a href="https://t.me/dwarfplugshop?direct" target="_blank" class="footer-link">Telegram Support</a>
+          <a href="https://t.me/dwarfplugshop" target="_blank" class="footer-link">Telegram Support</a>
           <button class="footer-link" onclick="openReviews('_flower')">Customer Reviews</button>
         </div>
       </div>
@@ -634,6 +987,49 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
           <span class="footer-link">✓ PGP Encrypted Comm</span>
           <span class="footer-link">✓ No Logs Policy</span>
           <span class="footer-link">✓ Vacuum Stealth</span>
+        </div>
+      </div>
+      <div>
+        <div class="footer-head">💳 How to Pay</div>
+        <div class="footer-links" style="gap:16px">
+          <details style="border:1px solid var(--border);border-radius:8px;overflow:hidden">
+            <summary style="padding:10px 12px;font-size:12px;font-weight:700;cursor:pointer;background:var(--bg3);list-style:none;display:flex;align-items:center;gap:7px">🌐 Buy Crypto Online</summary>
+            <div style="padding:10px 12px;font-size:11px;color:var(--fg3);line-height:1.8;background:var(--bg2)">
+              <a href="https://www.binance.com" target="_blank" style="color:var(--gold);display:block">↗ Binance.com</a>
+              <a href="https://www.coinbase.com" target="_blank" style="color:var(--gold);display:block">↗ Coinbase.com</a>
+              <a href="https://www.kraken.com" target="_blank" style="color:var(--gold);display:block">↗ Kraken.com</a>
+              <a href="https://paxful.com" target="_blank" style="color:var(--gold);display:block">↗ Paxful (P2P)</a>
+              <a href="https://localcryptos.com" target="_blank" style="color:var(--gold);display:block">↗ LocalCryptos</a>
+            </div>
+          </details>
+          <details style="border:1px solid var(--border);border-radius:8px;overflow:hidden">
+            <summary style="padding:10px 12px;font-size:12px;font-weight:700;cursor:pointer;background:var(--bg3);list-style:none;display:flex;align-items:center;gap:7px">🏧 Buy Crypto Locally</summary>
+            <div style="padding:10px 12px;font-size:11px;color:var(--fg3);line-height:1.8;background:var(--bg2)">
+              <a href="https://coinatmradar.com" target="_blank" style="color:var(--gold);display:block">↗ Find Bitcoin ATM Near You</a>
+              <span style="color:var(--fg4)">• Gas stations & kiosks</span><br/>
+              <span style="color:var(--fg4)">• Coin stores & exchanges</span><br/>
+              <span style="color:var(--fg4)">• P2P (meet in person)</span>
+            </div>
+          </details>
+          <details style="border:1px solid var(--border);border-radius:8px;overflow:hidden">
+            <summary style="padding:10px 12px;font-size:12px;font-weight:700;cursor:pointer;background:var(--bg3);list-style:none;display:flex;align-items:center;gap:7px">🎁 Buy Gift Cards Online</summary>
+            <div style="padding:10px 12px;font-size:11px;color:var(--fg3);line-height:1.8;background:var(--bg2)">
+              <a href="https://www.amazon.com/gift-cards" target="_blank" style="color:var(--gold);display:block">↗ Amazon Gift Cards</a>
+              <a href="https://www.razer.com/gold" target="_blank" style="color:var(--gold);display:block">↗ Razer Gold</a>
+              <a href="https://www.giftcards.com" target="_blank" style="color:var(--gold);display:block">↗ GiftCards.com</a>
+              <span style="color:var(--fg4)">Instant digital delivery</span>
+            </div>
+          </details>
+          <details style="border:1px solid var(--border);border-radius:8px;overflow:hidden">
+            <summary style="padding:10px 12px;font-size:12px;font-weight:700;cursor:pointer;background:var(--bg3);list-style:none;display:flex;align-items:center;gap:7px">🏪 Gift Cards In-Store</summary>
+            <div style="padding:10px 12px;font-size:11px;color:var(--fg3);line-height:1.8;background:var(--bg2)">
+              <span style="color:var(--fg4)">• Walmart · Target · CVS</span><br/>
+              <span style="color:var(--fg4)">• 7-Eleven · Walgreens</span><br/>
+              <span style="color:var(--fg4)">• Supermarkets & newsagents</span><br/>
+              <span style="color:var(--fg4)">• Airport shops worldwide</span><br/>
+              <span style="color:var(--green-text);font-weight:700">No ID needed ✓</span>
+            </div>
+          </details>
         </div>
       </div>
     </div>
@@ -747,8 +1143,14 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
         </div>
 
         <button class="checkout-btn" onclick="checkout()">
-          <span data-t="send_telegram">✈ Send Order to Telegram</span>
+          <span data-t="send_telegram">✈ Send Order via Telegram</span>
         </button>
+        <button class="copy-order-btn" id="copyOrderBtn" onclick="copyOrder()">
+          📋 Copy Order Summary to Clipboard
+        </button>
+        <div style="margin-top:10px;padding:10px 12px;background:rgba(0,208,132,0.05);border:1px solid rgba(0,255,153,.12);border-radius:var(--radius-sm);font-size:11px;color:var(--fg3);line-height:1.6;text-align:center">
+          After copying, open <strong style="color:#00ff99">@dwarfplugshop</strong> on Telegram and paste your order — we reply within minutes.
+        </div>
       </div>
     </div>
   </div>
@@ -771,6 +1173,16 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       <div class="sp-headline" id="spHeadline">New York just ordered</div>
       <div class="sp-sub" id="spSub">Blue Dream — 1 oz</div>
       <div class="sp-time" id="spTime">Just now</div>
+    </div>
+  </div>
+
+  <!-- ═══ PAYMENT ANNOUNCEMENT BANNER ═══ -->
+  <div class="pay-announce" id="payAnnounce">
+    <div class="pa-icon" id="paIcon">🔒</div>
+    <div class="pa-body">
+      <div class="pa-title" id="paTitle">Why Only Crypto & Gift Cards?</div>
+      <div class="pa-msg" id="paMsg">Loading…</div>
+      <div class="pa-progress"><div class="pa-progress-fill" id="paFill"></div></div>
     </div>
   </div>
 
@@ -847,8 +1259,57 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     document.getElementById('cartTotal').textContent = '$' + total.toLocaleString();
   }
 
-  function openCart() { document.getElementById('cartModalOverlay').classList.add('open'); }
-  function closeCart() { document.getElementById('cartModalOverlay').classList.remove('open'); }
+  // ── PAYMENT ANNOUNCEMENTS ─────────────────────────────────────────────────
+  const _PA_MSGS = [
+    {
+      icon:'🔒',
+      title:'Your Privacy Is Non-Negotiable',
+      msg:'Credit cards and bank transfers expose your identity, location, and purchase history to financial institutions, governments, and data brokers. We accept only Bitcoin, Ethereum, Monero & Gift Cards — zero paper trails, zero surveillance. Your order stays between us.'
+    },
+    {
+      icon:'🌍',
+      title:'Borderless. Instant. Untraceable.',
+      msg:'Traditional payment processors flag and block cannabis purchases worldwide, freezing accounts and reporting customers. Crypto works in every country, 24/7, with no identity checks. Gift cards (Amazon, Razer, etc.) are anonymous cash equivalents available at any corner store. Your financial freedom matters.'
+    }
+  ];
+  let _paOpen = false;
+  let _paTimeout = null;
+
+  function _showAnnounce(idx) {
+    if (idx >= _PA_MSGS.length) { _paOpen = false; return; }
+    const m = _PA_MSGS[idx];
+    const el = document.getElementById('payAnnounce');
+    const dur = 5200;
+    document.getElementById('paIcon').textContent = m.icon;
+    document.getElementById('paTitle').textContent = m.title;
+    document.getElementById('paMsg').textContent = m.msg;
+    const fill = document.getElementById('paFill');
+    fill.style.transition = 'none';
+    fill.style.transform = 'scaleX(0)';
+    el.classList.add('show');
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        fill.style.transition = 'transform ' + dur + 'ms linear';
+        fill.style.transform = 'scaleX(1)';
+      });
+    });
+    _paTimeout = setTimeout(() => {
+      el.classList.remove('show');
+      setTimeout(() => { _showAnnounce(idx + 1); }, 520);
+    }, dur);
+  }
+
+  function openCart() {
+    document.getElementById('cartModalOverlay').classList.add('open');
+    if (_paTimeout) { clearTimeout(_paTimeout); document.getElementById('payAnnounce').classList.remove('show'); }
+    setTimeout(() => { _paOpen = true; _showAnnounce(0); }, 600);
+  }
+  function closeCart() {
+    document.getElementById('cartModalOverlay').classList.remove('open');
+    if (_paTimeout) clearTimeout(_paTimeout);
+    document.getElementById('payAnnounce').classList.remove('show');
+    _paOpen = false;
+  }
 
   function checkout() {
     if (cart.length === 0) {
@@ -899,8 +1360,51 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     orderSummary += '4. Tracking number provided within 24 hours\n\n';
     orderSummary += 'Please confirm this order and provide any additional preferences.';
     
+    _lastOrderText = orderSummary;
+    document.getElementById('copyOrderBtn').classList.remove('copied');
+    document.getElementById('copyOrderBtn').textContent = '📋 Copy Order Summary to Clipboard';
     const encoded = encodeURIComponent(orderSummary);
     window.open('https://t.me/dwarfplugshop?text=' + encoded, '_blank');
+  }
+
+  let _lastOrderText = '';
+
+  function copyOrder() {
+    const btn = document.getElementById('copyOrderBtn');
+    let text = _lastOrderText;
+    if (!text) {
+      // Build a partial order if they haven't clicked Send yet
+      if (cart.length === 0) { showToast('Your cart is empty'); return; }
+      text = '🔐 ORDER FROM DWARF PLUG\n\n';
+      text += '═══ 📦 ORDER ITEMS ═══\n';
+      cart.forEach(item => { text += `• ${item.name} (${item.size}) - $${item.price.toLocaleString()}\n`; });
+      text += `\n💰 TOTAL: ${document.getElementById('cartTotal').textContent}\n\n`;
+      text += 'Send to @dwarfplugshop on Telegram to complete your order.';
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = '✓ Copied! Now paste in Telegram';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = '📋 Copy Order Summary to Clipboard'; btn.classList.remove('copied'); }, 3500);
+      }).catch(() => _fallbackCopy(text, btn));
+    } else {
+      _fallbackCopy(text, btn);
+    }
+  }
+
+  function _fallbackCopy(text, btn) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.cssText = 'position:fixed;left:-9999px;top:-9999px;opacity:0';
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand('copy');
+      btn.textContent = '✓ Copied! Now paste in Telegram';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = '📋 Copy Order Summary to Clipboard'; btn.classList.remove('copied'); }, 3500);
+    } catch(e) { showToast('Press Ctrl+C / Cmd+C to copy'); }
+    document.body.removeChild(ta);
   }
 
   
@@ -985,28 +1489,132 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       {name:'R.*** — Amsterdam, NL',stars:4,date:'May 29 2025',text:'Solid product and good communication on Telegram. Took 10 days to arrive but they kept me updated. Would order again.',verified:true},
       {name:'S.*** — Sydney, AU',stars:5,date:'May 22 2025',text:'Best plug I\'ve found online. Stealthy, fast, and the quality is genuinely premium. My third order and zero issues.',verified:true},
       {name:'A.*** — Dubai, UAE',stars:5,date:'May 18 2025',text:'Thought it was a scam at first. Took the risk on a small order — arrived in 6 days, quality was better than what I get locally. Ordered 3x since.',verified:true}
+    ],
+    'blue-dream': [
+      {name:'M.*** — Toronto, CA',stars:5,date:'Jun 12 2025',text:'Blue Dream QP arrived in 8 days. Triple-vac sealed, zero smell through customs. Dense, frosty — exactly what was pictured. Third order now.',verified:true},
+      {name:'J.*** — London, UK',stars:5,date:'Jun 1 2025',text:'Absolutely premier quality. Blue Dream is my go-to — same batch consistency every time. Packaging is next level discreet.',verified:true},
+      {name:'K.*** — Paris, FR',stars:5,date:'May 20 2025',text:'Commande parfaite. Blue Dream de qualité musée, arrivée en 9 jours. Emballage sous vide irréprochable.',verified:true}
+    ],
+    'og-kush': [
+      {name:'T.*** — Los Angeles, US',stars:5,date:'Jun 15 2025',text:'OG Kush HP — certified fire. This is how it\'s supposed to taste. Shipping was discreet and faster than expected. 10/10 plug.',verified:true},
+      {name:'B.*** — Amsterdam, NL',stars:5,date:'Jun 3 2025',text:'Real OG phenotype, piney and fuel-forward. Received the 1lb — vacuum-sealed, completely odourless in transit. Unreal service.',verified:true},
+      {name:'N.*** — Dubai, UAE',stars:4,date:'May 25 2025',text:'Quality is genuinely top-shelf. Took 11 days but the Telegram updates kept me calm. Will reorder the QP next month.',verified:true}
+    ],
+    'gelato-33': [
+      {name:'A.*** — Milan, IT',stars:5,date:'Jun 18 2025',text:'Gelato 33 is something else. The smell alone through the bag was insane — sweet cream and berries. Ordered the HP, no regrets.',verified:true},
+      {name:'F.*** — Barcelona, ES',stars:5,date:'Jun 5 2025',text:'Second Gelato order. Consistency is the word — same purple-flecked, trichome-coated nugs both times. Dwarf Plug is reliable.',verified:true},
+      {name:'C.*** — Zurich, CH',stars:5,date:'May 28 2025',text:'Best Gelato I\'ve seen outside California. Arrived in 7 days. Packaging was a basic brown box — zero flags.',verified:true}
+    ],
+    'gorilla-glue': [
+      {name:'P.*** — Toronto, CA',stars:5,date:'Jun 20 2025',text:'GG#4 QP — completely covered in resin, stickiest buds I\'ve received. Came in 9 days. Great for bulk reselling.',verified:true},
+      {name:'W.*** — Melbourne, AU',stars:5,date:'Jun 7 2025',text:'Gorilla Glue HP was exceptional. This isn\'t shake — proper whole flowers, dense and loud. Exactly what was described.',verified:true},
+      {name:'S.*** — Frankfurt, DE',stars:4,date:'May 30 2025',text:'Quality is there, slight variation in bud size on the HP but all premium grade. Packaging held up perfectly.',verified:true}
+    ],
+    'white-widow': [
+      {name:'E.*** — Rotterdam, NL',stars:5,date:'Jun 22 2025',text:'White Widow QP — classic phenotype, thick white crystal coat. This is how WW should look and smoke. Arrived in 8 days.',verified:true},
+      {name:'H.*** — Dublin, IE',stars:5,date:'Jun 10 2025',text:'Ordered the HP of White Widow. Smells exactly like Dutch coffeeshop quality. Vacuum-sealed perfectly, zero issues at customs.',verified:true},
+      {name:'L.*** — Copenhagen, DK',stars:5,date:'May 27 2025',text:'My fifth order. White Widow is always consistent — earthy, piney, incredible resin. Dwarf Plug delivers every time.',verified:true}
+    ],
+    'sour-diesel': [
+      {name:'G.*** — New York, US',stars:5,date:'Jun 24 2025',text:'Real Sour Diesel — hits the nose like a gas station in the best way. Got the HP, arrived in 10 days. Completely discreet packaging.',verified:true},
+      {name:'V.*** — Stockholm, SE',stars:5,date:'Jun 11 2025',text:'Sour Diesel QP for my dispensary. Consistent potency, great terpene profile. Clients keep asking for more. Will reorder monthly.',verified:true},
+      {name:'O.*** — Lisbon, PT',stars:4,date:'May 31 2025',text:'Proper sativa high — energetic, euphoric. Took 12 days but Telegram updates the whole time. Would order again.',verified:true}
+    ],
+    'purple-punch': [
+      {name:'I.*** — Vienna, AT',stars:5,date:'Jun 25 2025',text:'Purple Punch HP — deep purple nugs, grape and berry aroma that fills the room. Knocked me out. Best indica I\'ve tried.',verified:true},
+      {name:'Q.*** — Brussels, BE',stars:5,date:'Jun 13 2025',text:'Purple Punch QP was a dream. Dense, colourful, incredibly fragrant. Arrived in 7 days in a plain parcel. Zero issues.',verified:true},
+      {name:'X.*** — Tokyo, JP',stars:5,date:'Jun 2 2025',text:'Amazed it arrived at all given my location. Full 1oz, intact vacuum seal, quality exactly as described. Purple Punch is unreal.',verified:true}
+    ],
+    'wedding-cake': [
+      {name:'R.*** — Singapore, SG',stars:5,date:'Jun 26 2025',text:'Wedding Cake oz arrived in 9 days. Vanilla and cake aroma — opens and fills the room. High-end quality, worth every dollar.',verified:true},
+      {name:'Y.*** — Geneva, CH',stars:5,date:'Jun 15 2025',text:'Wedding Cake HP for private clients. Consistent, potent, beautiful trim. Dwarf Plug is the most reliable bulk source I\'ve found.',verified:true},
+      {name:'Z.*** — Oslo, NO',stars:4,date:'Jun 4 2025',text:'Premium buds, great cure. Wedding Cake HP took 10 days but tracking updates on Telegram made the wait easy.',verified:true}
+    ],
+    'zkittlez': [
+      {name:'U.*** — Prague, CZ',stars:5,date:'Jun 27 2025',text:'Zkittlez HP — absolutely covered in multicoloured hairs, smells like a bag of candy. One of the most unique buds I\'ve seen.',verified:true},
+      {name:'N.*** — Warsaw, PL',stars:5,date:'Jun 16 2025',text:'Zkittlez QP for my collective. The terpene profile is wild — sweet, fruity, full-spectrum. Everyone loves it. Reordering.',verified:true},
+      {name:'B.*** — Helsinki, FI',stars:5,date:'Jun 6 2025',text:'Ordered Zkittlez oz. Arrived in 8 days. Packaging completely odourless. The flavour is as advertised — like rainbow candy.',verified:true}
+    ],
+    'gsc': [
+      {name:'C.*** — Toronto, CA',stars:5,date:'Jun 28 2025',text:'GSC HP — this is the real thing. OG phenotype, sweet minty dough, incredible potency. Arrived in 9 days completely sealed.',verified:true},
+      {name:'D.*** — Amsterdam, NL',stars:5,date:'Jun 17 2025',text:'Girl Scout Cookies QP for resale. Clients love it. Consistent grade every batch, Dwarf Plug doesn\'t disappoint.',verified:true},
+      {name:'F.*** — London, UK',stars:5,date:'Jun 7 2025',text:'GSC oz as a test order. Now I\'m ordering the pound. Quality speaks for itself — dense, trichome-heavy, absolutely premium.',verified:true}
+    ],
+    'dutch-polm': [
+      {name:'H.*** — Amsterdam, NL',stars:5,date:'Jun 9 2025',text:'Dutch Polm 100g — smooth, clean smoke, mild and pleasant. Traditional blonde slab exactly as described. Quick delivery.',verified:true},
+      {name:'J.*** — Brussels, BE',stars:4,date:'May 26 2025',text:'Good quality polm, solid consistency. 100g arrived well-wrapped and vacuum-sealed. Nice classic hash.',verified:true}
+    ],
+    'afghani-black': [
+      {name:'K.*** — Berlin, DE',stars:5,date:'Jun 14 2025',text:'Afghani Black 100g — dark, pliable, fantastic smoky aroma. This is old-school traditional hash done right. Very happy.',verified:true},
+      {name:'L.*** — Paris, FR',stars:5,date:'Jun 2 2025',text:'Hash de qualité exceptionnelle. 100g bien emballé, arrivé en 8 jours. Le meilleur afghani que j\'ai eu depuis des années.',verified:true}
+    ],
+    'gummies': [
+      {name:'M.*** — Los Angeles, US',stars:5,date:'Jun 19 2025',text:'THC Gummies case (20 packs) — each gummy is dosed perfectly at 10mg. Clients love them. Consistent potency batch to batch.',verified:true},
+      {name:'O.*** — Barcelona, ES',stars:5,date:'Jun 8 2025',text:'10-pack order as a test. Arrived in 9 days, sealed. Gummies are firm, consistent colour and taste. Will order the bulk next time.',verified:true},
+      {name:'P.*** — Sydney, AU',stars:4,date:'May 29 2025',text:'Good gummies, well-packaged. Took 12 days to Australia but Telegram communication was great throughout.',verified:true}
+    ],
+    'chocolate': [
+      {name:'Q.*** — Zurich, CH',stars:5,date:'Jun 21 2025',text:'THC Chocolate bars — dark chocolate version is incredible. 100mg per bar, 10mg segments, perfect for dosing. My favourite edible.',verified:true},
+      {name:'R.*** — Milan, IT',stars:5,date:'Jun 10 2025',text:'Cioccolato di qualità, dosaggio preciso. 20 barrette arrivate in 8 giorni, imballaggio discreto. Ottimo prodotto.',verified:true},
+      {name:'S.*** — Vienna, AT',stars:5,date:'May 31 2025',text:'Ordered the 50-bar bulk. Every bar was individually sealed, potency consistent. Great value for wholesale buyers.',verified:true}
+    ],
+    'live-resin': [
+      {name:'T.*** — Denver, US',stars:5,date:'Jun 29 2025',text:'Live Resin oz — golden amber, incredible terpene profile. Full-spectrum flavour is miles ahead of anything I\'ve tried from other sources.',verified:true},
+      {name:'U.*** — London, UK',stars:5,date:'Jun 18 2025',text:'3.5g Live Resin test order. The consistency and flavour are exceptional. This is extract done properly. Ordering the oz next.',verified:true},
+      {name:'V.*** — Toronto, CA',stars:5,date:'Jun 8 2025',text:'7g Live Resin — arrived in 7 days. Sealed in a smell-proof container inside a plain box. Quality is absolutely premium.',verified:true}
+    ],
+    'bho-shatter': [
+      {name:'W.*** — Amsterdam, NL',stars:5,date:'Jun 30 2025',text:'BHO Glass Shatter 7g — perfectly clear, clean snap-and-pull consistency. 85% THC tested. This is real craft extract work.',verified:true},
+      {name:'X.*** — Barcelona, ES',stars:4,date:'Jun 19 2025',text:'Shatter 3.5g test — arrived well-wrapped in parchment. Clear, clean, potent. Good value and fast shipping.',verified:true}
+    ],
+    'hash-oil': [
+      {name:'Y.*** — Berlin, DE',stars:5,date:'Jul 1 2025',text:'Hash Oil syringe 3.5g — easy to dose, potent and clean. Full-spectrum flavour. Perfect for edibles and tinctures.',verified:true},
+      {name:'Z.*** — Paris, FR',stars:5,date:'Jun 20 2025',text:'Huile premium, dosage parfait à la seringue. Arrivée en 9 jours, emballage irréprochable. 5 étoiles sans hésitation.',verified:true}
+    ],
+    'infused-preroll': [
+      {name:'A.*** — Toronto, CA',stars:5,date:'Jul 1 2025',text:'Infused preroll 10-pack — slow-burning, flavourful, consistently dosed. The live resin fill makes these next level. Best prerolls I\'ve had.',verified:true},
+      {name:'B.*** — London, UK',stars:5,date:'Jun 22 2025',text:'5-pack as a test. These burn for 20+ minutes each. The kief roll on the outside is a nice touch. Absolutely premium.',verified:true},
+      {name:'C.*** — Dubai, UAE',stars:5,date:'Jun 12 2025',text:'25-pack for a private event. Every guest was impressed. Arrived in 8 days, vacuum-sealed tube. 10/10 product.',verified:true}
+    ],
+    'classic-preroll': [
+      {name:'D.*** — Sydney, AU',stars:5,date:'Jun 30 2025',text:'Classic preroll 10-pack — the rotating strain was Gorilla Glue this batch. Perfectly rolled, clean burn, premium flower inside.',verified:true},
+      {name:'E.*** — Berlin, DE',stars:4,date:'Jun 20 2025',text:'Good prerolls, well-packed. Batch was Blue Dream — nice flavour, even burn. Would prefer to choose the strain but still great.',verified:true}
     ]
   };
 
   function openReviews(cat) {
     const body = document.getElementById('rvBody');
     body.innerHTML = '';
-    const reviews = REVIEWS_DB[cat] || [];
-    
-    reviews.forEach(r => {
-      body.innerHTML += `
-        <div class="rv-card">
-          <div class="rv-card-head">
-            <div class="rv-card-stars">${'⭐'.repeat(r.stars)}</div>
-            <div class="rv-verified">VERIFIED BUYER</div>
+    const reviews = REVIEWS_DB[cat] || REVIEWS_DB['_flower'] || [];
+    const titleMap = {
+      'blue-dream':'Blue Dream','og-kush':'OG Kush','gelato-33':'Gelato 33',
+      'gorilla-glue':'Gorilla Glue #4','white-widow':'White Widow','sour-diesel':'Sour Diesel',
+      'purple-punch':'Purple Punch','wedding-cake':'Wedding Cake','zkittlez':'Zkittlez',
+      'gsc':'Girl Scout Cookies','dutch-polm':'Dutch Polm Hash','afghani-black':'Afghani Black Hash',
+      'gummies':'THC Gummies','chocolate':'THC Chocolate Bar','live-resin':'Premium Live Resin',
+      'bho-shatter':'BHO Glass Shatter','hash-oil':'Premium Hash Oil',
+      'infused-preroll':'Infused Prerolls','classic-preroll':'Classic Prerolls',
+      '_flower':'Customer Reviews'
+    };
+    const rvTitle = document.getElementById('rvTitle');
+    if (rvTitle) rvTitle.textContent = (titleMap[cat] || 'Customer') + ' — Reviews';
+    if (!reviews.length) {
+      body.innerHTML = '<div style="text-align:center;padding:40px;color:var(--fg3);font-size:13px">No reviews yet for this product.</div>';
+    } else {
+      reviews.forEach(r => {
+        body.innerHTML += `
+          <div class="rv-card">
+            <div class="rv-card-head">
+              <div class="rv-card-stars">${'⭐'.repeat(r.stars)}</div>
+              <div class="rv-verified">VERIFIED BUYER</div>
+            </div>
+            <div class="rv-card-name">${r.name}</div>
+            <div class="rv-card-date">${r.date}</div>
+            <div class="rv-card-body">${r.text}</div>
           </div>
-          <div class="rv-card-name">${r.name}</div>
-          <div class="rv-card-date">${r.date}</div>
-          <div class="rv-card-body">${r.text}</div>
-        </div>
-      `;
-    });
-    
+        `;
+      });
+    }
     document.getElementById('rvOverlay').classList.add('open');
   }
   function closeReviews() { document.getElementById('rvOverlay').classList.remove('open'); }
@@ -1057,6 +1665,46 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   function toggleTipBody(btn) {
     btn.nextElementSibling.classList.toggle('open');
   }
+
+  // ── LOADING SCREEN ───────────────────────────────────────────────────────────
+  (function() {
+    const ls = document.getElementById('loadScreen');
+    if (!ls) return;
+    const fill = document.getElementById('lsBarFill');
+    let w = 0;
+    const iv = setInterval(() => {
+      w = Math.min(w + (Math.random() * 5 + 2), 92);
+      if (fill) fill.style.width = w + '%';
+    }, 40);
+    function dismiss() {
+      clearInterval(iv);
+      if (fill) fill.style.width = '100%';
+      setTimeout(() => {
+        ls.classList.add('fade');
+        setTimeout(() => { ls.style.display = 'none'; }, 600);
+      }, 280);
+    }
+    if (document.readyState === 'complete') { dismiss(); }
+    else { window.addEventListener('load', dismiss); }
+    setTimeout(dismiss, 3500);
+  })();
+
+  // ── INJECT PER-CARD REVIEW BUTTONS ──────────────────────────────────────────
+  window.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.item-card[id]').forEach(function(card) {
+      var itemId = card.id.replace('card-', '');
+      var info = card.querySelector('.item-info');
+      if (!info) return;
+      var reviews = REVIEWS_DB[itemId] || [];
+      var count = reviews.length;
+      var avg = count ? (reviews.reduce(function(s,r){return s+r.stars;},0)/count).toFixed(1) : '5.0';
+      var btn = document.createElement('button');
+      btn.className = 'item-rv-btn';
+      btn.innerHTML = '<span class="irv-stars">⭐⭐⭐⭐⭐</span><span class="irv-count">' + avg + ' · ' + (count || '5+') + ' reviews</span>';
+      btn.onclick = function(e) { e.stopPropagation(); openReviews(itemId); };
+      info.appendChild(btn);
+    });
+  });
   </script>
 
 </body>
