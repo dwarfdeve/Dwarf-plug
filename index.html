@@ -269,7 +269,17 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
           <span class="logo-sub">Bulk Worldwide</span>
         </div>
       </a>
-      <div class="header-links">
+      
+      <div style="margin-left:10px;display:flex;align-items:center;gap:5px">
+        <select id="langSelect" onchange="changeLang(this.value)" style="background:var(--bg3);border:1px solid var(--border);color:var(--fg2);font-size:10px;padding:4px 8px;border-radius:6px;outline:none;cursor:pointer">
+          <option value="en">🇺🇸 EN</option>
+          <option value="es">🇪🇸 ES</option>
+          <option value="fr">🇫🇷 FR</option>
+          <option value="de">🇩🇪 DE</option>
+          <option value="it">🇮🇹 IT</option>
+        </select>
+      </div>
+<div class="header-links">
         <a href="https://t.me/dwarfplugshop?direct" target="_blank" class="header-link hl-tg" title="Telegram Channel">✈</a>
         <button class="header-link hl-reviews" onclick="openReviews('_flower')" title="Customer Reviews">⭐</button>
         <button class="cart-btn" onclick="openCart()">
@@ -297,8 +307,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   <section class="hero">
     <div class="hero-inner">
       <div class="live-badge"><span class="live-dot"></span> Worldwide Discreet Delivery</div>
-      <h1>Premium Craft Cannabis</h1>
-      <p>Odor-proof, vacuum-sealed, plain packaging. Crypto and gift card payments accepted for total anonymity.</p>
+      <h1 data-t="hero_h1">Premium Craft Cannabis</h1>
+      <p data-t="hero_p">Odor-proof, vacuum-sealed, plain packaging. Crypto and gift card payments accepted for total anonymity.</p>
       
       <div class="order-counter">
         <div class="oc-stat"><span class="oc-num" id="counterOrders">3,204</span><span class="oc-label">Successful Drops</span></div>
@@ -643,63 +653,73 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       <div class="modal-body">
         <!-- CART ITEMS -->
         <div style="margin-bottom:24px">
-          <div style="font-size:12px;font-weight:700;color:var(--green-text);margin-bottom:10px;text-transform:uppercase;letter-spacing:.1em">📦 Order Items</div>
+          <div style="font-size:12px;font-weight:700;color:var(--green-text);margin-bottom:10px;text-transform:uppercase;letter-spacing:.1em" data-t="order_items">📦 Order Items</div>
           <div class="cart-list" id="cartList"></div>
           <div class="cart-total-row">
-            <span class="cart-total-label">Subtotal:</span>
+            <span class="cart-total-label" data-t="subtotal">Subtotal:</span>
             <span class="cart-total-val" id="cartTotal">$0</span>
           </div>
         </div>
 
         <!-- CUSTOMER INFO FORM -->
         <div style="margin-bottom:24px;padding:16px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius)">
-          <div style="font-size:12px;font-weight:700;color:var(--green-text);margin-bottom:12px;text-transform:uppercase;letter-spacing:.1em">👤 Your Information</div>
+          <div style="font-size:12px;font-weight:700;color:var(--green-text);margin-bottom:12px;text-transform:uppercase;letter-spacing:.1em" data-t="customer_info">👤 Your Information</div>
           
           <div style="margin-bottom:12px">
-            <label style="font-size:11px;color:var(--fg3);display:block;margin-bottom:4px;font-weight:600">Full Name *</label>
+            <label style="font-size:11px;color:var(--fg3);display:block;margin-bottom:4px;font-weight:600" data-t="full_name">Full Name *</label>
             <input type="text" id="custName" placeholder="Your full name" style="width:100%;padding:8px;border-radius:var(--radius-sm);background:var(--bg2);border:1px solid var(--border);color:var(--fg);font-size:12px"/>
           </div>
           
           <div style="margin-bottom:12px">
-            <label style="font-size:11px;color:var(--fg3);display:block;margin-bottom:4px;font-weight:600">Email Address *</label>
+            <label style="font-size:11px;color:var(--fg3);display:block;margin-bottom:4px;font-weight:600" data-t="email">Email Address *</label>
             <input type="email" id="custEmail" placeholder="your@email.com" style="width:100%;padding:8px;border-radius:var(--radius-sm);background:var(--bg2);border:1px solid var(--border);color:var(--fg);font-size:12px"/>
           </div>
           
           <div style="margin-bottom:12px">
-            <label style="font-size:11px;color:var(--fg3);display:block;margin-bottom:4px;font-weight:600">Telegram Handle (or Phone) *</label>
+            <label style="font-size:11px;color:var(--fg3);display:block;margin-bottom:4px;font-weight:600" data-t="telegram">Telegram Handle (or Phone) *</label>
             <input type="text" id="custTelegram" placeholder="@yourhandle or +1234567890" style="width:100%;padding:8px;border-radius:var(--radius-sm);background:var(--bg2);border:1px solid var(--border);color:var(--fg);font-size:12px"/>
           </div>
         </div>
 
         <!-- SHIPPING INFO -->
         <div style="margin-bottom:24px;padding:16px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius)">
-          <div style="font-size:12px;font-weight:700;color:var(--green-text);margin-bottom:12px;text-transform:uppercase;letter-spacing:.1em">📍 Shipping Address</div>
+          <div style="font-size:12px;font-weight:700;color:var(--green-text);margin-bottom:12px;text-transform:uppercase;letter-spacing:.1em" data-t="shipping_info">📍 Shipping Address</div>
           
           <div style="margin-bottom:12px">
-            <label style="font-size:11px;color:var(--fg3);display:block;margin-bottom:4px;font-weight:600">Full Address *</label>
+            <label style="font-size:11px;color:var(--fg3);display:block;margin-bottom:4px;font-weight:600" data-t="address">Full Address *</label>
             <input type="text" id="custAddress" placeholder="Street address, building, apt" style="width:100%;padding:8px;border-radius:var(--radius-sm);background:var(--bg2);border:1px solid var(--border);color:var(--fg);font-size:12px"/>
           </div>
           
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
             <div>
-              <label style="font-size:11px;color:var(--fg3);display:block;margin-bottom:4px;font-weight:600">City *</label>
-              <input type="text" id="custCity" placeholder="City" style="width:100%;padding:8px;border-radius:var(--radius-sm);background:var(--bg2);border:1px solid var(--border);color:var(--fg);font-size:12px"/>
+              <label style="font-size:11px;color:var(--fg3);display:block;margin-bottom:4px;font-weight:600" data-t="city">City *</label>
+              <select id="custCity" style="width:100%;padding:8px;border-radius:var(--radius-sm);background:var(--bg2);border:1px solid var(--border);color:var(--fg);font-size:12px">
+                <option value="">Select City</option>
+              </select>
             </div>
             <div>
               <label style="font-size:11px;color:var(--fg3);display:block;margin-bottom:4px;font-weight:600">Country *</label>
-              <input type="text" id="custCountry" placeholder="Country" style="width:100%;padding:8px;border-radius:var(--radius-sm);background:var(--bg2);border:1px solid var(--border);color:var(--fg);font-size:12px"/>
+              
+            <div>
+              <label style="font-size:11px;color:var(--fg3);display:block;margin-bottom:4px;font-weight:600" data-t="country">Country *</label>
+              <select id="custCountry" style="width:100%;padding:8px;border-radius:var(--radius-sm);background:var(--bg2);border:1px solid var(--border);color:var(--fg);font-size:12px">
+                <option value="">Select Country</option>
+                <option value="United States">United States</option><option value="Canada">Canada</option><option value="United Kingdom">United Kingdom</option><option value="Australia">Australia</option><option value="Germany">Germany</option><option value="France">France</option><option value="Italy">Italy</option><option value="Japan">Japan</option><option value="Netherlands">Netherlands</option><option value="Switzerland">Switzerland</option><option value="Sweden">Sweden</option><option value="Norway">Norway</option><option value="Denmark">Denmark</option><option value="Finland">Finland</option><option value="Belgium">Belgium</option><option value="Austria">Austria</option><option value="New Zealand">New Zealand</option><option value="Singapore">Singapore</option><option value="South Korea">South Korea</option><option value="Ireland">Ireland</option><option value="Spain">Spain</option><option value="Portugal">Portugal</option><option value="Luxembourg">Luxembourg</option><option value="Iceland">Iceland</option><option value="Israel">Israel</option>
+              </select>
+            </div>
+
             </div>
           </div>
           
           <div style="margin-bottom:12px">
-            <label style="font-size:11px;color:var(--fg3);display:block;margin-bottom:4px;font-weight:600">Postal Code</label>
+            <label style="font-size:11px;color:var(--fg3);display:block;margin-bottom:4px;font-weight:600" data-t="postal">Postal Code</label>
             <input type="text" id="custPostal" placeholder="Postal/ZIP code" style="width:100%;padding:8px;border-radius:var(--radius-sm);background:var(--bg2);border:1px solid var(--border);color:var(--fg);font-size:12px"/>
           </div>
         </div>
 
         <!-- PAYMENT METHOD -->
         <div style="margin-bottom:24px;padding:16px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius)">
-          <div style="font-size:12px;font-weight:700;color:var(--green-text);margin-bottom:12px;text-transform:uppercase;letter-spacing:.1em">💰 Payment Method</div>
+          <div style="font-size:12px;font-weight:700;color:var(--green-text);margin-bottom:12px;text-transform:uppercase;letter-spacing:.1em" data-t="payment_method">💰 Payment Method</div>
           
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
             <label style="display:flex;align-items:center;gap:8px;padding:8px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-size:11px">
@@ -727,7 +747,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
         </div>
 
         <button class="checkout-btn" onclick="checkout()">
-          ✈ Send Order to Telegram
+          <span data-t="send_telegram">✈ Send Order to Telegram</span>
         </button>
       </div>
     </div>
@@ -882,6 +902,80 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     const encoded = encodeURIComponent(orderSummary);
     window.open('https://t.me/dwarfplugshop?text=' + encoded, '_blank');
   }
+
+  
+  const TRANSLATIONS = {"en": {"title": "Dwarf Plug | Premium Discreet Cannabis Delivery Worldwide", "hero_h1": "Premium Craft Cannabis", "hero_p": "Odor-proof, vacuum-sealed, plain packaging. Crypto and gift card payments accepted for total anonymity.", "order_items": "Order Items", "customer_info": "Your Information", "shipping_info": "Shipping Address", "payment_method": "Payment Method", "send_telegram": "Send Order to Telegram", "full_name": "Full Name", "email": "Email Address", "telegram": "Telegram Handle (or Phone)", "address": "Full Address", "city": "City", "country": "Country", "postal": "Postal Code", "total": "Total Amount", "subtotal": "Subtotal", "cart_empty": "Your cart is empty", "add_to_cart": "Add to Cart", "select_language": "Language", "reviews": "Customer Reviews", "ordering_steps": "Ordering Steps", "packaging_shipping": "Packaging & Shipping", "successful_drops": "Successful Drops", "landing_rate": "Landing Rate", "discreet": "100% Discreet", "guarantee": "Reship Guarantee", "quality": "AAA+ Quality"}, "es": {"title": "Dwarf Plug | Entrega de Cannabis Discreta y Premium en Todo el Mundo", "hero_h1": "Cannabis Artesanal Premium", "hero_p": "Embalaje liso, sellado al vac\u00edo y a prueba de olores. Se aceptan pagos con criptomonedas y tarjetas de regalo para total anonimato.", "order_items": "Art\u00edculos del Pedido", "customer_info": "Tu Informaci\u00f3n", "shipping_info": "Direcci\u00f3n de Env\u00edo", "payment_method": "M\u00e9todo de Pago", "send_telegram": "Enviar Pedido a Telegram", "full_name": "Nombre Completo", "email": "Correo Electr\u00f3nico", "telegram": "Usuario de Telegram (o Tel\u00e9fono)", "address": "Direcci\u00f3n Completa", "city": "Ciudad", "country": "Pa\u00eds", "postal": "C\u00f3digo Postal", "total": "Monto Total", "subtotal": "Subtotal", "cart_empty": "Tu carrito est\u00e1 vac\u00edo", "add_to_cart": "A\u00f1adir al Carrito", "select_language": "Idioma", "reviews": "Rese\u00f1as de Clientes", "ordering_steps": "Pasos para Pedir", "packaging_shipping": "Embalaje y Env\u00edo", "successful_drops": "Entregas Exitosas", "landing_rate": "Tasa de Llegada", "discreet": "100% Discreto", "guarantee": "Garant\u00eda de Reenv\u00edo", "quality": "Calidad AAA+"}, "fr": {"title": "Dwarf Plug | Livraison de Cannabis Discr\u00e8te et Premium dans le Monde Entier", "hero_h1": "Cannabis Artisanal Premium", "hero_p": "Emballage neutre, scell\u00e9 sous vide et anti-odeur. Paiements en crypto et cartes-cadeaux accept\u00e9s pour un anonymat total.", "order_items": "Articles de la Commande", "customer_info": "Vos Informations", "shipping_info": "Adresse de Livraison", "payment_method": "Mode de Paiement", "send_telegram": "Envoyer la Commande sur Telegram", "full_name": "Nom Complet", "email": "Adresse E-mail", "telegram": "Identifiant Telegram (ou T\u00e9l\u00e9phone)", "address": "Adresse Compl\u00e8te", "city": "Ville", "country": "Pays", "postal": "Code Postal", "total": "Montant Total", "subtotal": "Sous-total", "cart_empty": "Votre panier est vide", "add_to_cart": "Ajouter au Panier", "select_language": "Langue", "reviews": "Avis Clients", "ordering_steps": "\u00c9tapes de Commande", "packaging_shipping": "Emballage et Exp\u00e9dition", "successful_drops": "Livraisons R\u00e9ussies", "landing_rate": "Taux de R\u00e9ussite", "discreet": "100% Discret", "guarantee": "Garantie de R\u00e9exp\u00e9dition", "quality": "Qualit\u00e9 AAA+"}, "de": {"title": "Dwarf Plug | Premium Diskrete Cannabis-Lieferung Weltweit", "hero_h1": "Premium Handverlesenes Cannabis", "hero_p": "Geruchsdichte, vakuumversiegelte, neutrale Verpackung. Krypto- und Geschenkkartenzahlungen f\u00fcr totale Anonymit\u00e4t akzeptiert.", "order_items": "Bestellte Artikel", "customer_info": "Ihre Informationen", "shipping_info": "Lieferadresse", "payment_method": "Zahlungsmethode", "send_telegram": "Bestellung per Telegram senden", "full_name": "Vollst\u00e4ndiger Name", "email": "E-Mail-Adresse", "telegram": "Telegram-Handle (oder Telefon)", "address": "Vollst\u00e4ndige Adresse", "city": "Stadt", "country": "Land", "postal": "Postleitzahl", "total": "Gesamtbetrag", "subtotal": "Zwischensumme", "cart_empty": "Ihr Warenkorb ist leer", "add_to_cart": "In den Warenkorb", "select_language": "Sprache", "reviews": "Kundenbewertungen", "ordering_steps": "Bestellablauf", "packaging_shipping": "Verpackung & Versand", "successful_drops": "Erfolgreiche Lieferungen", "landing_rate": "Ankunftsrate", "discreet": "100% Diskret", "guarantee": "Versandgarantie", "quality": "AAA+ Qualit\u00e4t"}, "it": {"title": "Dwarf Plug | Consegna di Cannabis Discreta e Premium in Tutto il Mondo", "hero_h1": "Cannabis Artigianale Premium", "hero_p": "Confezione anonima, sottovuoto e inodore. Pagamenti in criptovalute e carte regalo accettati per il totale anonimato.", "order_items": "Articoli dell'Ordine", "customer_info": "Le Tue Informazioni", "shipping_info": "Indirizzo di Spedizione", "payment_method": "Metodo di Pagamento", "send_telegram": "Invia Ordine su Telegram", "full_name": "Nome Completo", "email": "Indirizzo Email", "telegram": "Username Telegram (o Telefono)", "address": "Indirizzo Completo", "city": "Citt\u00e0", "country": "Paese", "postal": "Codice Postale", "total": "Importo Totale", "subtotal": "Totale parziale", "cart_empty": "Il tuo carrello \u00e8 vuoto", "add_to_cart": "Aggiungi al Carrello", "select_language": "Lingua", "reviews": "Recensioni Clienti", "ordering_steps": "Passaggi per l'Ordine", "packaging_shipping": "Imballaggio e Spedizione", "successful_drops": "Consegne Riuscite", "landing_rate": "Tasso di Arrivo", "discreet": "100% Discreto", "guarantee": "Garanzia di Rispedizione", "quality": "Qualit\u00e0 AAA+"}};
+  let currentLang = localStorage.getItem('dwarfplug-lang') || 'en';
+
+  function changeLang(lang) {
+    currentLang = lang;
+    localStorage.setItem('dwarfplug-lang', lang);
+    applyTranslations();
+  }
+
+  function applyTranslations() {
+    const t = TRANSLATIONS[currentLang];
+    document.querySelectorAll('[data-t]').forEach(el => {
+      const key = el.dataset.t;
+      if (t[key]) {
+        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+          el.placeholder = t[key];
+        } else {
+          el.textContent = t[key];
+        }
+      }
+    });
+    document.title = t.title;
+    document.getElementById('langSelect').value = currentLang;
+  }
+
+  window.addEventListener('DOMContentLoaded', applyTranslations);
+
+  
+  const COUNTRIES_CITIES = {"United States": ["New York", "Los Angeles", "Chicago", "Houston", "Phoenix", "San Francisco", "Miami", "Seattle"], "Canada": ["Toronto", "Vancouver", "Montreal", "Calgary", "Ottawa", "Winnipeg", "Edmonton", "Halifax"], "United Kingdom": ["London", "Manchester", "Birmingham", "Leeds", "Glasgow", "Liverpool", "Newcastle", "Bristol"], "Australia": ["Sydney", "Melbourne", "Brisbane", "Perth", "Adelaide", "Hobart", "Canberra", "Gold Coast"], "Germany": ["Berlin", "Munich", "Frankfurt", "Hamburg", "Cologne", "Stuttgart", "D\u00fcsseldorf", "Dresden"], "France": ["Paris", "Marseille", "Lyon", "Toulouse", "Nice", "Nantes", "Strasbourg", "Montpellier"], "Italy": ["Rome", "Milan", "Naples", "Turin", "Palermo", "Genoa", "Bologna", "Florence"], "Japan": ["Tokyo", "Osaka", "Yokohama", "Nagoya", "Sapporo", "Fukuoka", "Kobe", "Kyoto"], "Netherlands": ["Amsterdam", "Rotterdam", "The Hague", "Utrecht", "Eindhoven", "Groningen", "Tilburg", "Almere"], "Switzerland": ["Zurich", "Geneva", "Basel", "Bern", "Lausanne", "Lucerne", "St. Gallen", "Winterthur"], "Sweden": ["Stockholm", "Gothenburg", "Malm\u00f6", "Uppsala", "V\u00e4ster\u00e5s", "\u00d6rebro", "Link\u00f6ping", "Helsingborg"], "Norway": ["Oslo", "Bergen", "Trondheim", "Stavanger", "Kristiansand", "Troms\u00f8", "Fredrikstad", "Sandnes"], "Denmark": ["Copenhagen", "Aarhus", "Odense", "Aalborg", "Esbjerg", "Randers", "Kolding", "Horsens"], "Finland": ["Helsinki", "Espoo", "Tampere", "Vantaa", "Turku", "Oulu", "Jyv\u00e4skyl\u00e4", "Kuopio"], "Belgium": ["Brussels", "Antwerp", "Ghent", "Charleroi", "Li\u00e8ge", "Bruges", "Namur", "Leuven"], "Austria": ["Vienna", "Graz", "Linz", "Salzburg", "Innsbruck", "Klagenfurt", "Villach", "Wels"], "New Zealand": ["Auckland", "Wellington", "Christchurch", "Hamilton", "Tauranga", "Lower Hutt", "Dunedin", "Palmerston North"], "Singapore": ["Singapore", "Marina Bay", "Jurong", "Bedok", "Tampines", "Clementi", "Bukit Merah", "Hougang"], "South Korea": ["Seoul", "Busan", "Incheon", "Daegu", "Daejeon", "Gwangju", "Ulsan", "Suwon"], "Ireland": ["Dublin", "Cork", "Limerick", "Galway", "Waterford", "Drogheda", "Dundalk", "Athlone"], "Spain": ["Madrid", "Barcelona", "Valencia", "Seville", "Bilbao", "Malaga", "Murcia", "Palma"], "Portugal": ["Lisbon", "Porto", "Braga", "Covilh\u00e3", "Aveiro", "Set\u00fabal", "Guarda", "Leiria"], "Luxembourg": ["Luxembourg City", "Esch-sur-Alzette", "Differdange", "Dudelange", "Schifflange", "Petange", "Sanem", "Rumelange"], "Iceland": ["Reykjavik", "K\u00f3pavogur", "Hafnarfj\u00f6r\u00f0ur", "Mosfellsb\u00e6r", "Gar\u00f0ab\u00e6r", "Akranes", "Hverager\u00f0i", "Borgarnes"], "Israel": ["Tel Aviv", "Jerusalem", "Haifa", "Rishon LeZion", "Petah Tikva", "Beersheba", "Netanya", "Ashdod"]};
+  const TRANSLATIONS = {"en": {"title": "Dwarf Plug | Premium Discreet Cannabis Delivery Worldwide", "hero_h1": "Premium Craft Cannabis", "hero_p": "Odor-proof, vacuum-sealed, plain packaging. Crypto and gift card payments accepted for total anonymity.", "order_items": "\ud83d\udce6 Order Items", "customer_info": "\ud83d\udc64 Your Information", "shipping_info": "\ud83d\udccd Shipping Address", "payment_method": "\ud83d\udcb0 Payment Method", "send_telegram": "\u2708 Send Order to Telegram", "full_name": "Full Name *", "email": "Email Address *", "telegram": "Telegram Handle (or Phone) *", "address": "Full Address *", "city": "City *", "country": "Country *", "postal": "Postal Code", "total": "Total Amount", "subtotal": "Subtotal", "cart_empty": "Your cart is empty", "add_to_cart": "Add to Cart", "select_language": "Language", "restricted": "RESTRICTED AREA", "verify": "VERIFY CLEARANCE LEVEL TO CONTINUE", "authorize": "AUTHORIZE", "placeholder": "ENTER ACCESS CODE"}, "es": {"title": "Dwarf Plug | Entrega de Cannabis Discreta y Premium en Todo el Mundo", "hero_h1": "Cannabis Artesanal Premium", "hero_p": "Embalaje liso, sellado al vac\u00edo y a prueba de olores. Se aceptan pagos con criptomonedas y tarjetas de regalo para total anonimato.", "order_items": "\ud83d\udce6 Art\u00edculos del Pedido", "customer_info": "\ud83d\udc64 Tu Informaci\u00f3n", "shipping_info": "\ud83d\udccd Direcci\u00f3n de Env\u00edo", "payment_method": "\ud83d\udcb0 M\u00e9todo de Pago", "send_telegram": "\u2708 Enviar Pedido a Telegram", "full_name": "Nombre Completo *", "email": "Correo Electr\u00f3nico *", "telegram": "Usuario de Telegram (o Tel\u00e9fono) *", "address": "Direcci\u00f3n Completa *", "city": "Ciudad *", "country": "Pa\u00eds *", "postal": "C\u00f3digo Postal", "total": "Monto Total", "subtotal": "Subtotal", "cart_empty": "Tu carrito est\u00e1 vac\u00edo", "add_to_cart": "A\u00f1adir al Carrito", "select_language": "Idioma", "restricted": "\u00c1REA RESTRINGIDA", "verify": "VERIFIQUE EL NIVEL DE AUTORIZACI\u00d3N PARA CONTINUAR", "authorize": "AUTORIZAR", "placeholder": "INGRESE C\u00d3DIGO DE ACCESO"}, "fr": {"title": "Dwarf Plug | Livraison de Cannabis Discr\u00e8te et Premium dans le Monde Entier", "hero_h1": "Cannabis Artisanal Premium", "hero_p": "Emballage neutre, scell\u00e9 sous vide et anti-odeur. Paiements en crypto et cartes-cadeaux accept\u00e9s pour un anonymat total.", "order_items": "\ud83d\udce6 Articles de la Commande", "customer_info": "\ud83d\udc64 Vos Informations", "shipping_info": "\ud83d\udccd Adresse de Livraison", "payment_method": "\ud83d\udcb0 Mode de Paiement", "send_telegram": "\u2708 Envoyer la Commande sur Telegram", "full_name": "Nom Complet *", "email": "Adresse E-mail *", "telegram": "Identifiant Telegram (ou T\u00e9l\u00e9phone) *", "address": "Adresse Compl\u00e8te *", "city": "Ville *", "country": "Pays *", "postal": "Code Postal", "total": "Montant Total", "subtotal": "Sous-total", "cart_empty": "Votre panier est vide", "add_to_cart": "Ajouter au Panier", "select_language": "Langue", "restricted": "ZONE RESTREINTE", "verify": "V\u00c9RIFIER LE NIVEAU D'AUTORISATION POUR CONTINUER", "authorize": "AUTORISER", "placeholder": "ENTRER LE CODE D'ACC\u00c8S"}, "de": {"title": "Dwarf Plug | Premium Diskrete Cannabis-Lieferung Weltweit", "hero_h1": "Premium Handverlesenes Cannabis", "hero_p": "Geruchsdichte, vakuumversiegelte, neutrale Verpackung. Krypto- und Geschenkkartenzahlungen f\u00fcr totale Anonymit\u00e4t akzeptiert.", "order_items": "\ud83d\udce6 Bestellte Artikel", "customer_info": "\ud83d\udc64 Ihre Informationen", "shipping_info": "\ud83d\udccd Lieferadresse", "payment_method": "\ud83d\udcb0 Zahlungsmethode", "send_telegram": "\u2708 Bestellung per Telegram senden", "full_name": "Vollst\u00e4ndiger Name *", "email": "E-Mail-Adresse *", "telegram": "Telegram-Handle (oder Telefon) *", "address": "Vollst\u00e4ndige Adresse *", "city": "Stadt *", "country": "Land *", "postal": "Postleitzahl", "total": "Gesamtbetrag", "subtotal": "Zwischensumme", "cart_empty": "Ihr Warenkorb ist leer", "add_to_cart": "In den Warenkorb", "select_language": "Sprache", "restricted": "SPERRGEBIET", "verify": "ZUGANGSLEVEL VERIFIZIEREN, UM FORTZUFAHREN", "authorize": "AUTORISIEREN", "placeholder": "ZUGANGSCODE EINGEBEN"}, "it": {"title": "Dwarf Plug | Consegna di Cannabis Discreta e Premium in Tutto il Mondo", "hero_h1": "Cannabis Artigianale Premium", "hero_p": "Confezione anonima, sottovuoto e inodore. Pagamenti in criptovalute e carte regalo accettati per il totale anonimato.", "order_items": "\ud83d\udce6 Articoli dell'Ordine", "customer_info": "\ud83d\udc64 Le Tue Informazioni", "shipping_info": "\ud83d\udccd Indirizzo di Spedizione", "payment_method": "\ud83d\udcb0 Metodo di Pagamento", "send_telegram": "\u2708 Invia Ordine su Telegram", "full_name": "Nome Completo *", "email": "Indirizzo Email *", "telegram": "Username Telegram (o Telefono) *", "address": "Indirizzo Completo *", "city": "Citt\u00e0 *", "country": "Paese *", "postal": "Codice Postale", "total": "Importo Totale", "subtotal": "Totale parziale", "cart_empty": "Il tuo carrello \u00e8 vuoto", "add_to_cart": "Aggiungi al Carrello", "select_language": "Lingua", "restricted": "AREA RISERVATA", "verify": "VERIFICARE IL LIVELLO DI AUTORIZZAZIONE PER CONTINUARE", "authorize": "AUTORIZZARE", "placeholder": "INSERIRE CODICE DI ACCESSO"}};
+  let currentLang = localStorage.getItem('dwarfplug-lang') || 'en';
+
+  function changeLang(lang) {
+    currentLang = lang;
+    localStorage.setItem('dwarfplug-lang', lang);
+    applyTranslations();
+  }
+
+  function updateCities() {
+    const country = document.getElementById('custCountry').value;
+    const citySelect = document.getElementById('custCity');
+    citySelect.innerHTML = '<option value="">Select City</option>';
+    if (country && COUNTRIES_CITIES[country]) {
+      COUNTRIES_CITIES[country].forEach(city => {
+        const option = document.createElement('option');
+        option.value = city;
+        option.textContent = city;
+        citySelect.appendChild(option);
+      });
+    }
+  }
+
+  function applyTranslations() {
+    const t = TRANSLATIONS[currentLang];
+    document.querySelectorAll('[data-t]').forEach(el => {
+      const key = el.dataset.t;
+      if (t[key]) {
+        if (el.tagName === 'LABEL') {
+          el.textContent = t[key];
+        } else if (el.tagName === 'SPAN') {
+          el.textContent = t[key];
+        } else {
+          el.textContent = t[key];
+        }
+      }
+    });
+    document.title = t.title;
+    const langSelect = document.getElementById('langSelect');
+    if (langSelect) langSelect.value = currentLang;
+  }
+
+  window.addEventListener('DOMContentLoaded', applyTranslations);
 
   // ── REVIEWS ──────────────────────────────────────────────────────────────────
   const REVIEWS_DB = {

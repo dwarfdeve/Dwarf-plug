@@ -27,7 +27,9 @@
             width: 100%;
             height: 100%;
             font-family: 'Press Start 2P', cursive;
-            background: linear-gradient(135deg, #000000 0%, #0d0d2b 50%, #000000 100%);
+            background: linear-gradient(-45deg, #000000, #0d0d2b, #1a0d2b, #000000);
+            background-size: 400% 400%;
+            animation: bgShift 15s ease infinite;
             color: var(--text);
             overflow: hidden;
             display: flex;
@@ -37,6 +39,12 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             overscroll-behavior: none;
+        }
+
+        @keyframes bgShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         /* Scanline effect */
@@ -99,6 +107,18 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
             font-weight: bold;
+        }
+
+        .lang-select {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            font-size: 0.5rem;
+            padding: 4px 8px;
+            border-radius: 3px;
+            outline: none;
+            cursor: pointer;
+            font-family: 'Press Start 2P', cursive;
         }
 
         /* Game Container */
