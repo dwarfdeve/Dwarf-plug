@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Loading | Dwarf Plug</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet"/>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:#050a05;
+    height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Inter',sans-serif;
+    overflow:hidden;
+    color:#fff;
+  }
+
+  /* Scanlines effect */
+  body::before{
+    content:'';
+    position:fixed;
+    inset:0;
+    background:repeating-linear-gradient(0deg,rgba(0,0,0,0.15),rgba(0,0,0,0.15) 1px,transparent 1px,transparent 3px);
+    pointer-events:none;
+    z-index:10;
+  }
+
+  .loading-container{
+    text-align:center;
+    position:relative;
+    z-index:1;
+  }
+
+  .mascot-wrapper {
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 30px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mascot-img {
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 15px rgba(0, 255, 153, 0.6));
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(2deg); }
+  }
+
+  .glow-ring {
+    position: absolute;
+    width: 160px;
+    height: 160px;
+    border: 2px solid rgba(0, 255, 153, 0.2);
+    border-radius: 50%;
+    animation: pulse-ring 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+  }
+
+  @keyframes pulse-ring {
+    0% { transform: scale(0.8); opacity: 0.8; }
+    100% { transform: scale(1.3); opacity: 0; }
+  }
+
+  .loading-text {
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: #00ff99;
+    text-shadow: 0 0 10px rgba(0, 255, 153, 0.5);
+    margin-bottom: 15px;
+  }
+
+  .progress-bar {
+    width: 200px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 30%;
+    background: linear-gradient(90deg, transparent, #00ff99, transparent);
+    animation: progress-move 1.5s linear infinite;
+  }
+
+  @keyframes progress-move {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+
+  .loading-sub {
+    margin-top: 15px;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.3);
+    letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+  <div class="loading-container">
+    <div class="mascot-wrapper">
+      <div class="glow-ring"></div>
+      <div class="glow-ring" style="animation-delay: 0.5s;"></div>
+      <img src="imgs/mascot.jpg" alt="Dwarf Plug Mascot" class="mascot-img">
+    </div>
+    <div class="loading-text">Establishing Connection</div>
+    <div class="progress-bar">
+      <div class="progress-fill"></div>
+    </div>
+    <div class="loading-sub">Securing discreet tunnel...</div>
+  </div>
+
+  <script>
+    // Simulate loading and redirect
+    setTimeout(() => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const next = urlParams.get('next') || 'index.html';
+      window.location.href = next;
+    }, 2500);
+  </script>
+</body>
+</html>
